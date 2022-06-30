@@ -29,10 +29,10 @@ public class AutoCargaBanco implements CommandLineRunner {
         
         
         // Carga da Tabela: ESTADO
-        Estado estado1 = new Estado("RJ","Rio de Janeiro");
-        Estado estado2 = new Estado("SP","S�o Paulo");
-        Estado estado3 = new Estado("MG","Minas Gerais");
-        Estado estado4 = new Estado("ES","Esp�rito Santo");
+        //Estado estado1 = new Estado("RJ","Rio de Janeiro");
+        //Estado estado2 = new Estado("SP","S�o Paulo");
+        //Estado estado3 = new Estado("MG","Minas Gerais");
+        //Estado estado4 = new Estado("ES","Esp�rito Santo");
 
 //        estadoService.addEstado(estado1);
 //        estadoService.addEstado(estado2);
