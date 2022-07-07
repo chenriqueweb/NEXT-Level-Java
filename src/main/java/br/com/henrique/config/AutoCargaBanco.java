@@ -25,7 +25,7 @@ public class AutoCargaBanco implements CommandLineRunner {
        
         empresaService.addEmpresa(empresa1);
         empresaService.addEmpresa(empresa2);
-        empresaService.addEmpresa(empresa3);
+        empresaService.addEmpresa(empresa3);  
         
         
         // Carga da Tabela: ESTADO
