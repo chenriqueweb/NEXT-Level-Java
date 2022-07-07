@@ -59,32 +59,29 @@ public class AutoCargaBanco implements CommandLineRunner {
 
         
         // Carga da Tabela: ESTADO        
-        Estado estado1 = new Estado("RJ", "Rio de Janeiro");
-        Estado estado2 = new Estado("SP","Sao Paulo");
-        Estado estado3 = new Estado("MG","Minas Gerais");
-        Estado estado4 = new Estado("ES","Espirito Santo");
+        Estado estadoRJ = new Estado("RJ", "Rio de Janeiro");
+        Estado estadoSP = new Estado("SP","Sao Paulo");
+        Estado estadoMG = new Estado("MG","Minas Gerais");
+        Estado estadoES = new Estado("ES","Espirito Santo");
 
-        estadoService.addEstado(estado1);       
-        estadoService.addEstado(estado2);
-        estadoService.addEstado(estado3);       
-        estadoService.addEstado(estado4);  
+        estadoService.addEstado(estadoRJ);       
+        estadoService.addEstado(estadoSP);
+        estadoService.addEstado(estadoMG);       
+        estadoService.addEstado(estadoES);  
         
         
         // Carga da Tabela: MUNICIPIO
-        Estado estadoMunicipioRJ = new Estado("RJ", "Rio de Janeiro");
-        Estado estadoMunicipioSP = new Estado("SP", "Sao Paulo");
-//      Estado estadoMunicipioMG = new Estado("MG", "Minas Gerais");
-//      Estado estadoMunicipioES = new Estado("ES", "Espirito Santo");
-        
-        Municipio municipio1 = new Municipio(null, "Barra do Pirai", estadoMunicipioRJ);
-        Municipio municipio2 = new Municipio(null, "Volta Redonda", estadoMunicipioRJ);
-        Municipio municipio3 = new Municipio(null, "São Caetano", estadoMunicipioSP);
-        Municipio municipio4 = new Municipio(null, "Jundiai", estadoMunicipioSP);
+        Municipio municipioRJ1 = new Municipio(null, "Barra do Pirai", estadoRJ);
+        Municipio municipioRJ2 = new Municipio(null, "Volta Redonda", estadoRJ);
+        Municipio municipioRJ3 = new Municipio(null, "Pirai", estadoRJ);        
+        Municipio municipioSP1 = new Municipio(null, "São Caetano", estadoSP);
+        Municipio municipioSP2 = new Municipio(null, "Jundiai", estadoSP);
 
-        municipioService.addMunicipio(municipio1);
-        municipioService.addMunicipio(municipio2);
-        municipioService.addMunicipio(municipio3);
-        municipioService.addMunicipio(municipio4);     
+        municipioService.addMunicipio(municipioRJ1);
+        municipioService.addMunicipio(municipioRJ2);
+        municipioService.addMunicipio(municipioRJ3);        
+        municipioService.addMunicipio(municipioSP1);
+        municipioService.addMunicipio(municipioSP2);     
         
         
         // Carga da Tabela: FILIAL
@@ -101,11 +98,11 @@ public class AutoCargaBanco implements CommandLineRunner {
         
         
         // Carga da Tabela: MICROZONA
-        Microzona microzona1 = new Microzona(null, "Microzona-01", "A", "N", "S", "N", "S", "N", "S", "N", 1, "RJ", 1);        
-        Microzona microzona2 = new Microzona(null, "Microzona-02", "A", "N", "S", "N", "N", "S", "N", "N", 1, "RJ", 1);
-        Microzona microzona3 = new Microzona(null, "Microzona-03", "A", "N", "S", "N", "S", "N", "S", "N", 1, "RJ", 1);
-        Microzona microzona4 = new Microzona(null, "Microzona-04", "A", "N", "S", "N", "N", "S", "N", "N", 1, "SP", 1);
-        Microzona microzona5 = new Microzona(null, "Microzona-05", "A", "N", "S", "N", "S", "N", "S", "N", 1, "SP", 1);        
+        Microzona microzona1 = new Microzona(null, "Microzona-01", "A", "N", "S", "N", "S", "N", "S", "N", estadoRJ, municipioRJ1, 1);
+        Microzona microzona2 = new Microzona(null, "Microzona-02", "A", "N", "S", "N", "S", "N", "S", "N", estadoRJ, municipioRJ2, 1);
+        Microzona microzona3 = new Microzona(null, "Microzona-03", "A", "N", "S", "N", "S", "N", "S", "N", estadoRJ, municipioRJ3, 1);
+        Microzona microzona4 = new Microzona(null, "Microzona-04", "A", "N", "S", "N", "S", "N", "S", "N", estadoSP, municipioSP1, 1);
+        Microzona microzona5 = new Microzona(null, "Microzona-05", "A", "N", "S", "N", "S", "N", "S", "N", estadoSP, municipioSP2, 1);
         
         microzonaService.addMicrozona(microzona1);
         microzonaService.addMicrozona(microzona2);        

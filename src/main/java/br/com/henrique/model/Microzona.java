@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Microzona {
@@ -22,17 +24,26 @@ public class Microzona {
     private String atendeSexta;
     private String atendeSabado;
     
-    private Integer codigoMunicipio;
-    private String  estadoRota;
-    private Integer codigoRota;
+    // FK com Estado
+    @ManyToOne
+    @JoinColumn(name="sigla")    
+    private Estado estadoRota;
     
+    // FK com Municipio 
+    @ManyToOne
+    @JoinColumn(name="codigo_ID")
+    private Municipio codigoMunicipio;
+        
+    
+    private Integer codigoRota;
+
     public Microzona() {
         super();
     }
-    
+
     public Microzona(Integer codigo, String nome, String status, String atendimentoDiario, String atendeSegunda, String atendeTerca,
-                    String atendeQuarta, String atendeQuinta, String atendeSexta, String atendeSabado, Integer codigoMunicipio,
-                    String estadoRota, Integer codigoRota) {
+                    String atendeQuarta, String atendeQuinta, String atendeSexta, String atendeSabado, Estado estadoRota,
+                    Municipio codigoMunicipio, Integer codigoRota) {
         super();
         this.codigo = codigo;
         this.nome = nome;
@@ -44,91 +55,116 @@ public class Microzona {
         this.atendeQuinta = atendeQuinta;
         this.atendeSexta = atendeSexta;
         this.atendeSabado = atendeSabado;
-        this.codigoMunicipio = codigoMunicipio;
         this.estadoRota = estadoRota;
+        this.codigoMunicipio = codigoMunicipio;
         this.codigoRota = codigoRota;
     }
-    
+
     // Método para identificar registro novo
     public boolean isNovo() {
         return nome == null;
-    } 
-    
+    }
+
     public Integer getCodigo() {
         return codigo;
     }
+
     public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
+
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
+
     public String getStatus() {
         return status;
     }
+
     public void setStatus(String status) {
         this.status = status;
     }
+
     public String getAtendimentoDiario() {
         return atendimentoDiario;
     }
+
     public void setAtendimentoDiario(String atendimentoDiario) {
         this.atendimentoDiario = atendimentoDiario;
     }
+
     public String getAtendeSegunda() {
         return atendeSegunda;
     }
+
     public void setAtendeSegunda(String atendeSegunda) {
         this.atendeSegunda = atendeSegunda;
     }
+
     public String getAtendeTerca() {
         return atendeTerca;
     }
+
     public void setAtendeTerca(String atendeTerca) {
         this.atendeTerca = atendeTerca;
     }
+
     public String getAtendeQuarta() {
         return atendeQuarta;
     }
+
     public void setAtendeQuarta(String atendeQuarta) {
         this.atendeQuarta = atendeQuarta;
     }
+
     public String getAtendeQuinta() {
         return atendeQuinta;
     }
+
     public void setAtendeQuinta(String atendeQuinta) {
         this.atendeQuinta = atendeQuinta;
     }
+
     public String getAtendeSexta() {
         return atendeSexta;
     }
+
     public void setAtendeSexta(String atendeSexta) {
         this.atendeSexta = atendeSexta;
     }
+
     public String getAtendeSabado() {
         return atendeSabado;
     }
+
     public void setAtendeSabado(String atendeSabado) {
         this.atendeSabado = atendeSabado;
     }
-    public Integer getCodigoMunicipio() {
-        return codigoMunicipio;
-    }
-    public void setCodigoMunicipio(Integer codigoMunicipio) {
-        this.codigoMunicipio = codigoMunicipio;
-    }
-    public String getEstadoRota() {
+
+    public Estado getEstadoRota() {
         return estadoRota;
     }
-    public void setEstadoRota(String estadoRota) {
+
+    public void setEstadoRota(Estado estadoRota) {
         this.estadoRota = estadoRota;
     }
+
+    public Municipio getCodigoMunicipio() {
+        return codigoMunicipio;
+    }
+
+    public void setCodigoMunicipio(Municipio codigoMunicipio) {
+        this.codigoMunicipio = codigoMunicipio;
+    }
+
     public Integer getCodigoRota() {
         return codigoRota;
     }
+
     public void setCodigoRota(Integer codigoRota) {
         this.codigoRota = codigoRota;
     }
@@ -229,5 +265,5 @@ public class Microzona {
             return false;
         return true;
     }
-    
+
 }

@@ -45,7 +45,7 @@ public class MunicipioController {
     public ResponseEntity<Void> addMunicipio(@RequestBody Municipio municipio) {
         Municipio municipioNovo = municipioService.addMunicipio(municipio);
         
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{codigo}").buildAndExpand(municipioNovo.getCodigo()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{codigo}").buildAndExpand(municipioNovo.getCodigo_ID()).toUri();
         return ResponseEntity.created(uri).build();
     }    
     

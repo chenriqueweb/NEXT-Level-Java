@@ -43,8 +43,8 @@
 						<th>Quinta</th>
 						<th>Sexta</th>
 						<th>Sábado</th>
-						<th>Município</th>
 						<th>Estado Rota</th>
+						<th>Município</th>
 						<th>Rota</th>
 					</tr>
 				</thead>
@@ -62,8 +62,8 @@
 						<td th:text="${microzona.atendeQuinta}"></td>
 						<td th:text="${microzona.atendeSexta}"></td>
 						<td th:text="${microzona.atendeSabado}"></td>
-						<td th:text="${microzona.codigoMunicipio}"></td>
-						<td th:text="${microzona.estadoRota}"></td>
+						<td th:text="${microzona.estadoRota.sigla}"></td>
+						<td th:text="${microzona.codigoMunicipio.nome}"></td>
 						<td th:text="${microzona.codigoRota}"></td>	
 						
 						<td>
