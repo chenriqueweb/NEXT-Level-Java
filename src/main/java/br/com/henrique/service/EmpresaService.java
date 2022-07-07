@@ -25,7 +25,7 @@ public class EmpresaService {
     }
 
     // Busca pela Empresa
-    public Empresa findById(Long codigo) {
+    public Empresa findById(Integer codigo) {
         Empresa empresa = repositEmpresa.findById(codigo).orElse(null);
         if (empresa == null) {
             throw new ObjectNotFoundException("Empresa nao encontrada !");
@@ -39,7 +39,7 @@ public class EmpresaService {
     }
 
     // Atualiza uma Empresa
-    public void updateEmpresa(Long codigo, Empresa empresa) {
+    public void updateEmpresa(Integer codigo, Empresa empresa) {
         Empresa empresaAtualizado = this.findById(codigo);
         
         empresaAtualizado.setRazaoSocial(empresa.getRazaoSocial());
@@ -50,7 +50,7 @@ public class EmpresaService {
     }
 
     // Exclusão de Empresa
-    public void deletaEmpresa(Long codigo) {
+    public void deletaEmpresa(Integer codigo) {
         this.findById(codigo);
 
         repositEmpresa.deleteById(codigo);

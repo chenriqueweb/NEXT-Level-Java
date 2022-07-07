@@ -5,33 +5,33 @@ import java.io.Serializable;
 public class RotaEntregaId  implements Serializable {
     
     private static final long serialVersionUID = 1L;
-    private Long siglaEstado;
-    private Long codigo;
+    private Integer siglaEstado;
+    private Integer codigo;
        
     public RotaEntregaId() {
         super();
     }
     
-    public RotaEntregaId(Long siglaEstado, Long codigo) {
+    public RotaEntregaId(Integer siglaEstado, Integer codigo) {
         super();
         this.siglaEstado = siglaEstado;
         this.codigo = codigo;
     }
 
 
-    public Long getSiglaEstado() {
+    public Integer getSiglaEstado() {
         return siglaEstado;
     }
 
-    public void setSiglaEstado(Long siglaEstado) {
+    public void setSiglaEstado(Integer siglaEstado) {
         this.siglaEstado = siglaEstado;
     }
 
-    public Long getCodigo() {
+    public Integer getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(Long codigo) {
+    public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
 

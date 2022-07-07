@@ -35,7 +35,7 @@ public class MunicipioController {
    
     // Busca pelo Municipio
     @GetMapping(path = "{codigo}")
-    public ResponseEntity<Municipio> findById(@PathVariable Long codigo) {
+    public ResponseEntity<Municipio> findById(@PathVariable Integer codigo) {
         Municipio municipio = municipioService.findById(codigo);
         return ResponseEntity.ok().body(municipio);
     }    
@@ -51,14 +51,14 @@ public class MunicipioController {
     
     // Altera Municipio
     @PutMapping(path = "{codigo}")
-    public ResponseEntity<Void> updateMunicipio(@PathVariable Long codigo, @RequestBody Municipio municipio) {
+    public ResponseEntity<Void> updateMunicipio(@PathVariable Integer codigo, @RequestBody Municipio municipio) {
         municipioService.updateMunicipio(codigo, municipio);
         return ResponseEntity.noContent().build();
     }
     
     // Deleta Municipio = method Delete
     @DeleteMapping(path = "{codigo}")
-    public ResponseEntity<Void> deletaMunicipio(@PathVariable Long codigo) {
+    public ResponseEntity<Void> deletaMunicipio(@PathVariable Integer codigo) {
         municipioService.deletaMunicipio(codigo);
         return ResponseEntity.noContent().build();
     }
@@ -67,7 +67,7 @@ public class MunicipioController {
     // Deleta estado e chama Lista de Municipio
     // method Post (página)
     @PostMapping(path = "/remover/{codigo}")
-    public ModelAndView deletaMunicipioWeb(@PathVariable Long codigo) {
+    public ModelAndView deletaMunicipioWeb(@PathVariable Integer codigo) {
         municipioService.deletaMunicipio(codigo);
         
         List<Municipio> municipios = municipioService.findAll();
@@ -81,7 +81,7 @@ public class MunicipioController {
     // Altera Municipio
     // method Post (página)
     @GetMapping(path = "/editar/{codigo}")
-    public ModelAndView editarMunicipioWeb(@PathVariable Long codigo) {
+    public ModelAndView editarMunicipioWeb(@PathVariable Integer codigo) {
         ModelAndView modelAndView = new ModelAndView("MunicipioFormulario");
         
         Municipio municipio = municipioService.findById(codigo);

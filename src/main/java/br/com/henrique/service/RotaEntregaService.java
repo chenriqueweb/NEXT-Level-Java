@@ -24,7 +24,7 @@ public class RotaEntregaService {
     }    
     
     // Busca pela Rota de Entrega
-    public RotaEntrega findById(Long codigo) {
+    public RotaEntrega findById(Integer codigo) {
         RotaEntrega rotaEntrega = repositRotaEntrega.findById(codigo).orElse(null);
         if (rotaEntrega == null) {
             throw new ObjectNotFoundException("Rota de Entrega nao encontrada !");
@@ -38,7 +38,7 @@ public class RotaEntregaService {
     }    
     
     // Atualiza uma Rota de Entrega
-    public void updateRotaEntrega(Long codigo, RotaEntrega rotaEntrega) {
+    public void updateRotaEntrega(Integer codigo, RotaEntrega rotaEntrega) {
         RotaEntrega rotaEntregaAtualizado = this.findById(codigo);
         
         rotaEntregaAtualizado.setSiglaEstado(rotaEntrega.getSiglaEstado());
@@ -53,7 +53,7 @@ public class RotaEntregaService {
     
     
     // Exclusão da Rota de Entrega
-    public void deletaRotaEntrega(Long codigo) {
+    public void deletaRotaEntrega(Integer codigo) {
         this.findById(codigo);
         
         repositRotaEntrega.deleteById(codigo);

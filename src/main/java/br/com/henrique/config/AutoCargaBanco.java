@@ -24,7 +24,7 @@ public class AutoCargaBanco implements CommandLineRunner {
     @Autowired
     private EmpresaService empresaService;
     
-    @Autowired  
+    @Autowired
     private EstadoService estadoService;    
     
     @Autowired
@@ -47,10 +47,10 @@ public class AutoCargaBanco implements CommandLineRunner {
     public void run(String...args) throws Exception { 
         
         // Carga da Tabela: EMPRESA
-        Empresa empresa1 = new Empresa(null, "teste-01da", "111.456.789/0001-01", "2022-06-25");
-        Empresa empresa2 = new Empresa(null, "teste-02cb", "222.456.789/0001-01", "2022-06-26");
-        Empresa empresa3 = new Empresa(null, "teste-03bc", "333.456.789/0001-01", "2022-06-27");
-        Empresa empresa4 = new Empresa(null, "teste-04ad", "333.456.789/0001-01", "2022-06-27");
+        Empresa empresa1 = new Empresa(null, "teste-01", "111.456.789/0001-01", "2022-06-25");
+        Empresa empresa2 = new Empresa(null, "teste-02", "222.456.789/0001-01", "2022-06-26");
+        Empresa empresa3 = new Empresa(null, "teste-03", "333.456.789/0001-01", "2022-06-27");
+        Empresa empresa4 = new Empresa(null, "teste-04", "333.456.789/0001-01", "2022-06-27");
        
         empresaService.addEmpresa(empresa1);
         empresaService.addEmpresa(empresa2);
@@ -96,11 +96,11 @@ public class AutoCargaBanco implements CommandLineRunner {
         
         
         // Carga da Tabela: MICROZONA
-        Microzona microzona1 = new Microzona(null, "Microzona-01", "x", "Y", "2", "3", "4", "5", "6", "7", 1L, 1L, 1L);        
-        Microzona microzona2 = new Microzona(null, "Microzona-02", "x", "Y", "2", "3", "4", "5", "6", "7", 1L, 1L, 1L);
-        Microzona microzona3 = new Microzona(null, "Microzona-03", "x", "Y", "2", "3", "4", "5", "6", "7", 1L, 1L, 1L);
-        Microzona microzona4 = new Microzona(null, "Microzona-04", "x", "Y", "2", "3", "4", "5", "6", "7", 1L, 1L, 1L);
-        Microzona microzona5 = new Microzona(null, "Microzona-05", "x", "Y", "2", "3", "4", "5", "6", "7", 1L, 1L, 1L);        
+        Microzona microzona1 = new Microzona(null, "Microzona-01", "A", "N", "S", "N", "S", "N", "S", "N", 1, "RJ", 1);        
+        Microzona microzona2 = new Microzona(null, "Microzona-02", "A", "N", "S", "N", "N", "S", "N", "N", 1, "RJ", 1);
+        Microzona microzona3 = new Microzona(null, "Microzona-03", "A", "N", "S", "N", "S", "N", "S", "N", 1, "RJ", 1);
+        Microzona microzona4 = new Microzona(null, "Microzona-04", "A", "N", "S", "N", "N", "S", "N", "N", 1, "SP", 1);
+        Microzona microzona5 = new Microzona(null, "Microzona-05", "A", "N", "S", "N", "S", "N", "S", "N", 1, "SP", 1);        
         
         microzonaService.addMicrozona(microzona1);
         microzonaService.addMicrozona(microzona2);        

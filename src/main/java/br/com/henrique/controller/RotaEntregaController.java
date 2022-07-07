@@ -35,7 +35,7 @@ public class RotaEntregaController {
     
     // Busca por RotaEntrega
     @GetMapping(path = "{codigo}")
-    public ResponseEntity<RotaEntrega> findById(@PathVariable Long codigo) {
+    public ResponseEntity<RotaEntrega> findById(@PathVariable Integer codigo) {
         RotaEntrega rotaEntrega = rotaEntregaService.findById(codigo);
         return ResponseEntity.ok().body(rotaEntrega);
     }
@@ -51,14 +51,14 @@ public class RotaEntregaController {
 
     // Altera RotaEntrega
     @PutMapping(path = "{codigo}")
-    public ResponseEntity<Void> updateRotaEntrega(@PathVariable Long codigo, @RequestBody RotaEntrega rotaEntrega) {
+    public ResponseEntity<Void> updateRotaEntrega(@PathVariable Integer codigo, @RequestBody RotaEntrega rotaEntrega) {
         rotaEntregaService.updateRotaEntrega(codigo, rotaEntrega);
         return ResponseEntity.noContent().build();
     }
     
     // Exclusão RotaEntrega
     @DeleteMapping(path = "{codigo}")
-    public ResponseEntity<Void> deletaRotaEntrega(@PathVariable Long codigo) {
+    public ResponseEntity<Void> deletaRotaEntrega(@PathVariable Integer codigo) {
         rotaEntregaService.deletaRotaEntrega(codigo);
         return ResponseEntity.noContent().build();
     }
@@ -67,7 +67,7 @@ public class RotaEntregaController {
     // Exclui rotaEntrega e chama Lista de RotaEntregas
     // method Post (página)
     @PostMapping(path = "/remover/{codigo}")
-    public ModelAndView deletaRotaEntregaWeb(@PathVariable Long codigo) {
+    public ModelAndView deletaRotaEntregaWeb(@PathVariable Integer codigo) {
         rotaEntregaService.deletaRotaEntrega(codigo);
         
         List<RotaEntrega> rotaEntregas = rotaEntregaService.findAll();
@@ -81,7 +81,7 @@ public class RotaEntregaController {
     // Altera rotaEntrega
     // method Post (página)
     @GetMapping(path = "/editar/{codigo}")
-    public ModelAndView editarRotaEntregaWeb(@PathVariable Long codigo) {
+    public ModelAndView editarRotaEntregaWeb(@PathVariable Integer codigo) {
         ModelAndView modelAndView = new ModelAndView("RotaEntregaFormulario");
         
         RotaEntrega rotaEntrega = rotaEntregaService.findById(codigo);

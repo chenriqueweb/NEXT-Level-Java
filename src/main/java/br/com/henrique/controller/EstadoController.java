@@ -30,7 +30,7 @@ public class EstadoController {
     @GetMapping
     public ResponseEntity<List<Estado>> findAll() {
         List<Estado> estados = estadoService.findAll();
-        return ResponseEntity.ok().body(estados);   
+        return ResponseEntity.ok().body(estados);
     }
     
     // Busca pelo Estado

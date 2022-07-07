@@ -15,19 +15,19 @@ public class RotaEntrega {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo;
+    private Integer codigo;
     
     private String nome;
     private String status;
-    private Long codigoEmpresa;
-    private Long codigoFilial;
+    private Integer codigoEmpresa;
+    private Integer codigoFilial;
     private String prazoExpedicao;
     
     public RotaEntrega() {
         super();
     }
     
-    public RotaEntrega(String siglaEstado, Long codigo, String nome, String status, Long codigoEmpresa, Long codigoFilial,
+    public RotaEntrega(String siglaEstado, Integer codigo, String nome, String status, Integer codigoEmpresa, Integer codigoFilial,
                     String prazoExpedicao) {
         super();
         this.siglaEstado = siglaEstado;
@@ -50,10 +50,10 @@ public class RotaEntrega {
     public void setSiglaEstado(String siglaEstado) {
         this.siglaEstado = siglaEstado;
     }
-    public Long getCodigo() {
+    public Integer getCodigo() {
         return codigo;
     }
-    public void setCodigo(Long codigo) {
+    public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
     public String getNome() {
@@ -68,16 +68,16 @@ public class RotaEntrega {
     public void setStatus(String status) {
         this.status = status;
     }
-    public Long getCodigoEmpresa() {
+    public Integer getCodigoEmpresa() {
         return codigoEmpresa;
     }
-    public void setCodigoEmpresa(Long codigoEmpresa) {
+    public void setCodigoEmpresa(Integer codigoEmpresa) {
         this.codigoEmpresa = codigoEmpresa;
     }
-    public Long getCodigoFilial() {
+    public Integer getCodigoFilial() {
         return codigoFilial;
     }
-    public void setCodigoFilial(Long codigoFilial) {
+    public void setCodigoFilial(Integer codigoFilial) {
         this.codigoFilial = codigoFilial;
     }
     public String getPrazoExpedicao() {

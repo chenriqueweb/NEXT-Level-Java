@@ -35,7 +35,7 @@ public class EmpresaController {
     
     // Busca por Empresa
     @GetMapping(path = "{codigo}")
-    public ResponseEntity<Empresa> findById(@PathVariable Long codigo) {
+    public ResponseEntity<Empresa> findById(@PathVariable Integer codigo) {
         Empresa empresa = empresaService.findById(codigo);
         return ResponseEntity.ok().body(empresa);
     }
@@ -51,14 +51,14 @@ public class EmpresaController {
     
     // Altera Empresa
     @PutMapping(path = "{codigo}")
-    public ResponseEntity<Void> updateEmpresa(@PathVariable Long codigo, @RequestBody Empresa empresa) {
+    public ResponseEntity<Void> updateEmpresa(@PathVariable Integer codigo, @RequestBody Empresa empresa) {
         empresaService.updateEmpresa(codigo, empresa);
         return ResponseEntity.noContent().build();
     }
     
     // Exclusão Empresa
     @DeleteMapping(path = "{codigo}")
-    public ResponseEntity<Void> deletaEmpresa(@PathVariable Long codigo) {
+    public ResponseEntity<Void> deletaEmpresa(@PathVariable Integer codigo) {
         empresaService.deletaEmpresa(codigo);
         return ResponseEntity.noContent().build();
     }
@@ -67,7 +67,7 @@ public class EmpresaController {
     // Exclui empresa e chama Lista de Empresas
     // method Post (página)
     @PostMapping(path = "/remover/{codigo}")
-    public ModelAndView deletaEmpresaWeb(@PathVariable Long codigo) {
+    public ModelAndView deletaEmpresaWeb(@PathVariable Integer codigo) {
         empresaService.deletaEmpresa(codigo);
         
         List<Empresa> empresas = empresaService.findAll();
@@ -81,7 +81,7 @@ public class EmpresaController {
     // Altera empresa
     // method Post (página)
     @GetMapping(path = "/editar/{codigo}")
-    public ModelAndView editarEmpresaWeb(@PathVariable Long codigo) {
+    public ModelAndView editarEmpresaWeb(@PathVariable Integer codigo) {
         ModelAndView modelAndView = new ModelAndView("EmpresaFormulario");
         
         Empresa empresa = empresaService.findById(codigo);

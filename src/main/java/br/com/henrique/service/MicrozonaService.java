@@ -30,7 +30,7 @@ public class MicrozonaService {
     }    
     
     // Busca pela Microzona
-    public Microzona findById(Long codigo) {
+    public Microzona findById(Integer codigo) {
         Microzona microzona = repositMicrozona.findById(codigo).orElse(null);
         if (microzona == null) {
             throw new ObjectNotFoundException("Microzona nao encontrada !");
@@ -39,7 +39,7 @@ public class MicrozonaService {
     }    
     
     // Atualiza uma Microzona
-    public void updateMicrozona(Long codigo, Microzona microzona) {
+    public void updateMicrozona(Integer codigo, Microzona microzona) {
         Microzona microzonaAtualizado = this.findById(codigo);
         
         microzonaAtualizado.setNome(microzona.getNome());
@@ -61,7 +61,7 @@ public class MicrozonaService {
     }    
     
     // Exclusão da Microzona
-    public void deletaMicrozona(Long codigo) {
+    public void deletaMicrozona(Integer codigo) {
         this.findById(codigo);
         
         repositMicrozona.deleteById(codigo);

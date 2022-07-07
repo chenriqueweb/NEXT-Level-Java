@@ -7,13 +7,13 @@
 ---------------------------------------
 # Listar
 - Empresa - ok
-- Estado - okkkk
-- Municipio - okggg
+- Estado - ok
+- Municipio - ok
 - Filial - ok
-- Microzona - ok
-  - Rota de Entrega   ddd
+- Microzona - okk
+  - Rota de Entrega 
   - Faixa de CEPs Microzona
- 
+
 ---------------------------------------
 # Consultar
 - Empresa - ok

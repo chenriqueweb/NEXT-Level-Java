@@ -10,7 +10,7 @@ public class Microzona {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo;
+    private Integer codigo;
         
     private String nome;
     private String status;
@@ -21,17 +21,17 @@ public class Microzona {
     private String atendeQuinta;
     private String atendeSexta;
     private String atendeSabado;
-    private Long codigoMunicipio;
-    private Long estadoRota;
-    private Long codigoRota;
+    private Integer codigoMunicipio;
+    private String estadoRota;
+    private Integer codigoRota;
     
     public Microzona() {
         super();
     }
     
-    public Microzona(Long codigo, String nome, String status, String atendimentoDiario, String atendeSegunda, String atendeTerca,
-                    String atendeQuarta, String atendeQuinta, String atendeSexta, String atendeSabado, Long codigoMunicipio,
-                    Long estadoRota, Long codigoRota) {
+    public Microzona(Integer codigo, String nome, String status, String atendimentoDiario, String atendeSegunda, String atendeTerca,
+                    String atendeQuarta, String atendeQuinta, String atendeSexta, String atendeSabado, Integer codigoMunicipio,
+                    String estadoRota, Integer codigoRota) {
         super();
         this.codigo = codigo;
         this.nome = nome;
@@ -53,10 +53,10 @@ public class Microzona {
         return nome == null;
     } 
     
-    public Long getCodigo() {
+    public Integer getCodigo() {
         return codigo;
     }
-    public void setCodigo(Long codigo) {
+    public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
     public String getNome() {
@@ -113,22 +113,22 @@ public class Microzona {
     public void setAtendeSabado(String atendeSabado) {
         this.atendeSabado = atendeSabado;
     }
-    public Long getCodigoMunicipio() {
+    public Integer getCodigoMunicipio() {
         return codigoMunicipio;
     }
-    public void setCodigoMunicipio(Long codigoMunicipio) {
+    public void setCodigoMunicipio(Integer codigoMunicipio) {
         this.codigoMunicipio = codigoMunicipio;
     }
-    public Long getEstadoRota() {
+    public String getEstadoRota() {
         return estadoRota;
     }
-    public void setEstadoRota(Long estadoRota) {
+    public void setEstadoRota(String estadoRota) {
         this.estadoRota = estadoRota;
     }
-    public Long getCodigoRota() {
+    public Integer getCodigoRota() {
         return codigoRota;
     }
-    public void setCodigoRota(Long codigoRota) {
+    public void setCodigoRota(Integer codigoRota) {
         this.codigoRota = codigoRota;
     }
 

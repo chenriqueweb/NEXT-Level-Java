@@ -10,13 +10,13 @@ public class Municipio {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo;
+    private Integer codigo;
     
     public Municipio() {
         super();
     }
     
-    public Municipio(Long codigo, String nome, String siglaEstado) {
+    public Municipio(Integer codigo, String nome, String siglaEstado) {
         super();
         this.nome = nome;
         this.siglaEstado = siglaEstado;
@@ -30,10 +30,10 @@ public class Municipio {
     private String nome;
     private String siglaEstado;
     
-    public Long getCodigo() {
+    public Integer getCodigo() {
         return codigo;
     }
-    public void setCodigo(Long codigo) {
+    public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
     public String getNome() {

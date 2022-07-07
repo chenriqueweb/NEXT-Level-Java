@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import br.com.henrique.model.Microzona;
 
 @Repository
-public interface MicrozonaRepository extends JpaRepository<Microzona, Long> {
+public interface MicrozonaRepository extends JpaRepository<Microzona, Integer> {
 
 }

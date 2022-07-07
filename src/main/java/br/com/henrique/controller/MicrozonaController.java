@@ -43,7 +43,7 @@ public class MicrozonaController {
     
     // Busca por Microzona
     @GetMapping(path = "{codigo}")
-    public ResponseEntity<Microzona> findById(@PathVariable Long codigo) {
+    public ResponseEntity<Microzona> findById(@PathVariable Integer codigo) {
         Microzona microzona = microzonaService.findById(codigo);
         return ResponseEntity.ok().body(microzona);
     }    
@@ -59,14 +59,14 @@ public class MicrozonaController {
 
     // Altera Microzona
     @PutMapping(path = "{codigo}")
-    public ResponseEntity<Void> updateMicrozona(@PathVariable Long codigo, @RequestBody Microzona microzona) {
+    public ResponseEntity<Void> updateMicrozona(@PathVariable Integer codigo, @RequestBody Microzona microzona) {
         microzonaService.updateMicrozona(codigo, microzona);
         return ResponseEntity.noContent().build();
     }    
         
     // Exclusão Microzona
     @DeleteMapping(path = "{codigo}")
-    public ResponseEntity<Void> deletaMicrozona(@PathVariable Long codigo) {
+    public ResponseEntity<Void> deletaMicrozona(@PathVariable Integer codigo) {
         microzonaService.deletaMicrozona(codigo);
         return ResponseEntity.noContent().build();
     }    
@@ -75,7 +75,7 @@ public class MicrozonaController {
     // Exclui empresa e chama Lista de Empresas
     // method Post (página)
     @PostMapping(path = "/remover/{codigo}")
-    public ModelAndView deletaMicrozonaWeb(@PathVariable Long codigo) {
+    public ModelAndView deletaMicrozonaWeb(@PathVariable Integer codigo) {
         microzonaService.deletaMicrozona(codigo);
         
         List<Microzona> microzonas = microzonaService.findAll();
@@ -89,7 +89,7 @@ public class MicrozonaController {
     // Altera empresa
     // method Post (página)
     @GetMapping(path = "/editar/{codigo}")
-    public ModelAndView editarMicrozonaWeb(@PathVariable Long codigo) {
+    public ModelAndView editarMicrozonaWeb(@PathVariable Integer codigo) {
         ModelAndView modelAndView = new ModelAndView("MicrozonaFormulario");
         
         Microzona microzona = microzonaService.findById(codigo);

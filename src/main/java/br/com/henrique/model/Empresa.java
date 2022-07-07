@@ -10,7 +10,7 @@ public class Empresa {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo;
+    private Integer codigo;
     
     private String razaoSocial;
     private String raizCNPJ;
@@ -21,7 +21,7 @@ public class Empresa {
         super();
     }
     
-    public Empresa(Long codigo, String razaoSocial, String raizCNPJ, String dataAbertura) {
+    public Empresa(Integer codigo, String razaoSocial, String raizCNPJ, String dataAbertura) {
         super();
         this.razaoSocial = razaoSocial;
         this.raizCNPJ = raizCNPJ;
@@ -33,10 +33,10 @@ public class Empresa {
         return razaoSocial == null;
     } 
     
-    public Long getCodigo() {
+    public Integer getCodigo() {
         return codigo;
     }
-    public void setCodigo(Long codigo) {
+    public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
     public String getRazaoSocial() {

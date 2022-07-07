@@ -24,7 +24,7 @@ public class MunicipioService {
     }
 
     // Busca pelo Municipio
-    public Municipio findById(Long codigo) {
+    public Municipio findById(Integer codigo) {
         Municipio municipio = repositMunicipio.findById(codigo).orElse(null);
         if (municipio == null) {
             throw new ObjectNotFoundException("Municipio nao encontrado !");
@@ -38,7 +38,7 @@ public class MunicipioService {
     }
     
     // Atualiza um Municipio
-    public void updateMunicipio(Long codigo, Municipio municipio) {
+    public void updateMunicipio(Integer codigo, Municipio municipio) {
         Municipio municipioAtualizado = this.findById(codigo);
         
         municipioAtualizado.setNome(municipio.getNome());
@@ -48,7 +48,7 @@ public class MunicipioService {
     }    
     
     // Exclusão de Municipio
-    public void deletaMunicipio(Long codigo) {
+    public void deletaMunicipio(Integer codigo) {
         this.findById(codigo);
         
         repositMunicipio.deleteById(codigo);
