@@ -71,10 +71,15 @@ public class AutoCargaBanco implements CommandLineRunner {
         
         
         // Carga da Tabela: MUNICIPIO
-        Municipio municipio1 = new Municipio(null, "Barra do Pirai", "RJ");
-        Municipio municipio2 = new Municipio(null, "Volta Redonda", "RJ");
-        Municipio municipio3 = new Municipio(null, "São Caetano", "SP");
-        Municipio municipio4 = new Municipio(null, "Jundiai", "SP");
+        Estado estadoMunicipioRJ = new Estado("RJ", "Rio de Janeiro");
+        Estado estadoMunicipioSP = new Estado("SP", "Sao Paulo");
+//      Estado estadoMunicipioMG = new Estado("MG", "Minas Gerais");
+//      Estado estadoMunicipioES = new Estado("ES", "Espirito Santo");
+        
+        Municipio municipio1 = new Municipio(null, "Barra do Pirai", estadoMunicipioRJ);
+        Municipio municipio2 = new Municipio(null, "Volta Redonda", estadoMunicipioRJ);
+        Municipio municipio3 = new Municipio(null, "São Caetano", estadoMunicipioSP);
+        Municipio municipio4 = new Municipio(null, "Jundiai", estadoMunicipioSP);
 
         municipioService.addMunicipio(municipio1);
         municipioService.addMunicipio(municipio2);
@@ -109,17 +114,20 @@ public class AutoCargaBanco implements CommandLineRunner {
         microzonaService.addMicrozona(microzona5);        
         
         // Carga da Tabela: ROTA DE ENTREGA
-//        RotaEntrega rotaEntrega1 = new RotaEntrega("RJ", null, "Rota-01", "X", 1L, 1L, "12");
-//        RotaEntrega rotaEntrega2 = new RotaEntrega("RJ", null, "Rota-02", "X", 1L, 1L, "12");
-//        RotaEntrega rotaEntrega3 = new RotaEntrega("MG", null, "Rota-03", "X", 1L, 1L, "12");
-//        RotaEntrega rotaEntrega4 = new RotaEntrega("SP", null, "Rota-04", "X", 1L, 1L, "12");
-//        RotaEntrega rotaEntrega5 = new RotaEntrega("SP", null, "Rota-05", "X", 1L, 1L, "12");        
+//        RotaEntrega rotaEntrega1 = new RotaEntrega("RJ", null, "Rota-01", "X", 1, 1, "12");
+//        RotaEntrega rotaEntrega2 = new RotaEntrega("RJ", null, "Rota-02", "X", 1, 1, "12");
+//        RotaEntrega rotaEntrega3 = new RotaEntrega("MG", null, "Rota-03", "X", 1, 1, "12");
+//        RotaEntrega rotaEntrega4 = new RotaEntrega("SP", null, "Rota-04", "X", 1, 1, "12");
+//        RotaEntrega rotaEntrega5 = new RotaEntrega("SP", null, "Rota-05", "X", 1, 1, "12");        
 //        
 //        rotaEntregaService.addRotaEntrega(rotaEntrega1);
 //        rotaEntregaService.addRotaEntrega(rotaEntrega2);
 //        rotaEntregaService.addRotaEntrega(rotaEntrega3);
 //        rotaEntregaService.addRotaEntrega(rotaEntrega4);
 //        rotaEntregaService.addRotaEntrega(rotaEntrega5);        
+        
+        
+        
         
 //      @GetMapping("/empresa")
 //      public List<Empresa> listar() {

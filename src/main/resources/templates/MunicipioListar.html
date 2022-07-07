@@ -44,7 +44,7 @@
    					 <tr th:each="municipio: ${municipios}">
 						<td th:text="${municipio.codigo}"></td>
 						<td th:text="${municipio.nome}"></td>
-						<td th:text="${municipio.siglaEstado}"></td>
+						<td th:text="${municipio.siglaEstado.sigla}"></td>
 						
 						<td>
 							<a th:href="@{/municipio/editar/{codigo}(codigo=${municipio.codigo})}">Editar</a>

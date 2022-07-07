@@ -2,7 +2,6 @@ package br.com.henrique.model;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class Filial {

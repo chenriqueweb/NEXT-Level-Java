@@ -21,8 +21,9 @@ public class Microzona {
     private String atendeQuinta;
     private String atendeSexta;
     private String atendeSabado;
+    
     private Integer codigoMunicipio;
-    private String estadoRota;
+    private String  estadoRota;
     private Integer codigoRota;
     
     public Microzona() {

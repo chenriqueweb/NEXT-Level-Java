@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Municipio {
@@ -15,24 +17,31 @@ public class Municipio {
     public Municipio() {
         super();
     }
-    
-    public Municipio(Integer codigo, String nome, String siglaEstado) {
+
+    public Municipio(Integer codigo, String nome, Estado estado) {
         super();
+        this.codigo = codigo;
         this.nome = nome;
-        this.siglaEstado = siglaEstado;
+        this.estado = estado;
     }
-    
+
     // Método para identificar registro novo
     public boolean isNovo() {
         return nome == null;
     }    
     
     private String nome;
-    private String siglaEstado;
+    
+    // FK com Estado
+    @ManyToOne
+    @JoinColumn(name="sigla")
+    private Estado estado;
+//    private String siglaEstado;
     
     public Integer getCodigo() {
         return codigo;
     }
+
     public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
@@ -42,12 +51,12 @@ public class Municipio {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    public String getSiglaEstado() {
-        return siglaEstado;
-    }
-    public void setSiglaEstado(String siglaEstado) {
-        this.siglaEstado = siglaEstado;
-    }
+//    public String getSiglaEstado() {
+//        return siglaEstado;
+//    }
+//    public void setSiglaEstado(String siglaEstado) {
+//        this.siglaEstado = siglaEstado;
+//    }
 
     @Override
     public int hashCode() {
@@ -55,7 +64,7 @@ public class Municipio {
         int result = 1;
         result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
         result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-        result = prime * result + ((siglaEstado == null) ? 0 : siglaEstado.hashCode());
+        result = prime * result + ((estado == null) ? 0 : estado.hashCode());
         return result;
     }
 
@@ -78,12 +87,20 @@ public class Municipio {
                 return false;
         } else if (!nome.equals(other.nome))
             return false;
-        if (siglaEstado == null) {
-            if (other.siglaEstado != null)
+        if (estado == null) {
+            if (other.estado != null)
                 return false;
-        } else if (!siglaEstado.equals(other.siglaEstado))
+        } else if (!estado.equals(other.estado))
             return false;
         return true;
+    }
+
+    public Estado getSiglaEstado() {
+        return estado;
+    }
+
+    public void setSiglaEstado(Estado estado) {
+        this.estado = estado;
     }
 
 }
