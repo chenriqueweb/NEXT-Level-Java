@@ -25,10 +25,30 @@ public class FilialController {
         List<Filial> filiais = filialService.findAll();
         return filiais;
     }
-    
+//    
+//    // Busca por Filial
+//    @GetMapping(path = "{empresa}/{codigo}")
+//    public Optional<Filial> findByAll(@PathVariable Long codigoEmpresa, @PathVariable Long codigoFilial) {
+//        Optional<Filial> filial = filialService.findById(codigoEmpresa, codigoFilial);
+//        return filial;
+//    }
+//   
     // Inclui Filial
     @PostMapping
-    public void addFilial(@RequestBody Filial filial) {
-        filialService.addFilial(filial);
+    public void addFilial(@RequestBody Filial Filial) {
+        filialService.addFilial(Filial);
     }
+//    
+//    // Altera Filial
+////    @PutMapping(path =  "{empresa}/{codigo}")
+////    public void updateFilial(@PathVariable Long codigoEmpresa, @PathVariable Long codigoFilial,
+////                              @RequestBody Filial filial) {
+////        filialService.updateFilial(codigoEmpresa, codigoFilial, filial);
+////    }
+//    
+//    // Deleta Filial = method Delete
+////    @DeleteMapping(path = "{empresa}/{codigo}")
+////    public void deletaFilial(@PathVariable Long codigoEmpresa, @PathVariable Long codigoFilial) {
+////       filialService.deletaFilial(codigoEmpresa, codigoFilial);
+////    }    
 }

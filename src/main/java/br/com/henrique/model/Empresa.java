@@ -28,6 +28,11 @@ public class Empresa {
         this.dataAbertura = dataAbertura;
     }
     
+    // Método para identificar registro novo
+    public boolean isNovo() {
+        return razaoSocial == null;
+    } 
+    
     public Long getCodigo() {
         return codigo;
     }

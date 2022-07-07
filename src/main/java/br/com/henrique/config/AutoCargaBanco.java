@@ -6,39 +6,120 @@ import org.springframework.context.annotation.Configuration;
 
 import br.com.henrique.model.Empresa;
 import br.com.henrique.model.Estado;
+import br.com.henrique.model.Filial;
+import br.com.henrique.model.FilialChavePK;
+import br.com.henrique.model.Microzona;
+import br.com.henrique.model.Municipio;
 import br.com.henrique.service.EmpresaService;
 import br.com.henrique.service.EstadoService;
+import br.com.henrique.service.FaixasCEPMicrozonaService;
+import br.com.henrique.service.FilialService;
+import br.com.henrique.service.MicrozonaService;
+import br.com.henrique.service.MunicipioService;
+import br.com.henrique.service.RotaEntregaService;
 
 @Configuration
 public class AutoCargaBanco implements CommandLineRunner {
     
     @Autowired
     private EmpresaService empresaService;
-    private EstadoService estadoService;
+    
+    @Autowired  
+    private EstadoService estadoService;    
+    
+    @Autowired
+    private MunicipioService municipioService;  
+    
+    @Autowired
+    private FilialService filialService;       
+    
+    @Autowired
+    private FaixasCEPMicrozonaService faixasCEPMicrozona;    
+ 
+    @Autowired
+    private MicrozonaService microzonaService;    
+  
+    
+    @Autowired
+    private RotaEntregaService rotaEntregaService;
     
     @Override
-    public void run(String...args) throws Exception {
+    public void run(String...args) throws Exception { 
+        
         // Carga da Tabela: EMPRESA
-        Empresa empresa1 = new Empresa(null, "teste-01", "111.456.789/0001-01", "2022-06-25");
-        Empresa empresa2 = new Empresa(null, "teste-02", "222.456.789/0001-01", "2022-06-26");
-        Empresa empresa3 = new Empresa(null, "teste-03", "333.456.789/0001-01", "2022-06-27");
+        Empresa empresa1 = new Empresa(null, "teste-01da", "111.456.789/0001-01", "2022-06-25");
+        Empresa empresa2 = new Empresa(null, "teste-02cb", "222.456.789/0001-01", "2022-06-26");
+        Empresa empresa3 = new Empresa(null, "teste-03bc", "333.456.789/0001-01", "2022-06-27");
+        Empresa empresa4 = new Empresa(null, "teste-04ad", "333.456.789/0001-01", "2022-06-27");
        
         empresaService.addEmpresa(empresa1);
         empresaService.addEmpresa(empresa2);
-        empresaService.addEmpresa(empresa3);  
-        
-        
-        // Carga da Tabela: ESTADO
-        //Estado estado1 = new Estado("RJ","Rio de Janeiro");
-        //Estado estado2 = new Estado("SP","S�o Paulo");
-        //Estado estado3 = new Estado("MG","Minas Gerais");
-        //Estado estado4 = new Estado("ES","Esp�rito Santo");
+        empresaService.addEmpresa(empresa3);
+        empresaService.addEmpresa(empresa4);  
 
-//        estadoService.addEstado(estado1);
-//        estadoService.addEstado(estado2);
-//        estadoService.addEstado(estado3);
-//        estadoService.addEstado(estado4);
         
+        // Carga da Tabela: ESTADO        
+        Estado estado1 = new Estado("RJ", "Rio de Janeiro");
+        Estado estado2 = new Estado("SP","Sao Paulo");
+        Estado estado3 = new Estado("MG","Minas Gerais");
+        Estado estado4 = new Estado("ES","Espirito Santo");
+
+        estadoService.addEstado(estado1);       
+        estadoService.addEstado(estado2);
+        estadoService.addEstado(estado3);       
+        estadoService.addEstado(estado4);  
+        
+        
+        // Carga da Tabela: MUNICIPIO
+        Municipio municipio1 = new Municipio(null, "Barra do Pirai", "RJ");
+        Municipio municipio2 = new Municipio(null, "Volta Redonda", "RJ");
+        Municipio municipio3 = new Municipio(null, "São Caetano", "SP");
+        Municipio municipio4 = new Municipio(null, "Jundiai", "SP");
+
+        municipioService.addMunicipio(municipio1);
+        municipioService.addMunicipio(municipio2);
+        municipioService.addMunicipio(municipio3);
+        municipioService.addMunicipio(municipio4);     
+        
+        
+        // Carga da Tabela: FILIAL
+        FilialChavePK filialChavePK = new FilialChavePK();
+        filialChavePK.setCodigoEmpresa(1);
+        filialChavePK.setCodigoFilial(1);
+        Filial filial1 = new Filial(filialChavePK, "Filial-01", "123.456.0001/01", "Barra do Pirai");
+        filialService.addFilial(filial1);
+
+        filialChavePK.setCodigoEmpresa(1);
+        filialChavePK.setCodigoFilial(2);
+        Filial filial2 = new Filial(filialChavePK, "Filial-02", "222.456.0001/01", "Sao Caetano do Sul");
+        filialService.addFilial(filial2);
+        
+        
+        // Carga da Tabela: MICROZONA
+        Microzona microzona1 = new Microzona(null, "Microzona-01", "x", "Y", "2", "3", "4", "5", "6", "7", 1L, 1L, 1L);        
+        Microzona microzona2 = new Microzona(null, "Microzona-02", "x", "Y", "2", "3", "4", "5", "6", "7", 1L, 1L, 1L);
+        Microzona microzona3 = new Microzona(null, "Microzona-03", "x", "Y", "2", "3", "4", "5", "6", "7", 1L, 1L, 1L);
+        Microzona microzona4 = new Microzona(null, "Microzona-04", "x", "Y", "2", "3", "4", "5", "6", "7", 1L, 1L, 1L);
+        Microzona microzona5 = new Microzona(null, "Microzona-05", "x", "Y", "2", "3", "4", "5", "6", "7", 1L, 1L, 1L);        
+        
+        microzonaService.addMicrozona(microzona1);
+        microzonaService.addMicrozona(microzona2);        
+        microzonaService.addMicrozona(microzona3);
+        microzonaService.addMicrozona(microzona4);
+        microzonaService.addMicrozona(microzona5);        
+        
+        // Carga da Tabela: ROTA DE ENTREGA
+//        RotaEntrega rotaEntrega1 = new RotaEntrega("RJ", null, "Rota-01", "X", 1L, 1L, "12");
+//        RotaEntrega rotaEntrega2 = new RotaEntrega("RJ", null, "Rota-02", "X", 1L, 1L, "12");
+//        RotaEntrega rotaEntrega3 = new RotaEntrega("MG", null, "Rota-03", "X", 1L, 1L, "12");
+//        RotaEntrega rotaEntrega4 = new RotaEntrega("SP", null, "Rota-04", "X", 1L, 1L, "12");
+//        RotaEntrega rotaEntrega5 = new RotaEntrega("SP", null, "Rota-05", "X", 1L, 1L, "12");        
+//        
+//        rotaEntregaService.addRotaEntrega(rotaEntrega1);
+//        rotaEntregaService.addRotaEntrega(rotaEntrega2);
+//        rotaEntregaService.addRotaEntrega(rotaEntrega3);
+//        rotaEntregaService.addRotaEntrega(rotaEntrega4);
+//        rotaEntregaService.addRotaEntrega(rotaEntrega5);        
         
 //      @GetMapping("/empresa")
 //      public List<Empresa> listar() {

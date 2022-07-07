@@ -1,60 +1,47 @@
 package br.com.henrique.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.io.Serializable;
 
-@Entity
-public class Municipio {
+public class RotaEntregaId  implements Serializable {
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private static final long serialVersionUID = 1L;
+    private Long siglaEstado;
     private Long codigo;
-    
-    public Municipio() {
+       
+    public RotaEntregaId() {
         super();
     }
     
-    public Municipio(Long codigo, String nome, String siglaEstado) {
+    public RotaEntregaId(Long siglaEstado, Long codigo) {
         super();
-        this.nome = nome;
+        this.siglaEstado = siglaEstado;
+        this.codigo = codigo;
+    }
+
+
+    public Long getSiglaEstado() {
+        return siglaEstado;
+    }
+
+    public void setSiglaEstado(Long siglaEstado) {
         this.siglaEstado = siglaEstado;
     }
-    
-    // Método para identificar registro novo
-    public boolean isNovo() {
-        return nome == null;
-    }    
-    
-    private String nome;
-    private String siglaEstado;
-    
+
     public Long getCodigo() {
         return codigo;
     }
+
     public void setCodigo(Long codigo) {
         this.codigo = codigo;
     }
-    public String getNome() {
-        return nome;
-    }
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-    public String getSiglaEstado() {
-        return siglaEstado;
-    }
-    public void setSiglaEstado(String siglaEstado) {
-        this.siglaEstado = siglaEstado;
-    }
 
+    
+    
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
-        result = prime * result + ((nome == null) ? 0 : nome.hashCode());
         result = prime * result + ((siglaEstado == null) ? 0 : siglaEstado.hashCode());
         return result;
     }
@@ -67,16 +54,11 @@ public class Municipio {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Municipio other = (Municipio) obj;
+        RotaEntregaId other = (RotaEntregaId) obj;
         if (codigo == null) {
             if (other.codigo != null)
                 return false;
         } else if (!codigo.equals(other.codigo))
-            return false;
-        if (nome == null) {
-            if (other.nome != null)
-                return false;
-        } else if (!nome.equals(other.nome))
             return false;
         if (siglaEstado == null) {
             if (other.siglaEstado != null)
@@ -85,5 +67,4 @@ public class Municipio {
             return false;
         return true;
     }
-
-}
+}       

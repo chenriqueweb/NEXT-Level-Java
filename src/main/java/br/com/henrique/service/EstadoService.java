@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.henrique.model.Estado;
 import br.com.henrique.repository.EstadoRepository;
+import br.com.henrique.service.exception.ObjectNotFoundException;
 
 @Service
 public class EstadoService {
@@ -26,21 +27,20 @@ public class EstadoService {
     // Busca por Estado
     public Estado findById(String sigla) {
         Estado estado = repositEstado.findById(sigla).orElse(null);
+        if (estado == null) {
+            throw new ObjectNotFoundException("Estado nao encontrado !");
+        }        
         return estado;
     }
     
     // Inclui Empresa
-    public void addEstado(Estado estado) {
-        repositEstado.save(estado);
+    public Estado addEstado(Estado estado) {
+        return repositEstado.save(estado);
     }
     
     // Altera Estado
     public void updateEstado(String sigla, Estado estado) {
         Estado estadoAtualizado = this.findById(sigla);
-        
-        if (estadoAtualizado == null) {
-            throw new RuntimeException("Estado nao encontrado !");
-        }
         estadoAtualizado.setNome(estado.getNome());
         
         repositEstado.save(estadoAtualizado);
@@ -48,11 +48,8 @@ public class EstadoService {
     
     // Excluir Estado
     public void deletaEstado(String sigla) {
-        Estado estadoAtualizado = this.findById(sigla);
-        
-        if (estadoAtualizado == null) {
-            throw new RuntimeException("Estado nao encontrado !");
-        }
+        this.findById(sigla);
+
         repositEstado.deleteById(sigla);
     }
 }

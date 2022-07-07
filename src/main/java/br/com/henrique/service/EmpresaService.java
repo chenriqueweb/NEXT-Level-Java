@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 
 import br.com.henrique.model.Empresa;
 import br.com.henrique.repository.EmpresaRepository;
+import br.com.henrique.service.exception.ObjectNotFoundException;
 
 @Service
 public class EmpresaService {
-    // @PersistenceContext
     
     @Autowired
     private EmpresaRepository repositEmpresa;
@@ -27,21 +27,21 @@ public class EmpresaService {
     // Busca pela Empresa
     public Empresa findById(Long codigo) {
         Empresa empresa = repositEmpresa.findById(codigo).orElse(null);
+        if (empresa == null) {
+            throw new ObjectNotFoundException("Empresa nao encontrada !");
+        }      
         return empresa;
     }
 
     // Inclui Empresa
-    public void addEmpresa(Empresa empresa) {
-        repositEmpresa.save(empresa);
+    public Empresa addEmpresa(Empresa empresa) {
+        return repositEmpresa.save(empresa);
     }
 
     // Atualiza uma Empresa
     public void updateEmpresa(Long codigo, Empresa empresa) {
         Empresa empresaAtualizado = this.findById(codigo);
         
-        if (empresaAtualizado == null) {
-            throw new RuntimeException("Empresa nao encontrada !");
-        }
         empresaAtualizado.setRazaoSocial(empresa.getRazaoSocial());
         empresaAtualizado.setRaizCNPJ(empresa.getRaizCNPJ());
         empresaAtualizado.setDataAbertura(empresa.getDataAbertura());
@@ -51,11 +51,8 @@ public class EmpresaService {
 
     // Exclusão de Empresa
     public void deletaEmpresa(Long codigo) {
-        Empresa empresaExclusao = this.findById(codigo);
-        
-        if(empresaExclusao == null) {
-            throw new RuntimeException("Empresa nao encontrada !");
-        }
+        this.findById(codigo);
+
         repositEmpresa.deleteById(codigo);
     }
     

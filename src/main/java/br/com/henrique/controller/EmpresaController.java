@@ -1,8 +1,10 @@
 package br.com.henrique.controller;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.henrique.model.Empresa;
 import br.com.henrique.service.EmpresaService;
@@ -20,37 +24,70 @@ import br.com.henrique.service.EmpresaService;
 public class EmpresaController {
     
     @Autowired
-    private EmpresaService service;
+    private EmpresaService empresaService;
 
     // Lista Empresa
     @GetMapping
-    public List<Empresa> findAll() {
-        List<Empresa> empresa = service.findAll();
-        return empresa;
+    public ResponseEntity<List<Empresa>> findAll() {
+        List<Empresa> empresas = empresaService.findAll();
+        return ResponseEntity.ok().body(empresas);
     }
     
     // Busca por Empresa
     @GetMapping(path = "{codigo}")
-    public Empresa findById(@PathVariable Long codigo) {
-        Empresa empresa = service.findById(codigo);
-        return empresa;
+    public ResponseEntity<Empresa> findById(@PathVariable Long codigo) {
+        Empresa empresa = empresaService.findById(codigo);
+        return ResponseEntity.ok().body(empresa);
     }
     
     // Inclui Empresa
     @PostMapping
-    public void addEmpresa(@RequestBody Empresa empresa) {
-        service.addEmpresa(empresa);
-    }
-
+    public ResponseEntity<Void> addEmpresa(@RequestBody Empresa empresa) {
+        Empresa empresaNova = empresaService.addEmpresa(empresa);
+        
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{codigo}").buildAndExpand(empresaNova.getCodigo()).toUri();
+        return ResponseEntity.created(uri).build();
+    }    
+    
     // Altera Empresa
     @PutMapping(path = "{codigo}")
-    public void updateEmpresa(@PathVariable Long codigo, @RequestBody Empresa empresa) {
-        service.updateEmpresa(codigo, empresa);
+    public ResponseEntity<Void> updateEmpresa(@PathVariable Long codigo, @RequestBody Empresa empresa) {
+        empresaService.updateEmpresa(codigo, empresa);
+        return ResponseEntity.noContent().build();
     }
     
-    // Deleta Empresa
+    // Exclusão Empresa
     @DeleteMapping(path = "{codigo}")
-    public void deletaEmpresa(@PathVariable Long codigo) {
-        service.deletaEmpresa(codigo);
+    public ResponseEntity<Void> deletaEmpresa(@PathVariable Long codigo) {
+        empresaService.deletaEmpresa(codigo);
+        return ResponseEntity.noContent().build();
+    }
+    
+    //-----------------------------------------------------------------------------------------------------
+    // Exclui empresa e chama Lista de Empresas
+    // method Post (página)
+    @PostMapping(path = "/remover/{codigo}")
+    public ModelAndView deletaEmpresaWeb(@PathVariable Long codigo) {
+        empresaService.deletaEmpresa(codigo);
+        
+        List<Empresa> empresas = empresaService.findAll();
+        
+        ModelAndView modelAndView = new ModelAndView("EmpresaListar");
+        modelAndView.addObject("empresas", empresas);
+        
+        return modelAndView;
+    }         
+    
+    // Altera empresa
+    // method Post (página)
+    @GetMapping(path = "/editar/{codigo}")
+    public ModelAndView editarEmpresaWeb(@PathVariable Long codigo) {
+        ModelAndView modelAndView = new ModelAndView("EmpresaFormulario");
+        
+        Empresa empresa = empresaService.findById(codigo);
+        
+        modelAndView.addObject("empresa", empresa);
+        
+        return modelAndView;
     }
 }
