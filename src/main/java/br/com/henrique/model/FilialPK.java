@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
 @Embeddable
-public class FilialChavePK implements Serializable {
+public class FilialPK implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Integer codigoEmpresa;
@@ -15,11 +15,11 @@ public class FilialChavePK implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer codigoFilial;
     
-    public FilialChavePK() {
+    public FilialPK() {
         super();
     }
     
-    public FilialChavePK(Integer codigoEmpresa, Integer codigoFilial) {
+    public FilialPK(Integer codigoEmpresa, Integer codigoFilial) {
         super();
         this.codigoEmpresa = codigoEmpresa;
         this.codigoFilial = codigoFilial;
@@ -55,7 +55,7 @@ public class FilialChavePK implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        FilialChavePK other = (FilialChavePK) obj;
+        FilialPK other = (FilialPK) obj;
         if (codigoEmpresa == null) {
             if (other.codigoEmpresa != null)
                 return false;
@@ -70,16 +70,3 @@ public class FilialChavePK implements Serializable {
     }
     
 }
-
-
-
-
-//@Embeddable
-//public class FilialChavePK implements Serializable {
-//
-//    private static final long serialVersionUID = 1L;
-//    
-//    private Long codigoEmpresa;
-//    
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long codigoFilial;

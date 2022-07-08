@@ -177,30 +177,30 @@ public class NextLevelController {
         
         //--------------------------------------------------------------------------------------
         // #### Filial 
-        @GetMapping("/filialListar")
-        public ModelAndView findAllFilial() {
-            List<Filial> filiais = filialService.findAll();
-            
-            ModelAndView modelAndView = new ModelAndView("FilialListar");
-            modelAndView.addObject("filiais", filiais);
-            
-            return modelAndView;
-        }        
-        
-        @GetMapping("/filial/novo")
-        public ModelAndView filialNovo() {            
-            ModelAndView modelAndView = new ModelAndView("FilialFormulario");
-            modelAndView.addObject("filial", new Filial());
-            
-            return modelAndView;
-        }        
-       
-        @PostMapping("/filial/form")
-        public String insereFilial(Filial filial) {
-            filialService.addFilial(filial);
-            
-            return "redirect:/filialListar";
-        }          
+//        @GetMapping("/filialListar")
+//        public ModelAndView findAllFilial() {
+//            List<Filial> filiais = filialService.findAll();
+//            
+//            ModelAndView modelAndView = new ModelAndView("FilialListar");
+//            modelAndView.addObject("filiais", filiais);
+//            
+//            return modelAndView;
+//        }        
+//        
+//        @GetMapping("/filial/novo")
+//        public ModelAndView filialNovo() {            
+//            ModelAndView modelAndView = new ModelAndView("FilialFormulario");
+//            modelAndView.addObject("filial", new Filial());
+//            
+//            return modelAndView;
+//        }        
+//       
+//        @PostMapping("/filial/form")
+//        public String insereFilial(Filial filial) {
+//            filialService.addFilial(filial);
+//            
+//            return "redirect:/filialListar";
+//        }          
                 
         
         //--------------------------------------------------------------------------------------                
@@ -234,11 +234,9 @@ public class NextLevelController {
         // method Post (página)
         @PostMapping("/rotaEntrega/salvar/{siglaEstado}/{codigo}")
         public String atualizaRotaEntregaoWeb(RotaEntrega rotaEntrega) {
-            RotaEntrega rotaEntregaAntes = rotaEntregaService.findById(rotaEntrega.getRotaEntregaPK().getSiglaEstado(),
-                                                                       rotaEntrega.getRotaEntregaPK().getCodigo());
+            RotaEntrega rotaEntregaAntes = rotaEntregaService.findById(rotaEntrega.getRotaEntregaPK());
             
-            rotaEntregaService.deletaRotaEntrega(rotaEntregaAntes.getRotaEntregaPK().getSiglaEstado(),
-                                                 rotaEntregaAntes.getRotaEntregaPK().getCodigo());
+            rotaEntregaService.deletaRotaEntrega(rotaEntregaAntes.getRotaEntregaPK());
             rotaEntregaService.addRotaEntrega(rotaEntrega);
 
             return "redirect:/rotaEntregaListar";        

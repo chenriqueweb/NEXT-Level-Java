@@ -7,14 +7,13 @@ import org.springframework.context.annotation.Configuration;
 import br.com.henrique.model.Empresa;
 import br.com.henrique.model.Estado;
 import br.com.henrique.model.Filial;
-import br.com.henrique.model.FilialChavePK;
+import br.com.henrique.model.FilialPK;
 import br.com.henrique.model.Microzona;
 import br.com.henrique.model.Municipio;
 import br.com.henrique.model.RotaEntrega;
 import br.com.henrique.model.RotaEntregaPK;
 import br.com.henrique.service.EmpresaService;
 import br.com.henrique.service.EstadoService;
-import br.com.henrique.service.FaixasCEPMicrozonaService;
 import br.com.henrique.service.FilialService;
 import br.com.henrique.service.MicrozonaService;
 import br.com.henrique.service.MunicipioService;
@@ -35,8 +34,8 @@ public class AutoCargaBanco implements CommandLineRunner {
     @Autowired
     private FilialService filialService;       
     
-    @Autowired
-    private FaixasCEPMicrozonaService faixasCEPMicrozona;    
+//    @Autowired
+//    private FaixasCEPMicrozonaService faixasCEPMicrozona;    
  
     @Autowired
     private MicrozonaService microzonaService;    
@@ -87,16 +86,16 @@ public class AutoCargaBanco implements CommandLineRunner {
         
         
         // Carga da Tabela: FILIAL
-        FilialChavePK filialChavePK = new FilialChavePK();
-        filialChavePK.setCodigoEmpresa(1);
-        filialChavePK.setCodigoFilial(1);
-        Filial filial1 = new Filial(filialChavePK, "Filial-01", "123.456.0001/01", "Barra do Pirai");
-        filialService.addFilial(filial1);
-
-        filialChavePK.setCodigoEmpresa(1);
-        filialChavePK.setCodigoFilial(2);
-        Filial filial2 = new Filial(filialChavePK, "Filial-02", "222.456.0001/01", "Sao Caetano do Sul");
-        filialService.addFilial(filial2);
+//        FilialPK filialPK = new FilialPK();
+//        filialPK.setCodigoEmpresa(1);
+//        filialPK.setCodigoFilial(1);
+//        Filial filial1 = new Filial(filialPK, "Filial-01", "123.456.0001/01", 1);
+//        filialService.addFilial(filial1);
+//
+//        filialPK.setCodigoEmpresa(1);
+//        filialPK.setCodigoFilial(2);
+//        Filial filial2 = new Filial(filialPK, "Filial-02", "222.456.0001/01", 2);
+//        filialService.addFilial(filial2);
         
         
         // Carga da Tabela: MICROZONA

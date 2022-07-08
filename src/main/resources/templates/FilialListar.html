@@ -45,10 +45,9 @@
      			
    					 <tr th:each="filial: ${filiais}">
 <!--   					 
-						<td th:text="${filialChavePK.codigoEmpresa}"></td>
+						<td th:text="${filial.filialChavePK.codigoEmpresa}"></td>
 						<td th:text="${filial.filialChavePK.codigoFilial}"></td>
 -->						
-						
 						<td th:text="${filial.nome}"></td>
 						<td th:text="${filial.cnpj}"></td>
 						<td th:text="${filial.municipio}"></td>

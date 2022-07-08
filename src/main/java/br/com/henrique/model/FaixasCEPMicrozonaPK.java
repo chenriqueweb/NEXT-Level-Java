@@ -2,18 +2,18 @@ package br.com.henrique.model;
 
 import java.io.Serializable;
 
-public class FaixasCEPMicrozonaId implements Serializable {
+public class FaixasCEPMicrozonaPK implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Long codigoMicrozona;
     private Long codigoSequencial;
     
     // Construtor
-    public FaixasCEPMicrozonaId() {
+    public FaixasCEPMicrozonaPK() {
         super();
     }
     
-    public FaixasCEPMicrozonaId(Long codigoMicrozona, Long codigoSequencial) {
+    public FaixasCEPMicrozonaPK(Long codigoMicrozona, Long codigoSequencial) {
         super();
         this.codigoMicrozona = codigoMicrozona;
         this.codigoSequencial = codigoSequencial;
@@ -53,7 +53,7 @@ public class FaixasCEPMicrozonaId implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        FaixasCEPMicrozonaId other = (FaixasCEPMicrozonaId) obj;
+        FaixasCEPMicrozonaPK other = (FaixasCEPMicrozonaPK) obj;
         if (codigoMicrozona == null) {
             if (other.codigoMicrozona != null)
                 return false;

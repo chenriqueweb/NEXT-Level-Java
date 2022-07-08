@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.henrique.model.RotaEntrega;
+import br.com.henrique.model.RotaEntregaPK;
 import br.com.henrique.repository.RotaEntregaRepository;
 import br.com.henrique.service.exception.ObjectNotFoundException;
 
@@ -24,22 +25,33 @@ public class RotaEntregaService {
     }    
     
     // Busca pela Rota de Entrega
-    public RotaEntrega findById(String siglaEstado, Integer codigo) {
-        RotaEntrega rotaEntrega = repositRotaEntrega.findById(siglaEstado).orElse(null);
-        if (rotaEntrega == null) {
+    public RotaEntrega findById(String siglaEstado, Integer codigo,
+                                RotaEntrega rotaEntrega) {
+        RotaEntrega rotaEntregaBusca = repositRotaEntrega.findById(rotaEntrega.getRotaEntregaPK()).orElse(null);
+        if (rotaEntregaBusca == null) {
             throw new ObjectNotFoundException("Rota de Entrega nao encontrada !");
         }
-        return rotaEntrega;
-    }    
+        return rotaEntregaBusca;
+    }
     
+    public RotaEntrega findById(RotaEntregaPK rotaEntregaPK) {
+        RotaEntrega rotaEntregaBusca2 = repositRotaEntrega.findById(rotaEntregaPK).orElse(null);
+        
+        if (rotaEntregaBusca2 == null) {
+            throw new ObjectNotFoundException("Rota de Entrega nao encontrada !");
+        }
+        return rotaEntregaBusca2;
+    }
+
     // Inclui Rota de Entrega
     public RotaEntrega addRotaEntrega(RotaEntrega rotaEntrega) {
             return repositRotaEntrega.save(rotaEntrega);
     }    
     
     // Atualiza uma Rota de Entrega
-    public void updateRotaEntrega(String siglaEstado, Integer codigo, RotaEntrega rotaEntrega) {
-        RotaEntrega rotaEntregaAtualizado = this.findById(siglaEstado, codigo);
+    public void updateRotaEntrega(String siglaEstado, Integer codigo, 
+                                  RotaEntrega rotaEntrega) {
+        RotaEntrega rotaEntregaAtualizado = this.findById(rotaEntrega.getRotaEntregaPK());
         
 //        rotaEntregaAtualizado.setRotaEntregaPK(rotaEntrega.getRotaEntregaPK().getSiglaEstado());
 //        rotaEntregaAtualizado.setRotaEntregaPK(rotaEntrega.getRotaEntregaPK().getCodigo());     
@@ -55,12 +67,18 @@ public class RotaEntregaService {
         repositRotaEntrega.save(rotaEntregaAtualizado);
     }       
     
-    
     // Exclusão da Rota de Entrega
-    public void deletaRotaEntrega(String siglaEstado, Integer codigo) {
-        this.findById(siglaEstado, codigo);
+    public void deletaRotaEntrega(String siglaEstado, Integer codigo,
+                                  RotaEntrega rotaEntrega) {
+        this.findById(rotaEntrega.getRotaEntregaPK());
         
-        repositRotaEntrega.deleteById(siglaEstado);
+        repositRotaEntrega.deleteById(rotaEntrega.getRotaEntregaPK());
+    }
+
+    public void deletaRotaEntrega(RotaEntregaPK rotaEntregaPK) {
+        this.findById(rotaEntregaPK);
+        
+        repositRotaEntrega.deleteById(rotaEntregaPK);
     }    
     
 }

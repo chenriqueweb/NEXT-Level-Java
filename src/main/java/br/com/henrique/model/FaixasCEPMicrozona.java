@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 
 @Entity
-@IdClass(FaixasCEPMicrozonaId.class)
+@IdClass(FaixasCEPMicrozonaPK.class)
 public class FaixasCEPMicrozona {
     
     @Id

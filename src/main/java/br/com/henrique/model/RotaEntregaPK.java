@@ -29,19 +29,15 @@ public class RotaEntregaPK  implements Serializable {
     public String getSiglaEstado() {
         return siglaEstado;
     }
-
     public void setSiglaEstado(String siglaEstado) {
         this.siglaEstado = siglaEstado;
     }
-
     public Integer getCodigo() {
         return codigoRota;
     }
-
     public void setCodigo(Integer codigo) {
         this.codigoRota = codigo;
     }
-
     
     
     @Override

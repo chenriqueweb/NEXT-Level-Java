@@ -39,13 +39,13 @@
 						<th>Status</th>
 						<th>Empresa</th>
 						<th>Filial</th>
-						<th>Prazo Expedição</th>						
+ 						<th>Prazo Expedição</th>						
 					</tr>
 				</thead>
 				
 				<tbody>
    					 <tr th:each="rotaEntrega: ${RotasEntregas}">
-						<td th:text="${rotaEntrega.siglaEstado}"></td>
+    					<td th:text="${rotaEntrega.siglaEstado}"></td>
 						<td th:text="${rotaEntrega.codigo}"></td>
 						<td th:text="${rotaEntrega.nome}"></td>
 						<td th:text="${rotaEntrega.status}"></td>
@@ -64,7 +64,7 @@
 							</form>
 						</td>
 					</tr>
-				</tbody>
+ 				</tbody>
 			</table>
 		</section>
 	</main>

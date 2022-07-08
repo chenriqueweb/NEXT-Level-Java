@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.henrique.model.RotaEntrega;
+import br.com.henrique.model.RotaEntregaPK;
 import br.com.henrique.service.RotaEntregaService;
 
 @RestController
@@ -36,9 +37,10 @@ public class RotaEntregaController {
     // Busca por RotaEntrega
     @GetMapping(path = "{sigla}/{codigo}")
     public ResponseEntity<RotaEntrega> findById(@PathVariable String siglaEstado,
-                                                @PathVariable Integer codigo) {
-        RotaEntrega rotaEntrega = rotaEntregaService.findById(siglaEstado, codigo);
-        return ResponseEntity.ok().body(rotaEntrega);
+                                                @PathVariable Integer codigo,
+                                                @RequestBody RotaEntrega rotaEntrega) {
+        RotaEntrega rotaEntregaBusca = rotaEntregaService.findById(rotaEntrega.getRotaEntregaPK());
+        return ResponseEntity.ok().body(rotaEntregaBusca);
     }
     
     // Inclui RotaEntrega
@@ -64,8 +66,9 @@ public class RotaEntregaController {
     // Exclusão RotaEntrega
     @DeleteMapping(path = "{sigla}/{codigo}")
     public ResponseEntity<Void> deletaRotaEntrega(@PathVariable String siglaEstado,
-                                                  @PathVariable Integer codigo) {
-        rotaEntregaService.deletaRotaEntrega(siglaEstado, codigo);
+                                                  @PathVariable Integer codigo,
+                                                  @RequestBody RotaEntrega rotaEntrega) {
+        rotaEntregaService.deletaRotaEntrega(rotaEntrega.getRotaEntregaPK());
         return ResponseEntity.noContent().build();
     }
     
@@ -74,8 +77,9 @@ public class RotaEntregaController {
     // method Post (página)
     @PostMapping(path = "/remover/{sigla}/{codigo}")
     public ModelAndView deletaRotaEntregaWeb(@PathVariable String siglaEstado, 
-                                             @PathVariable Integer codigo) {
-        rotaEntregaService.deletaRotaEntrega(siglaEstado, codigo);
+                                             @PathVariable Integer codigo,
+                                             @RequestBody RotaEntrega rotaEntrega) {
+        rotaEntregaService.deletaRotaEntrega(rotaEntrega.getRotaEntregaPK());
         
         List<RotaEntrega> rotaEntregas = rotaEntregaService.findAll();
         
@@ -89,12 +93,13 @@ public class RotaEntregaController {
     // method Post (página)
     @GetMapping(path = "/editar/{sigla}/{codigo}")
     public ModelAndView editarRotaEntregaWeb(@PathVariable String siglaEstado,
-                                             @PathVariable Integer codigo) {
+                                             @PathVariable Integer codigo,
+                                             @RequestBody RotaEntrega rotaEntrega) {
         ModelAndView modelAndView = new ModelAndView("RotaEntregaFormulario");
         
-        RotaEntrega rotaEntrega = rotaEntregaService.findById(siglaEstado, codigo);
+        RotaEntrega rotaEntregaAltera = rotaEntregaService.findById(rotaEntrega.getRotaEntregaPK());
         
-        modelAndView.addObject("rotaEntrega", rotaEntrega);
+        modelAndView.addObject("rotaEntrega", rotaEntregaAltera);
         
         return modelAndView;
     }
