@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 public class FilialChavePK implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
     private Integer codigoEmpresa;
     
     @GeneratedValue(strategy = GenerationType.IDENTITY)

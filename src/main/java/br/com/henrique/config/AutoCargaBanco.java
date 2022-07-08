@@ -10,6 +10,8 @@ import br.com.henrique.model.Filial;
 import br.com.henrique.model.FilialChavePK;
 import br.com.henrique.model.Microzona;
 import br.com.henrique.model.Municipio;
+import br.com.henrique.model.RotaEntrega;
+import br.com.henrique.model.RotaEntregaPK;
 import br.com.henrique.service.EmpresaService;
 import br.com.henrique.service.EstadoService;
 import br.com.henrique.service.FaixasCEPMicrozonaService;
@@ -110,18 +112,33 @@ public class AutoCargaBanco implements CommandLineRunner {
         microzonaService.addMicrozona(microzona4);
         microzonaService.addMicrozona(microzona5);        
         
+        
         // Carga da Tabela: ROTA DE ENTREGA
-//        RotaEntrega rotaEntrega1 = new RotaEntrega("RJ", null, "Rota-01", "X", 1, 1, "12");
-//        RotaEntrega rotaEntrega2 = new RotaEntrega("RJ", null, "Rota-02", "X", 1, 1, "12");
-//        RotaEntrega rotaEntrega3 = new RotaEntrega("MG", null, "Rota-03", "X", 1, 1, "12");
-//        RotaEntrega rotaEntrega4 = new RotaEntrega("SP", null, "Rota-04", "X", 1, 1, "12");
-//        RotaEntrega rotaEntrega5 = new RotaEntrega("SP", null, "Rota-05", "X", 1, 1, "12");        
-//        
-//        rotaEntregaService.addRotaEntrega(rotaEntrega1);
-//        rotaEntregaService.addRotaEntrega(rotaEntrega2);
-//        rotaEntregaService.addRotaEntrega(rotaEntrega3);
-//        rotaEntregaService.addRotaEntrega(rotaEntrega4);
-//        rotaEntregaService.addRotaEntrega(rotaEntrega5);        
+        RotaEntregaPK rotaEntregaPK = new RotaEntregaPK();
+
+        rotaEntregaPK.setSiglaEstado("RJ");        
+
+        rotaEntregaPK.setCodigo(1);
+        RotaEntrega rotaEntrega1 = new RotaEntrega(rotaEntregaPK, "Rota-01", "A", 1, 1, 10);
+        rotaEntregaService.addRotaEntrega(rotaEntrega1);
+
+        rotaEntregaPK.setCodigo(2);
+        RotaEntrega rotaEntrega2 = new RotaEntrega(rotaEntregaPK, "Rota-02", "A", 1, 1, 2);
+        rotaEntregaService.addRotaEntrega(rotaEntrega2);
+
+        rotaEntregaPK.setCodigo(3);
+        RotaEntrega rotaEntrega3 = new RotaEntrega(rotaEntregaPK, "Rota-03", "I", 1, 1, 5);
+        rotaEntregaService.addRotaEntrega(rotaEntrega3);
+        
+        rotaEntregaPK.setSiglaEstado("SP");        
+
+        rotaEntregaPK.setCodigo(4);
+        RotaEntrega rotaEntrega4 = new RotaEntrega(rotaEntregaPK, "Rota-04", "A", 1, 1, 20);
+        rotaEntregaService.addRotaEntrega(rotaEntrega4);
+
+        rotaEntregaPK.setCodigo(5);
+        RotaEntrega rotaEntrega5 = new RotaEntrega(rotaEntregaPK, "Rota-05", "I", 1, 1, 3);        
+        rotaEntregaService.addRotaEntrega(rotaEntrega5);        
         
         
         

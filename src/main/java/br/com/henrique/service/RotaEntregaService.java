@@ -24,8 +24,8 @@ public class RotaEntregaService {
     }    
     
     // Busca pela Rota de Entrega
-    public RotaEntrega findById(Integer codigo) {
-        RotaEntrega rotaEntrega = repositRotaEntrega.findById(codigo).orElse(null);
+    public RotaEntrega findById(String siglaEstado, Integer codigo) {
+        RotaEntrega rotaEntrega = repositRotaEntrega.findById(siglaEstado).orElse(null);
         if (rotaEntrega == null) {
             throw new ObjectNotFoundException("Rota de Entrega nao encontrada !");
         }
@@ -38,10 +38,14 @@ public class RotaEntregaService {
     }    
     
     // Atualiza uma Rota de Entrega
-    public void updateRotaEntrega(Integer codigo, RotaEntrega rotaEntrega) {
-        RotaEntrega rotaEntregaAtualizado = this.findById(codigo);
+    public void updateRotaEntrega(String siglaEstado, Integer codigo, RotaEntrega rotaEntrega) {
+        RotaEntrega rotaEntregaAtualizado = this.findById(siglaEstado, codigo);
         
-        rotaEntregaAtualizado.setSiglaEstado(rotaEntrega.getSiglaEstado());
+//        rotaEntregaAtualizado.setRotaEntregaPK(rotaEntrega.getRotaEntregaPK().getSiglaEstado());
+//        rotaEntregaAtualizado.setRotaEntregaPK(rotaEntrega.getRotaEntregaPK().getCodigo());     
+       
+        rotaEntregaAtualizado.setRotaEntregaPK(rotaEntrega.getRotaEntregaPK());
+        
         rotaEntregaAtualizado.setNome(rotaEntrega.getNome());
         rotaEntregaAtualizado.setStatus(rotaEntrega.getStatus());
         rotaEntregaAtualizado.setCodigoEmpresa(rotaEntrega.getCodigoEmpresa());
@@ -53,10 +57,10 @@ public class RotaEntregaService {
     
     
     // Exclusão da Rota de Entrega
-    public void deletaRotaEntrega(Integer codigo) {
-        this.findById(codigo);
+    public void deletaRotaEntrega(String siglaEstado, Integer codigo) {
+        this.findById(siglaEstado, codigo);
         
-        repositRotaEntrega.deleteById(codigo);
+        repositRotaEntrega.deleteById(siglaEstado);
     }    
     
 }

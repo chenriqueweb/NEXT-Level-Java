@@ -42,7 +42,7 @@ public class MunicipioService {
         Municipio municipioAtualizado = this.findById(codigo);
         
         municipioAtualizado.setNome(municipio.getNome());
-        municipioAtualizado.setSiglaEstado(municipio.getSiglaEstado());
+        municipioAtualizado.setEstado(municipio.getEstado());
         
         repositMunicipio.save(municipioAtualizado);
     }    

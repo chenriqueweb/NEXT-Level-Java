@@ -1,37 +1,36 @@
 package br.com.henrique.model;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
 
 @Entity
-@IdClass(RotaEntregaId.class)
+//@IdClass(RotaEntregaPK.class)
 public class RotaEntrega {
     
-    @Id
-    private String siglaEstado;
+//    @Id
+//    private String siglaEstado;
+//    
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Integer codigo;
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer codigo;
+    @EmbeddedId
+    private RotaEntregaPK rotaEntregaPK;    
     
     private String nome;
     private String status;
     private Integer codigoEmpresa;
     private Integer codigoFilial;
-    private String prazoExpedicao;
+    private Integer prazoExpedicao;
     
     public RotaEntrega() {
         super();
     }
     
-    public RotaEntrega(String siglaEstado, Integer codigo, String nome, String status, Integer codigoEmpresa, Integer codigoFilial,
-                    String prazoExpedicao) {
+    public RotaEntrega(RotaEntregaPK rotaEntregaPK, String nome, String status, Integer codigoEmpresa, Integer codigoFilial,
+                    Integer prazoExpedicao) {
         super();
-        this.siglaEstado = siglaEstado;
-        this.codigo = codigo;
+        this.rotaEntregaPK = rotaEntregaPK;
         this.nome = nome;
         this.status = status;
         this.codigoEmpresa = codigoEmpresa;
@@ -42,19 +41,13 @@ public class RotaEntrega {
     // Método para identificar registro novo
     public boolean isNovo() {
         return nome == null;
-    }         
-    
-    public String getSiglaEstado() {
-        return siglaEstado;
     }
-    public void setSiglaEstado(String siglaEstado) {
-        this.siglaEstado = siglaEstado;
+
+    public RotaEntregaPK getRotaEntregaPK() {
+        return rotaEntregaPK;
     }
-    public Integer getCodigo() {
-        return codigo;
-    }
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
+    public void setRotaEntregaPK(RotaEntregaPK rotaEntregaPK) {
+        this.rotaEntregaPK = rotaEntregaPK;
     }
     public String getNome() {
         return nome;
@@ -80,10 +73,10 @@ public class RotaEntrega {
     public void setCodigoFilial(Integer codigoFilial) {
         this.codigoFilial = codigoFilial;
     }
-    public String getPrazoExpedicao() {
+    public Integer getPrazoExpedicao() {
         return prazoExpedicao;
     }
-    public void setPrazoExpedicao(String prazoExpedicao) {
+    public void setPrazoExpedicao(Integer prazoExpedicao) {
         this.prazoExpedicao = prazoExpedicao;
     }
 
@@ -91,12 +84,11 @@ public class RotaEntrega {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
         result = prime * result + ((codigoEmpresa == null) ? 0 : codigoEmpresa.hashCode());
         result = prime * result + ((codigoFilial == null) ? 0 : codigoFilial.hashCode());
         result = prime * result + ((nome == null) ? 0 : nome.hashCode());
         result = prime * result + ((prazoExpedicao == null) ? 0 : prazoExpedicao.hashCode());
-        result = prime * result + ((siglaEstado == null) ? 0 : siglaEstado.hashCode());
+        result = prime * result + ((rotaEntregaPK == null) ? 0 : rotaEntregaPK.hashCode());
         result = prime * result + ((status == null) ? 0 : status.hashCode());
         return result;
     }
@@ -110,11 +102,6 @@ public class RotaEntrega {
         if (getClass() != obj.getClass())
             return false;
         RotaEntrega other = (RotaEntrega) obj;
-        if (codigo == null) {
-            if (other.codigo != null)
-                return false;
-        } else if (!codigo.equals(other.codigo))
-            return false;
         if (codigoEmpresa == null) {
             if (other.codigoEmpresa != null)
                 return false;
@@ -135,10 +122,10 @@ public class RotaEntrega {
                 return false;
         } else if (!prazoExpedicao.equals(other.prazoExpedicao))
             return false;
-        if (siglaEstado == null) {
-            if (other.siglaEstado != null)
+        if (rotaEntregaPK == null) {
+            if (other.rotaEntregaPK != null)
                 return false;
-        } else if (!siglaEstado.equals(other.siglaEstado))
+        } else if (!rotaEntregaPK.equals(other.rotaEntregaPK))
             return false;
         if (status == null) {
             if (other.status != null)
@@ -146,7 +133,6 @@ public class RotaEntrega {
         } else if (!status.equals(other.status))
             return false;
         return true;
-    }
-    
+    }         
 
 }

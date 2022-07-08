@@ -166,9 +166,9 @@ public class NextLevelController {
         // method Post (página)
         @PostMapping("/municipio/salvar/{codigo}")
         public String atualizaMunicipioWeb(Municipio municipio) {
-            Municipio municipioAntes = municipioService.findById(municipio.getCodigo());
+            Municipio municipioAntes = municipioService.findById(municipio.getCodigo_ID());
             
-            municipioService.deletaMunicipio(municipioAntes.getCodigo());
+            municipioService.deletaMunicipio(municipioAntes.getCodigo_ID());
             municipioService.addMunicipio(municipio);
 
             return "redirect:/municipioListar";        
@@ -234,9 +234,11 @@ public class NextLevelController {
         // method Post (página)
         @PostMapping("/rotaEntrega/salvar/{siglaEstado}/{codigo}")
         public String atualizaRotaEntregaoWeb(RotaEntrega rotaEntrega) {
-            RotaEntrega rotaEntregaAntes = rotaEntregaService.findById(rotaEntrega.getCodigo());
+            RotaEntrega rotaEntregaAntes = rotaEntregaService.findById(rotaEntrega.getRotaEntregaPK().getSiglaEstado(),
+                                                                       rotaEntrega.getRotaEntregaPK().getCodigo());
             
-            rotaEntregaService.deletaRotaEntrega(rotaEntregaAntes.getCodigo());
+            rotaEntregaService.deletaRotaEntrega(rotaEntregaAntes.getRotaEntregaPK().getSiglaEstado(),
+                                                 rotaEntregaAntes.getRotaEntregaPK().getCodigo());
             rotaEntregaService.addRotaEntrega(rotaEntrega);
 
             return "redirect:/rotaEntregaListar";        

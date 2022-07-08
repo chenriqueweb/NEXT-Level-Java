@@ -2,37 +2,44 @@ package br.com.henrique.model;
 
 import java.io.Serializable;
 
-public class RotaEntregaId  implements Serializable {
+import javax.persistence.Embeddable;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
+@Embeddable
+public class RotaEntregaPK  implements Serializable {
     
     private static final long serialVersionUID = 1L;
-    private Integer siglaEstado;
-    private Integer codigo;
+    private String siglaEstado;
+    
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer codigoRota;
        
-    public RotaEntregaId() {
+    public RotaEntregaPK() {
         super();
     }
     
-    public RotaEntregaId(Integer siglaEstado, Integer codigo) {
+    public RotaEntregaPK(String siglaEstado, Integer codigo) {
         super();
         this.siglaEstado = siglaEstado;
-        this.codigo = codigo;
+        this.codigoRota = codigo;
     }
 
 
-    public Integer getSiglaEstado() {
+    public String getSiglaEstado() {
         return siglaEstado;
     }
 
-    public void setSiglaEstado(Integer siglaEstado) {
+    public void setSiglaEstado(String siglaEstado) {
         this.siglaEstado = siglaEstado;
     }
 
     public Integer getCodigo() {
-        return codigo;
+        return codigoRota;
     }
 
     public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
+        this.codigoRota = codigo;
     }
 
     
@@ -41,7 +48,7 @@ public class RotaEntregaId  implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+        result = prime * result + ((codigoRota == null) ? 0 : codigoRota.hashCode());
         result = prime * result + ((siglaEstado == null) ? 0 : siglaEstado.hashCode());
         return result;
     }
@@ -54,11 +61,11 @@ public class RotaEntregaId  implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        RotaEntregaId other = (RotaEntregaId) obj;
-        if (codigo == null) {
-            if (other.codigo != null)
+        RotaEntregaPK other = (RotaEntregaPK) obj;
+        if (codigoRota == null) {
+            if (other.codigoRota != null)
                 return false;
-        } else if (!codigo.equals(other.codigo))
+        } else if (!codigoRota.equals(other.codigoRota))
             return false;
         if (siglaEstado == null) {
             if (other.siglaEstado != null)

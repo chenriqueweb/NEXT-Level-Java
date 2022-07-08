@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import br.com.henrique.model.RotaEntrega;
 
 @Repository
-public interface RotaEntregaRepository extends JpaRepository<RotaEntrega, Integer> {
+public interface RotaEntregaRepository extends JpaRepository<RotaEntrega, String> {
+
+    // Optional<RotaEntrega> findById(String siglaEstado, Integer codigo);
 
 }
