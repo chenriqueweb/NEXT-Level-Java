@@ -19,10 +19,10 @@ public class RotaEntregaPK  implements Serializable {
         super();
     }
     
-    public RotaEntregaPK(String siglaEstado, Integer codigo) {
+    public RotaEntregaPK(String siglaEstado, Integer codigoRota) {
         super();
         this.siglaEstado = siglaEstado;
-        this.codigoRota = codigo;
+        this.codigoRota = codigoRota;
     }
 
 
@@ -32,11 +32,11 @@ public class RotaEntregaPK  implements Serializable {
     public void setSiglaEstado(String siglaEstado) {
         this.siglaEstado = siglaEstado;
     }
-    public Integer getCodigo() {
+    public Integer getCodigoRota() {
         return codigoRota;
     }
-    public void setCodigo(Integer codigo) {
-        this.codigoRota = codigo;
+    public void setCodigoRota(Integer codigoRota) {
+        this.codigoRota = codigoRota;
     }
     
     

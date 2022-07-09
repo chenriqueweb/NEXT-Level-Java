@@ -25,15 +25,6 @@ public class RotaEntregaService {
     }    
     
     // Busca pela Rota de Entrega
-    public RotaEntrega findById(String siglaEstado, Integer codigo,
-                                RotaEntrega rotaEntrega) {
-        RotaEntrega rotaEntregaBusca = repositRotaEntrega.findById(rotaEntrega.getRotaEntregaPK()).orElse(null);
-        if (rotaEntregaBusca == null) {
-            throw new ObjectNotFoundException("Rota de Entrega nao encontrada !");
-        }
-        return rotaEntregaBusca;
-    }
-    
     public RotaEntrega findById(RotaEntregaPK rotaEntregaPK) {
         RotaEntrega rotaEntregaBusca2 = repositRotaEntrega.findById(rotaEntregaPK).orElse(null);
         
@@ -49,7 +40,7 @@ public class RotaEntregaService {
     }    
     
     // Atualiza uma Rota de Entrega
-    public void updateRotaEntrega(String siglaEstado, Integer codigo, 
+    public void updateRotaEntrega(String siglaEstado, Integer codigoRota, 
                                   RotaEntrega rotaEntrega) {
         RotaEntrega rotaEntregaAtualizado = this.findById(rotaEntrega.getRotaEntregaPK());
         
@@ -67,13 +58,13 @@ public class RotaEntregaService {
         repositRotaEntrega.save(rotaEntregaAtualizado);
     }       
     
-    // Exclusão da Rota de Entrega
-    public void deletaRotaEntrega(String siglaEstado, Integer codigo,
-                                  RotaEntrega rotaEntrega) {
-        this.findById(rotaEntrega.getRotaEntregaPK());
-        
-        repositRotaEntrega.deleteById(rotaEntrega.getRotaEntregaPK());
-    }
+//    // Exclusão da Rota de Entrega
+//    public void deletaRotaEntrega(String siglaEstado, Integer codigoRota,
+//                                  RotaEntrega rotaEntrega) {
+//        this.findById(rotaEntrega.getRotaEntregaPK());
+//        
+//        repositRotaEntrega.deleteById(rotaEntrega.getRotaEntregaPK());
+//    }
 
     public void deletaRotaEntrega(RotaEntregaPK rotaEntregaPK) {
         this.findById(rotaEntregaPK);

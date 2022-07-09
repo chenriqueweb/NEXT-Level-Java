@@ -14,19 +14,18 @@ import br.com.henrique.service.exception.ObjectNotFoundException;
 @Service
 public class FilialService {
 
-//    @Autowired
-//    private FilialRepository repositFilial;
-//    
-//    // Lista Filiais
-//    public List<Filial> findAll() {
-//        List<Filial> filiais = new ArrayList<Filial>();
-//        filiais = repositFilial.findAll();                
-//        return filiais;
-//    }
-//    
-//    // Busca por Filial
-//    public Filial findById(Integer codigoEmpresa, Integer codigoFilial, 
-//                           Filial filial) {
+    @Autowired
+    private FilialRepository repositFilial;
+    
+    // Lista Filiais
+    public List<Filial> findAll() {
+        List<Filial> filiais = new ArrayList<Filial>();
+        filiais = repositFilial.findAll();                
+        return filiais;
+    }
+    
+    // Busca por Filial
+//    public Filial findById(Integer codigoEmpresa, Integer codigoFilial) {
 //        Filial filialBusca =  repositFilial.findById(filial.getFilialPK()).orElse(null);
 //        
 //        if (filialBusca == null) {
@@ -34,22 +33,21 @@ public class FilialService {
 //        }
 //        return filialBusca;
 //    }
-//    
-//    public Filial findById(FilialPK filialPK) {
-//        Filial filialBusca2 =  repositFilial.findById(filialPK).orElse(null);
-//        
-//        if (filialBusca2 == null) {
-//            throw new ObjectNotFoundException("Filial nao encontrada !");
-//        }
-//        return filialBusca2;
-//    }
-//    
-//    
-//    // Inclui Filial
-//    public Filial addFilial(Filial filial) {
-//            return repositFilial.save(filial);
-//    }
-//    
+    
+    public Filial findById(FilialPK filialPK) {
+        Filial filialBusca2 = repositFilial.findById(filialPK).orElse(null);
+        
+        if (filialBusca2 == null) {
+            throw new ObjectNotFoundException("Filial nao encontrada !");
+        }
+        return filialBusca2;
+    }
+    
+    // Inclui Filial
+    public Filial addFilial(Filial filial) {
+            return repositFilial.save(filial);
+    }
+    
 //    
 //    // Atualiza Filial
 //    public void updateFilial(Integer codigoEmpresa, Integer codigoFilial, 
@@ -72,5 +70,5 @@ public class FilialService {
 //        
 //        repositFilial.deleteById(filial.getFilialPK());
 //    }
-//
+
 }

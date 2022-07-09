@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 
 @Entity
 public class Filial {
+    
     @EmbeddedId
     private FilialPK filialPK;
     

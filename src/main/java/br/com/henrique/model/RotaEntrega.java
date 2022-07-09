@@ -4,15 +4,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
 @Entity
-//@IdClass(RotaEntregaPK.class)
 public class RotaEntrega {
-    
-//    @Id
-//    private String siglaEstado;
-//    
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Integer codigo;
     
     @EmbeddedId
     private RotaEntregaPK rotaEntregaPK;    
