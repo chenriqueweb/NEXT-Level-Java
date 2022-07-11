@@ -81,6 +81,7 @@ public class FilialController {
         filialPK.setCodigoFilial(codigoFilial);        
         
         filialService.deletaFilial(filialPK);
+        
         return ResponseEntity.noContent().build();
     }
     

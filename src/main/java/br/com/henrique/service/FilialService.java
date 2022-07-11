@@ -51,7 +51,7 @@ public class FilialService {
     // Atualiza Filial
     public void updateFilial(FilialPK filialPK, 
                              Filial filial) {
-        Filial filialAtualizado = repositFilial.findById(filialPK).orElse(null);
+        Filial filialAtualizado = this.findById(filialPK);
         
         filialAtualizado.setNome(filial.getNome());
         filialAtualizado.setCnpj(filial.getCnpj());
@@ -62,7 +62,7 @@ public class FilialService {
     
     // Exclusão de Filial
     public void deletaFilial(FilialPK filialPK) {
-        repositFilial.findById(filialPK);
+        this.findById(filialPK);
         
         repositFilial.deleteById(filialPK);
     }

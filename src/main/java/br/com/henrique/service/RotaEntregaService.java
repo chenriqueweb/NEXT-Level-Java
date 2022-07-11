@@ -42,7 +42,7 @@ public class RotaEntregaService {
     // Atualiza uma Rota de Entrega
     public void updateRotaEntrega(RotaEntregaPK rotaEntregaPK,
                                   RotaEntrega rotaEntrega) {
-        RotaEntrega rotaEntregaAtualizado = repositRotaEntrega.findById(rotaEntregaPK).orElse(null);
+        RotaEntrega rotaEntregaAtualizado = findById(rotaEntregaPK);   // repositRotaEntrega.findById(rotaEntregaPK).orElse(null);
         
         rotaEntregaAtualizado.setNome(rotaEntrega.getNome());
         rotaEntregaAtualizado.setStatus(rotaEntrega.getStatus());
