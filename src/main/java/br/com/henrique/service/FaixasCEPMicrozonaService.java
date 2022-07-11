@@ -41,6 +41,18 @@ public class FaixasCEPMicrozonaService {
             return repositFaixasCEPMicrozona.save(faixasCEPMicrozona);
     }
 
+    
+    // Atualiza Faixas de CEP da Microzona
+    public void updateFaixasCEPMicrozona(FaixasCEPMicrozonaPK faixasCEPMicrozonaPK, 
+                                         FaixasCEPMicrozona faixasCEPMicrozona) {
+        FaixasCEPMicrozona faixasCEPMicrozonaAtualizado = repositFaixasCEPMicrozona.findById(faixasCEPMicrozonaPK).orElse(null);
+        
+        faixasCEPMicrozonaAtualizado.setCEPinicial(faixasCEPMicrozona.getCEPinicial());
+        faixasCEPMicrozonaAtualizado.setCEPfinal(faixasCEPMicrozona.getCEPfinal());
+        
+        repositFaixasCEPMicrozona.save(faixasCEPMicrozonaAtualizado);
+    }
+    
    
     // Exclusão da Faixa de CEP da Microzona
     public void deletaFaixasCEPMicrozona(FaixasCEPMicrozonaPK faixasCEPMicrozonaPK) {

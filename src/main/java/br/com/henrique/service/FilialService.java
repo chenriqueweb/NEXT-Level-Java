@@ -48,27 +48,23 @@ public class FilialService {
             return repositFilial.save(filial);
     }
     
-//    
-//    // Atualiza Filial
-//    public void updateFilial(Integer codigoEmpresa, Integer codigoFilial, 
-//                             Filial filial) {
-//        Filial filialAtualizado = repositFilial.findById(filial.getFilialPK()).orElse(null);
-//        
-//        filialAtualizado.setFilialPK(filial.getFilialPK());
-//        
-//        filialAtualizado.setNome(filial.getNome());
-//        filialAtualizado.setCnpj(filial.getCnpj());
-//        filialAtualizado.setMunicipio(filial.getMunicipio());
-//        
-//        repositFilial.save(filialAtualizado);
-//    }
-//    
-//    // Exclusão de Filial
-//    public void deletaFilial(Integer codigoEmpresa, Integer codigoFilial,
-//                             Filial filial) {
-//        repositFilial.findById(filial.getFilialPK());
-//        
-//        repositFilial.deleteById(filial.getFilialPK());
-//    }
+    // Atualiza Filial
+    public void updateFilial(FilialPK filialPK, 
+                             Filial filial) {
+        Filial filialAtualizado = repositFilial.findById(filialPK).orElse(null);
+        
+        filialAtualizado.setNome(filial.getNome());
+        filialAtualizado.setCnpj(filial.getCnpj());
+        filialAtualizado.setMunicipio(filial.getMunicipio());
+        
+        repositFilial.save(filialAtualizado);
+    }
+    
+    // Exclusão de Filial
+    public void deletaFilial(FilialPK filialPK) {
+        repositFilial.findById(filialPK);
+        
+        repositFilial.deleteById(filialPK);
+    }
 
 }

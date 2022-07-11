@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,7 +34,7 @@ public class FaixasCEPMicrozonaController {
     }    
     
     
-    // Busca por Filial
+    // Busca por Faixa de CEP da Microzona
     @GetMapping(path = "/{codigoMicrozona}/{codigoSequencial}")
     public ResponseEntity<FaixasCEPMicrozona> findById(@PathVariable Integer codigoMicrozona,
                                                        @PathVariable Integer codigoSequencial) {
@@ -59,14 +60,20 @@ public class FaixasCEPMicrozonaController {
         return ResponseEntity.created(uri).build();
     }
         
-//    // Altera Filial
-//    @PutMapping(path = "{empresa}/{codigo}")
-//    public ResponseEntity<Void> updateFilial(@PathVariable Integer codigoEmpresa,
-//                                             @PathVariable Integer codigoFilial, 
-//                                             @RequestBody Filial filial) {
-//        filialService.updateFilial(codigoEmpresa, codigoFilial, filial);
-//        return ResponseEntity.noContent().build();
-//    }
+    // Altera Filial
+    @PutMapping(path = "/{codigoMicrozona}/{codigoSequencial}")
+    public ResponseEntity<Void> updateFaixasCEPMicrozona(@PathVariable Integer codigoMicrozona,
+                                                         @PathVariable Integer codigoSequencial, 
+                                                         @RequestBody FaixasCEPMicrozona faixasCEPMicrozona) {
+        FaixasCEPMicrozonaPK faixasCEPMicrozonaPK = new FaixasCEPMicrozonaPK();
+        faixasCEPMicrozonaPK.setCodigoMicrozona(codigoMicrozona);
+        faixasCEPMicrozonaPK.setCodigoSequencial(codigoSequencial);        
+        
+        faixasCEPMicrozonaService.updateFaixasCEPMicrozona(faixasCEPMicrozonaPK, faixasCEPMicrozona);
+        
+        return ResponseEntity.noContent().build();
+        
+    }
     
     
     // Exclusão da Faixa de CEP da Microzona

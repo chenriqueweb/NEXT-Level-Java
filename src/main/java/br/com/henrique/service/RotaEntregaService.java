@@ -33,21 +33,16 @@ public class RotaEntregaService {
         }
         return rotaEntregaBusca2;
     }
-
+    
     // Inclui Rota de Entrega
     public RotaEntrega addRotaEntrega(RotaEntrega rotaEntrega) {
             return repositRotaEntrega.save(rotaEntrega);
     }    
     
     // Atualiza uma Rota de Entrega
-    public void updateRotaEntrega(String siglaEstado, Integer codigoRota, 
+    public void updateRotaEntrega(RotaEntregaPK rotaEntregaPK,
                                   RotaEntrega rotaEntrega) {
-        RotaEntrega rotaEntregaAtualizado = this.findById(rotaEntrega.getRotaEntregaPK());
-        
-//        rotaEntregaAtualizado.setRotaEntregaPK(rotaEntrega.getRotaEntregaPK().getSiglaEstado());
-//        rotaEntregaAtualizado.setRotaEntregaPK(rotaEntrega.getRotaEntregaPK().getCodigo());     
-       
-        rotaEntregaAtualizado.setRotaEntregaPK(rotaEntrega.getRotaEntregaPK());
+        RotaEntrega rotaEntregaAtualizado = repositRotaEntrega.findById(rotaEntregaPK).orElse(null);
         
         rotaEntregaAtualizado.setNome(rotaEntrega.getNome());
         rotaEntregaAtualizado.setStatus(rotaEntrega.getStatus());
@@ -56,16 +51,9 @@ public class RotaEntregaService {
         rotaEntregaAtualizado.setPrazoExpedicao(rotaEntrega.getPrazoExpedicao());
         
         repositRotaEntrega.save(rotaEntregaAtualizado);
-    }       
+    }
     
-//    // Exclusão da Rota de Entrega
-//    public void deletaRotaEntrega(String siglaEstado, Integer codigoRota,
-//                                  RotaEntrega rotaEntrega) {
-//        this.findById(rotaEntrega.getRotaEntregaPK());
-//        
-//        repositRotaEntrega.deleteById(rotaEntrega.getRotaEntregaPK());
-//    }
-
+    // Exclusão da Rota de Entrega
     public void deletaRotaEntrega(RotaEntregaPK rotaEntregaPK) {
         this.findById(rotaEntregaPK);
         

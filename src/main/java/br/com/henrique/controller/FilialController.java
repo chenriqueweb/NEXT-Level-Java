@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,24 +56,33 @@ public class FilialController {
                   .toUri();
         return ResponseEntity.created(uri).build();
     }    
-//    
-//    // Altera Filial
-//    @PutMapping(path = "{empresa}/{codigo}")
-//    public ResponseEntity<Void> updateFilial(@PathVariable Integer codigoEmpresa,
-//                                             @PathVariable Integer codigoFilial, 
-//                                             @RequestBody Filial filial) {
-//        filialService.updateFilial(codigoEmpresa, codigoFilial, filial);
-//        return ResponseEntity.noContent().build();
-//    }
-//    
-//    // Exclusão RotaEntrega
-//    @DeleteMapping(path = "{sigla}/{codigo}")
-//    public ResponseEntity<Void> deletaFilial(@PathVariable Integer codigoEmpresa,
-//                                             @PathVariable Integer codigoFilial,
-//                                             @RequestBody Filial filial) {
-//        filialService.deletaFilial(codigoEmpresa, codigoFilial, filial);
-//        return ResponseEntity.noContent().build();
-//    }
+    
+    // Altera Filial
+    @PutMapping(path = "/{codigoEmpresa}/{codigoFilial}")
+    public ResponseEntity<Void> updateFilial(@PathVariable Integer codigoEmpresa,
+                                             @PathVariable Integer codigoFilial, 
+                                             @RequestBody Filial filial) {
+        
+        FilialPK filialPK = new FilialPK();
+        filialPK.setCodigoEmpresa(codigoEmpresa);
+        filialPK.setCodigoFilial(codigoFilial);          
+        
+        filialService.updateFilial(filialPK, filial);
+        
+        return ResponseEntity.noContent().build();
+    }
+    
+    // Exclusão RotaEntrega
+    @DeleteMapping(path = "/{codigoEmpresa}/{codigoFilial}")
+    public ResponseEntity<Void> deletaFilial(@PathVariable Integer codigoEmpresa, 
+                                             @PathVariable Integer codigoFilial) {
+        FilialPK filialPK = new FilialPK();
+        filialPK.setCodigoEmpresa(codigoEmpresa);
+        filialPK.setCodigoFilial(codigoFilial);        
+        
+        filialService.deletaFilial(filialPK);
+        return ResponseEntity.noContent().build();
+    }
     
 //    //-----------------------------------------------------------------------------------------------------
 //    // Exclui Filial e chama Lista de Filiais

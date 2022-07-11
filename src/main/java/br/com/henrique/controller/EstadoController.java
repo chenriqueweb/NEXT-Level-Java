@@ -67,29 +67,29 @@ public class EstadoController {
     //----------------------------------------------------------------------------------------
     // Deleta estado e chama Lista de Estados
     // method Post (página)
-    @PostMapping(path = "/remover/{sigla}")
-    public ModelAndView deletaEstadoWeb(@PathVariable String sigla) {
-        estadoService.deletaEstado(sigla);
-        
-        List<Estado> estados = estadoService.findAll();
-        
-        ModelAndView modelAndView = new ModelAndView("EstadoListar");
-        modelAndView.addObject("estados", estados);
-        
-        return modelAndView;
-    }     
-    
-    // Altera Estado
-    // method Post (página)
-    @GetMapping(path = "/editar/{sigla}")
-    public ModelAndView editarEstadoWeb(@PathVariable String sigla) {
-        ModelAndView modelAndView = new ModelAndView("EstadoFormulario");
-        
-        Estado estado = estadoService.findById(sigla);
-        
-        modelAndView.addObject("estado", estado);
-        
-        return modelAndView;
-    }    
+//    @PostMapping(path = "/remover/{sigla}")
+//    public ModelAndView deletaEstadoWeb(@PathVariable String sigla) {
+//        estadoService.deletaEstado(sigla);
+//        
+//        List<Estado> estados = estadoService.findAll();
+//        
+//        ModelAndView modelAndView = new ModelAndView("EstadoListar");
+//        modelAndView.addObject("estados", estados);
+//        
+//        return modelAndView;
+//    }     
+//    
+//    // Altera Estado
+//    // method Post (página)
+//    @GetMapping(path = "/editar/{sigla}")
+//    public ModelAndView editarEstadoWeb(@PathVariable String sigla) {
+//        ModelAndView modelAndView = new ModelAndView("EstadoFormulario");
+//        
+//        Estado estado = estadoService.findById(sigla);
+//        
+//        modelAndView.addObject("estado", estado);
+//        
+//        return modelAndView;
+//    }    
     
 }
