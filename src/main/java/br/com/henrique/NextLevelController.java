@@ -26,8 +26,8 @@ import br.com.henrique.service.RotaEntregaService;
 @Controller
 public class NextLevelController {
     
-//        @Autowired
-//        private FilialService filialService;
+        @Autowired
+        private FilialService filialService;
         
         @Autowired
         private EmpresaService empresaService;
@@ -38,8 +38,8 @@ public class NextLevelController {
         @Autowired
         private MunicipioService municipioService;
         
-//        @Autowired
-//        private RotaEntregaService rotaEntregaService;     
+        @Autowired
+        private RotaEntregaService rotaEntregaService;     
         
         @Autowired
         private MicrozonaService microzonaService;
@@ -177,59 +177,59 @@ public class NextLevelController {
         
         //--------------------------------------------------------------------------------------
         // #### Filial 
-//        @GetMapping("/filialListar")
-//        public ModelAndView findAllFilial() {
-//            List<Filial> filiais = filialService.findAll();
-//            
-//            ModelAndView modelAndView = new ModelAndView("FilialListar");
-//            modelAndView.addObject("filiais", filiais);
-//            
-//            return modelAndView;
-//        }        
-//        
-//        @GetMapping("/filial/novo")
-//        public ModelAndView filialNovo() {            
-//            ModelAndView modelAndView = new ModelAndView("FilialFormulario");
-//            modelAndView.addObject("filial", new Filial());
-//            
-//            return modelAndView;
-//        }        
-//       
-//        @PostMapping("/filial/form")
-//        public String insereFilial(Filial filial) {
-//            filialService.addFilial(filial);
-//            
-//            return "redirect:/filialListar";
-//        }          
+        @GetMapping("/filialListar")
+        public ModelAndView findAllFilial() {
+            List<Filial> filiais = filialService.findAll();
+            
+            ModelAndView modelAndView = new ModelAndView("FilialListar");
+            modelAndView.addObject("filiais", filiais);
+            
+            return modelAndView;
+        }        
+        
+        @GetMapping("/filial/novo")
+        public ModelAndView filialNovo() {            
+            ModelAndView modelAndView = new ModelAndView("FilialFormulario");
+            modelAndView.addObject("filial", new Filial());
+            
+            return modelAndView;
+        }        
+       
+        @PostMapping("/filial/form")
+        public String insereFilial(Filial filial) {
+            filialService.addFilial(filial);
+            
+            return "redirect:/filialListar";
+        }          
                 
         
         //--------------------------------------------------------------------------------------                
         // ### Rota de Entrega
-//        @GetMapping("/rotaEntregaListar")
-//        public ModelAndView findAllRotaEntrega() {
-//            List<RotaEntrega> rotasEntregas = rotaEntregaService.findAll();
-//            
-//            ModelAndView modelAndView = new ModelAndView("RotaEntregaListar");
-//            modelAndView.addObject("rotasEntregas", rotasEntregas);
-//            
-//            return modelAndView;
-//        }
-//        
-//        @GetMapping("/rotaEntrega/novo")
-//        public ModelAndView rotaEntregaNovo() {            
-//            ModelAndView modelAndView = new ModelAndView("RotaEntregaFormulario");
-//            modelAndView.addObject("rotaEntrega", new RotaEntrega());
-//            
-//            return modelAndView;
-//        }            
-//        
-//        @PostMapping("/rotaEntrega/form")
-//        public String insereRotaEntrega(RotaEntrega rotaEntrega) {
-//            rotaEntregaService.addRotaEntrega(rotaEntrega);
-//            
-//            return "redirect:/rotaEntregaListar";
-//        }              
-//        
+        @GetMapping("/rotaEntregaListar")
+        public ModelAndView findAllRotaEntrega() {
+            List<RotaEntrega> rotasEntregas = rotaEntregaService.findAll();
+            
+            ModelAndView modelAndView = new ModelAndView("RotaEntregaListar");
+            modelAndView.addObject("rotasEntregas", rotasEntregas);
+            
+            return modelAndView;
+        }
+        
+        @GetMapping("/rotaEntrega/novo")
+        public ModelAndView rotaEntregaNovo() {            
+            ModelAndView modelAndView = new ModelAndView("RotaEntregaFormulario");
+            modelAndView.addObject("rotaEntrega", new RotaEntrega());
+            
+            return modelAndView;
+        }            
+        
+        @PostMapping("/rotaEntrega/form")
+        public String insereRotaEntrega(RotaEntrega rotaEntrega) {
+            rotaEntregaService.addRotaEntrega(rotaEntrega);
+            
+            return "redirect:/rotaEntregaListar";
+        }              
+        
 //        // Atualiza dados da Rota de Entrega
 //        // method Post (página)
 //        @PostMapping("/rotaEntrega/salvar/{siglaEstado}/{codigo}")

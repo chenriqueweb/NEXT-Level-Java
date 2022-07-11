@@ -1,52 +1,40 @@
 package br.com.henrique.model;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
 
 @Entity
-@IdClass(FaixasCEPMicrozonaPK.class)
 public class FaixasCEPMicrozona {
-    
-    @Id
-    private Long codigoMicrozona;    
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigoSequencial;
+
+    @EmbeddedId
+    private FaixasCEPMicrozonaPK faixasCEPMicrozonaPK;
     
     private int CEPinicial;
     private int CEPfinal;
     
+    // Método para identificar registro novo
+    public boolean isNovo() {
+        return CEPinicial == 0;
+    }
+
+    // Construtor
     public FaixasCEPMicrozona() {
         super();
     }
-    public FaixasCEPMicrozona(Long codigoMicrozona, Long codigoSequencial, int cEPinicial, int cEPfinal) {
+
+    public FaixasCEPMicrozona(FaixasCEPMicrozonaPK faixasCEPMicrozonaPK, int cEPinicial, int cEPfinal) {
         super();
-        this.codigoMicrozona = codigoMicrozona;
-        this.codigoSequencial = codigoSequencial;
+        this.faixasCEPMicrozonaPK = faixasCEPMicrozonaPK;
         CEPinicial = cEPinicial;
         CEPfinal = cEPfinal;
     }
+
     
-    // Método para identificar registro novo
-    public boolean isNovo() {
-        return codigoMicrozona == null;
-    } 
-    
-    public Long getCodigoMicrozona() {
-        return codigoMicrozona;
+    public FaixasCEPMicrozonaPK getFaixasCEPMicrozonaPK() {
+        return faixasCEPMicrozonaPK;
     }
-    public void setCodigoMicrozona(Long codigoMicrozona) {
-        this.codigoMicrozona = codigoMicrozona;
-    }
-    public Long getCodigoSequencial() {
-        return codigoSequencial;
-    }
-    public void setCodigoSequencial(Long codigoSequencial) {
-        this.codigoSequencial = codigoSequencial;
+    public void setFaixasCEPMicrozonaPK(FaixasCEPMicrozonaPK faixasCEPMicrozonaPK) {
+        this.faixasCEPMicrozonaPK = faixasCEPMicrozonaPK;
     }
     public int getCEPinicial() {
         return CEPinicial;
@@ -60,19 +48,17 @@ public class FaixasCEPMicrozona {
     public void setCEPfinal(int cEPfinal) {
         CEPfinal = cEPfinal;
     }
-    
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + CEPfinal;
         result = prime * result + CEPinicial;
-        result = prime * result + ((codigoMicrozona == null) ? 0 : codigoMicrozona.hashCode());
-        result = prime * result + ((codigoSequencial == null) ? 0 : codigoSequencial.hashCode());
+        result = prime * result + ((faixasCEPMicrozonaPK == null) ? 0 : faixasCEPMicrozonaPK.hashCode());
         return result;
     }
-    
-    
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -86,17 +72,12 @@ public class FaixasCEPMicrozona {
             return false;
         if (CEPinicial != other.CEPinicial)
             return false;
-        if (codigoMicrozona == null) {
-            if (other.codigoMicrozona != null)
+        if (faixasCEPMicrozonaPK == null) {
+            if (other.faixasCEPMicrozonaPK != null)
                 return false;
-        } else if (!codigoMicrozona.equals(other.codigoMicrozona))
-            return false;
-        if (codigoSequencial == null) {
-            if (other.codigoSequencial != null)
-                return false;
-        } else if (!codigoSequencial.equals(other.codigoSequencial))
+        } else if (!faixasCEPMicrozonaPK.equals(other.faixasCEPMicrozonaPK))
             return false;
         return true;
-    }
-
+    } 
+    
 }

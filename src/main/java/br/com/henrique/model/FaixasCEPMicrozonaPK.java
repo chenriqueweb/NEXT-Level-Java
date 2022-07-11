@@ -2,40 +2,48 @@ package br.com.henrique.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Embeddable;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
+@Embeddable
 public class FaixasCEPMicrozonaPK implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private Long codigoMicrozona;
-    private Long codigoSequencial;
     
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer codigoMicrozona;
+    
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer codigoSequencial;
+
     // Construtor
     public FaixasCEPMicrozonaPK() {
         super();
     }
-    
-    public FaixasCEPMicrozonaPK(Long codigoMicrozona, Long codigoSequencial) {
+
+    public FaixasCEPMicrozonaPK(Integer codigoMicrozona, Integer codigoSequencial) {
         super();
         this.codigoMicrozona = codigoMicrozona;
         this.codigoSequencial = codigoSequencial;
     }
 
-    public Long getCodigoMicrozona() {
+    public Integer getCodigoMicrozona() {
         return codigoMicrozona;
     }
-
-    public void setCodigoMicrozona(Long codigoMicrozona) {
+    public void setCodigoMicrozona(Integer codigoMicrozona) {
         this.codigoMicrozona = codigoMicrozona;
     }
-
-    public Long getCodigoSequencial() {
+    public Integer getCodigoSequencial() {
         return codigoSequencial;
     }
-
-    public void setCodigoSequencial(Long codigoSequencial) {
+    public void setCodigoSequencial(Integer codigoSequencial) {
         this.codigoSequencial = codigoSequencial;
     }
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
 
-    
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -66,4 +74,5 @@ public class FaixasCEPMicrozonaPK implements Serializable {
             return false;
         return true;
     }
+    
 }

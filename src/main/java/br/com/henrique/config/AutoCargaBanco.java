@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 
 import br.com.henrique.model.Empresa;
 import br.com.henrique.model.Estado;
+import br.com.henrique.model.FaixasCEPMicrozona;
+import br.com.henrique.model.FaixasCEPMicrozonaPK;
 import br.com.henrique.model.Filial;
 import br.com.henrique.model.FilialPK;
 import br.com.henrique.model.Microzona;
@@ -14,6 +16,7 @@ import br.com.henrique.model.RotaEntrega;
 import br.com.henrique.model.RotaEntregaPK;
 import br.com.henrique.service.EmpresaService;
 import br.com.henrique.service.EstadoService;
+import br.com.henrique.service.FaixasCEPMicrozonaService;
 import br.com.henrique.service.FilialService;
 import br.com.henrique.service.MicrozonaService;
 import br.com.henrique.service.MunicipioService;
@@ -34,8 +37,8 @@ public class AutoCargaBanco implements CommandLineRunner {
     @Autowired
     private FilialService filialService;       
     
-//    @Autowired
-//    private FaixasCEPMicrozonaService faixasCEPMicrozona;    
+    @Autowired
+    private FaixasCEPMicrozonaService faixasCEPMicrozonaService;    
  
     @Autowired
     private MicrozonaService microzonaService;    
@@ -59,6 +62,7 @@ public class AutoCargaBanco implements CommandLineRunner {
         empresaService.addEmpresa(empresa4);  
 
         
+        
         // Carga da Tabela: ESTADO        
         Estado estadoRJ = new Estado("RJ", "Rio de Janeiro");
         Estado estadoSP = new Estado("SP","Sao Paulo");
@@ -68,7 +72,8 @@ public class AutoCargaBanco implements CommandLineRunner {
         estadoService.addEstado(estadoRJ);       
         estadoService.addEstado(estadoSP);
         estadoService.addEstado(estadoMG);       
-        estadoService.addEstado(estadoES);  
+        estadoService.addEstado(estadoES); 
+        
         
         
         // Carga da Tabela: MUNICIPIO
@@ -85,6 +90,7 @@ public class AutoCargaBanco implements CommandLineRunner {
         municipioService.addMunicipio(municipioSP2);     
         
         
+        
         // Carga da Tabela: FILIAL
         FilialPK filialPK = new FilialPK();
         filialPK.setCodigoEmpresa(1);
@@ -96,6 +102,7 @@ public class AutoCargaBanco implements CommandLineRunner {
         filialPK.setCodigoFilial(2);
         Filial filial2 = new Filial(filialPK, "Filial-02", "222.456.0001/01", 2);
         filialService.addFilial(filial2);
+        
         
         
         // Carga da Tabela: MICROZONA
@@ -110,6 +117,7 @@ public class AutoCargaBanco implements CommandLineRunner {
         microzonaService.addMicrozona(microzona3);
         microzonaService.addMicrozona(microzona4);
         microzonaService.addMicrozona(microzona5);        
+        
         
         
         // Carga da Tabela: ROTA DE ENTREGA
@@ -138,8 +146,36 @@ public class AutoCargaBanco implements CommandLineRunner {
         rotaEntregaPK.setCodigoRota(5);
         RotaEntrega rotaEntrega5 = new RotaEntrega(rotaEntregaPK, "Rota-05", "I", 1, 1, 3);        
         rotaEntregaService.addRotaEntrega(rotaEntrega5);        
+
         
         
+        // Carga da Tabela: FAIXAS DE MICROZONA
+        FaixasCEPMicrozonaPK faixasCEPMicrozonaPK = new FaixasCEPMicrozonaPK();
+        
+        faixasCEPMicrozonaPK.setCodigoMicrozona(1);
+        faixasCEPMicrozonaPK.setCodigoSequencial(1);
+        FaixasCEPMicrozona faixasCEPMicrozona1 = new FaixasCEPMicrozona(faixasCEPMicrozonaPK, 1000, 2000);
+        faixasCEPMicrozonaService.addFaixasCEPMicrozona(faixasCEPMicrozona1);
+        
+        faixasCEPMicrozonaPK.setCodigoMicrozona(1);
+        faixasCEPMicrozonaPK.setCodigoSequencial(2);
+        FaixasCEPMicrozona faixasCEPMicrozona2 = new FaixasCEPMicrozona(faixasCEPMicrozonaPK, 2001, 3000);
+        faixasCEPMicrozonaService.addFaixasCEPMicrozona(faixasCEPMicrozona2);
+        
+        faixasCEPMicrozonaPK.setCodigoMicrozona(1);
+        faixasCEPMicrozonaPK.setCodigoSequencial(3);
+        FaixasCEPMicrozona faixasCEPMicrozona3 = new FaixasCEPMicrozona(faixasCEPMicrozonaPK, 3001, 4000);
+        faixasCEPMicrozonaService.addFaixasCEPMicrozona(faixasCEPMicrozona3);
+        
+        faixasCEPMicrozonaPK.setCodigoMicrozona(2);
+        faixasCEPMicrozonaPK.setCodigoSequencial(1);
+        FaixasCEPMicrozona faixasCEPMicrozona4 = new FaixasCEPMicrozona(faixasCEPMicrozonaPK, 4001, 5000);
+        faixasCEPMicrozonaService.addFaixasCEPMicrozona(faixasCEPMicrozona4);
+        
+        faixasCEPMicrozonaPK.setCodigoMicrozona(3);
+        faixasCEPMicrozonaPK.setCodigoSequencial(1);
+        FaixasCEPMicrozona faixasCEPMicrozona5 = new FaixasCEPMicrozona(faixasCEPMicrozonaPK, 5001, 6000);
+        faixasCEPMicrozonaService.addFaixasCEPMicrozona(faixasCEPMicrozona5);
         
 //      @GetMapping("/empresa")
 //      public List<Empresa> listar() {
