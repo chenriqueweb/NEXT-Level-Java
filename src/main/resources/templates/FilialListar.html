@@ -53,17 +53,18 @@
 						<td th:text="${filial.cnpj}"></td>
 						<td th:text="${filial.municipio}"></td>
 
-						<td>
-    						<a th:href="@{/filial/editar/{empresa}/{codigo}(empresa=${filial.filialPK.codigoEmpresa},codigo=${filial.filialPK.codigoFilial})}">Editar</a>
+						<td><a
+							th:href="@{/filial/editar/{empresa}/{codigo}(empresa=${filial.filialPK.codigoEmpresa},codigo=${filial.filialPK.codigoFilial})}">Editar</a>
 						</td>
 
 						<td>
-              				<form th:action="@{/filial/remover/{empresa}/{codigo}(empresa=${filial.filialPK.codigoEmpresa},codigo=${filial.filialPK.codigoFilial})}"  
+							<form
+								th:action="@{/filial/remover/{empresa}/{codigo}(empresa=${filial.filialPK.codigoEmpresa},codigo=${filial.filialPK.codigoFilial})}"
 								th:method="delete">
 								<button>Remover</button>
 							</form>
 						</td>
-						
+
 					</tr>
 				</tbody>
 

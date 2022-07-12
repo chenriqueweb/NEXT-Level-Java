@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 <head>
 
 <meta charset="utf-8" />
@@ -7,8 +8,10 @@
 
 <title>NEXT Level - Java</title>
 
-<link rel="shortcut icon" href="https://www.via.com.br/wp-content/themes/viavarejo/assets/images/favicon.png?v=2">
-<link href="../static/css/estilo.css" th:href="@{/css/estilo.css}" rel="stylesheet" />
+<link rel="shortcut icon"
+	href="https://www.via.com.br/wp-content/themes/viavarejo/assets/images/favicon.png?v=2">
+<link href="../static/css/estilo.css" th:href="@{/css/estilo.css}"
+	rel="stylesheet" />
 
 </head>
 
@@ -21,7 +24,7 @@
 				<li><a th:href="@{/faixasCEPMicrozona/novo}"> Novo </a></li>
 			</ul>
 		</nav>
-
+ 
 	</header>
 
 	<main>
@@ -36,23 +39,22 @@
 				th:method="${faixasCEPMicrozona.novo} ? post : put">
 
 				<div>
-					<label>Código Microzona: </label> 
-					<input th:field="*{faixasCEPMicrozonaPK.codigoMicrozona}" />
+					<label>Código Microzona: </label> <input
+						th:field="*{faixasCEPMicrozonaPK.codigoMicrozona}" />
 				</div>
 
 				<div th:if="${!faixasCEPMicrozona.novo}">
-					<label>Sequencia: </label> 
-					<input th:field="*{faixasCEPMicrozonaPK.codigoSequencial}" readonly="readonly" />
+					<label>Sequencia: </label> <input
+						th:field="*{faixasCEPMicrozonaPK.codigoSequencial}"
+						readonly="readonly" />
 				</div>
 
 				<div>
-					<label>CEP Inicial: </label> 
-					<input th:field="*{CEPinicial}" />
+					<label>CEP Inicial: </label> <input th:field="*{CEPinicial}" />
 				</div>
 
 				<div>
-					<label>CEP Final: </label> 
-					<input th:field="*{CEPfinal}" />
+					<label>CEP Final: </label> <input th:field="*{CEPfinal}" />
 				</div>
 
 				<div>

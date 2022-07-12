@@ -32,9 +32,9 @@ public class FaixasCEPMicrozonaController {
         List<FaixasCEPMicrozona> faixasCEPMicrozona = faixasCEPMicrozonaService.findAll();
         return ResponseEntity.ok().body(faixasCEPMicrozona);
     }    
+
     
-    
-    // Busca por Faixa de CEP da Microzona
+    // Busca na Faixa de CEP da Microzona
     @GetMapping(path = "/{codigoMicrozona}/{codigoSequencial}")
     public ResponseEntity<FaixasCEPMicrozona> findById(@PathVariable Integer codigoMicrozona,
                                                        @PathVariable Integer codigoSequencial) {

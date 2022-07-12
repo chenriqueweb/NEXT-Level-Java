@@ -45,13 +45,15 @@
 				<tbody>
 
 					<tr th:each="faixasCEPMicrozona: ${faixasCEPMicrozonas}">
-						<td th:text="${faixasCEPMicrozona.faixasCEPMicrozonaPK.codigoMicrozona}"></td>
-						<td th:text="${faixasCEPMicrozona.faixasCEPMicrozonaPK.codigoSequencial}"></td>
+						<td
+							th:text="${faixasCEPMicrozona.faixasCEPMicrozonaPK.codigoMicrozona}"></td>
+						<td
+							th:text="${faixasCEPMicrozona.faixasCEPMicrozonaPK.codigoSequencial}"></td>
 						<td th:text="${faixasCEPMicrozona.CEPinicial}"></td>
 						<td th:text="${faixasCEPMicrozona.CEPfinal}"></td>
 
-						<td>
-						    <a th:href="@{/faixasCEPMicrozona/editar/{codigoMicrozona}/{codigoSequencial}(codigoMicrozona=${faixasCEPMicrozona.faixasCEPMicrozonaPK.codigoMicrozona},codigoSequencial=${faixasCEPMicrozona.faixasCEPMicrozonaPK.codigoSequencial})}">Editar</a>
+						<td><a
+							th:href="@{/faixasCEPMicrozona/editar/{codigoMicrozona}/{codigoSequencial}(codigoMicrozona=${faixasCEPMicrozona.faixasCEPMicrozonaPK.codigoMicrozona},codigoSequencial=${faixasCEPMicrozona.faixasCEPMicrozonaPK.codigoSequencial})}">Editar</a>
 						</td>
 
 						<td>
@@ -61,7 +63,7 @@
 								<button>Remover</button>
 							</form>
 						</td>
-						
+
 					</tr>
 				</tbody>
 			</table>

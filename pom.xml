@@ -10,7 +10,7 @@
 	<name>NEXT-Level - Java</name>
 	<description>API do NEXT-Level Java</description>  
   
-	<parent>   
+	<parent>     
 		<groupId>org.springframework.boot</groupId>  
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.7.1</version>
