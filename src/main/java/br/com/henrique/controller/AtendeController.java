@@ -1,6 +1,5 @@
 package br.com.henrique.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.simple.JSONObject;
@@ -11,8 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
-
+import br.com.henrique.ViaCepClient;
+import br.com.henrique.model.Cep;
 import br.com.henrique.model.FaixasCEPMicrozona;
 import br.com.henrique.service.FaixasCEPMicrozonaService;
 
@@ -42,13 +41,18 @@ public class AtendeController {
 //                System.out.println("CEPFinal:" + faixasCEPMicrozona.get(x).getCEPfinal());
                 
 //                objetoJson.put(faixasCEPMicrozona.get(x).getClass().getdeclaretion, faixasCEPMicrozona.get(x).getFaixasCEPMicrozonaPK().getCodigoMicrozona());
-                                
+
+              Cep cep = ViaCepClient.findCep("03422001");
+              
+              System.out.println(cep.getLogradouro());
+              
                 objetoJson.put("microzona", faixasCEPMicrozona.get(x).getFaixasCEPMicrozonaPK().getCodigoMicrozona());
                 objetoJson.put("sequencial", faixasCEPMicrozona.get(x).getFaixasCEPMicrozonaPK().getCodigoSequencial());
                 objetoJson.put("cepInicial", faixasCEPMicrozona.get(x).getCEPinicial());
                 objetoJson.put("cepFinal", faixasCEPMicrozona.get(x).getCEPfinal());                
                 
 //                System.out.println(objetoJson.toJSONString());
+                
             }
         }
         

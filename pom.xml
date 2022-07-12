@@ -59,7 +59,24 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+    <dependency>  
+        <groupId>br.com.henrique</groupId>
+        <artifactId>via-cep</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+<dependency>
+    <groupId>com.google.code.gson</groupId>
+    <artifactId>gson</artifactId>
+    </dependency>    
 	</dependencies>
+	
+<repositories>
+    <repository>
+        <id>repsy</id>
+        <url>https://repo.repsy.io/mvn/thalles/via-cep</url>
+    </repository>
+</repositories>	
 
 	<build>
 		<plugins>
