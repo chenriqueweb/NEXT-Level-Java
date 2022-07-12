@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head>
 
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width"/>
+<meta name="viewport" content="width=device-width" />
 
 <title>NEXT Level - Java</title>
 
@@ -24,39 +24,39 @@
 		</nav>
 
 	</header>
-	
+
 	<main>
 		<section>
 			<h1>Cadastro de Estados</h1>
 		</section>
 
 		<section>
-			<form th:action="${estado.novo} ? @{/estado/form} : @{/estado/salvar/{sigla}(sigla=${estado.sigla})}" 
-				th:object="${estado}" th:method="${estado.novo} ? post : put">				
-	
-   		        <div th:if="${!estado.novo}">
+			<form
+				th:action="${estado.novo} ? @{/estado/form} : @{/estado/salvar/{sigla}(sigla=${estado.sigla})}"
+				th:object="${estado}" th:method="${estado.novo} ? post : put">
+
+				<div th:if="${!estado.novo}">
 					<label>Sigla: </label> 
-					<input th:field="*{sigla}" readonly="readonly"/>
+					<input th:field="*{sigla}" readonly="readonly" />
 				</div>
-				
-   		        <div th:if="${estado.novo}">
+
+				<div th:if="${estado.novo}">
 					<label>Sigla: </label> 
-					<input th:field="*{sigla}"/>
-<!--  type="text" size="01" maxlength="02" == Para limitar o tamanho do campo fora do CSS -->					
-				</div>				
-				
+					<input th:field="*{sigla}" />
+					<!--  type="text" size="01" maxlength="02" == Para limitar o tamanho do campo fora do CSS -->
+				</div>
+
 				<div>
-					<label>Nome: </label> 
-					<input th:field="*{nome}"/>
+					<label>Nome: </label> <input th:field="*{nome}" />
 				</div>
 
 				<div>
 					<button>Salvar</button>
 				</div>
-	
-			</form> 
+
+			</form>
 		</section>
-		
+
 	</main>
 </body>
 

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head>
 
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width"/>
+<meta name="viewport" content="width=device-width" />
 
 <title>NEXT Level - Java</title>
 
@@ -18,44 +18,46 @@
 		<nav>
 			<ul>
 				<li><a th:href="@{/}">MENU</a></li>
-  				<li><a th:href="@{/municipio/novo}"> Novo </a></li>				
+				<li><a th:href="@{/municipio/novo}"> Novo </a></li>
 			</ul>
 		</nav>
 
 	</header>
-	
+
 	<main>
 		<section>
 			<h1>Lista Municipios</h1>
 		</section>
-		
+
 		<section>
 			<table>
 				<thead>
-					<tr>	
+					<tr>
 						<th>Codigo</th>
 						<th>Nome</th>
 						<th>Estado</th>
 					</tr>
 				</thead>
-				
+
 				<tbody>
 
-   					 <tr th:each="municipio: ${municipios}">
-						<td th:text="${municipio.codigo}"></td>
+					<tr th:each="municipio: ${municipios}">
+ 						<td th:text="${municipio.codigo_ID}"></td>
 						<td th:text="${municipio.nome}"></td>
-						<td th:text="${municipio.siglaEstado.sigla}"></td>
-						
-						<td>
-							<a th:href="@{/municipio/editar/{codigo}(codigo=${municipio.codigo})}">Editar</a>
+						<td th:text="${municipio.estado.sigla}"></td>
+
+						<td><a
+							th:href="@{/municipio/editar/{codigo}(codigo=${municipio.codigo_ID})}">Editar</a>
 						</td>
-						
+
 						<td>
-       						<form th:action="@{/municipio/remover/{codigo}(codigo=${municipio.codigo})}"
+							<form
+								th:action="@{/municipio/remover/{codigo}(codigo=${municipio.codigo_ID})}"
 								th:method="delete">
 								<button>Remover</button>
 							</form>
 						</td>
+						
 					</tr>
 				</tbody>
 			</table>

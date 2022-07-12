@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width"/>
+<meta name="viewport" content="width=device-width" />
 
 <title>NEXT Level - Java</title>
 
@@ -24,48 +23,46 @@
 		</nav>
 
 	</header>
-	
+
 	<main>
 		<section>
 			<h1>Cadastro de Filiais</h1>
 		</section>
 
 		<section>
-			<form th:action="${filial.novo} ? @{/filiai} : @{/filiai/{codigo}(codigo=${filial.codigo})}" 
+			<form
+				th:action="${filial.novo} ? @{/filial/form} : @{/filial/salvar/{empresa}/{codigo}(empresa=${filialPK.codigoEmpresa},codigo=${filialPK.codigoFilial})}"
 				th:object="${filial}" th:method="${filial.novo} ? post : put">
-			
+
 				<div th:if="${!filial.novo}">
 					<label>Empresa: </label> 
-					<input th:field="*{filial.codigoEmpresa}" readonly="readonly" />
+					<input th:field="*{filialPK.codigoEmpresa}" readonly="readonly" />
 				</div>
-	
+
 				<div th:if="${!filial.novo}">
 					<label>Código: </label> 
-					<input th:field="*{filialChavePK.codigoFilial}" readonly="readonly" />
+					<input th:field="*{filialPK.codigoFilial}" readonly="readonly" />
 				</div>
 				
 				<div>
-					<label>Nome: </label> 
-					<input th:field="*{nome}"/>
+					<label>Nome: </label> <input th:field="*{nome}" />
 				</div>
 
 				<div>
-					<label>CNPJ: </label> 
-					<input th:field="*{cnpj}"/>
+					<label>CNPJ: </label> <input th:field="*{cnpj}" />
 				</div>
-				
+
 				<div>
-					<label>Munipio: </label> 
-					<input th:field="*{municipio}"/>
+					<label>Munipio: </label> <input th:field="*{municipio}" />
 				</div>
-				
+
 				<div>
 					<button>Salvar</button>
 				</div>
-				
-			</form> 
+
+			</form>
 		</section>
-		
+
 	</main>
 </body>
 

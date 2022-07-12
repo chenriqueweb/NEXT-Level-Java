@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width"/>
+<meta name="viewport" content="width=device-width" />
 
 <title>NEXT Level - Java</title>
 
@@ -18,38 +17,39 @@
 		<nav>
 			<ul>
 				<li><a th:href="@{/}">MENU</a></li>
-   				<li><a th:href="@{/estado/novo}"> Novo </a></li>
+				<li><a th:href="@{/estado/novo}"> Novo </a></li>
 			</ul>
 		</nav>
 
 	</header>
-	
+
 	<main>
 		<section>
 			<h1>Lista Estados</h1>
 		</section>
-		
+
 		<section>
 			<table>
 				<thead>
-					<tr>	
+					<tr>
 						<th>Sigla</th>
 						<th>Nome</th>
 					</tr>
 				</thead>
-				
+
 				<tbody>
 
-   					 <tr th:each="estado: ${estados}">
+					<tr th:each="estado: ${estados}">
 						<td th:text="${estado.sigla}"></td>
 						<td th:text="${estado.nome}"></td>
-						
-						<td>
-							<a th:href="@{/estado/editar/{sigla}(sigla=${estado.sigla})}">Editar</a>
+
+						<td><a
+							th:href="@{/estado/editar/{sigla}(sigla=${estado.sigla})}">Editar</a>
 						</td>
-						
+
 						<td>
-       						<form th:action="@{/estado/remover/{sigla}(sigla=${estado.sigla})}"
+							<form
+								th:action="@{/estado/remover/{sigla}(sigla=${estado.sigla})}"
 								th:method="delete">
 								<button>Remover</button>
 							</form>

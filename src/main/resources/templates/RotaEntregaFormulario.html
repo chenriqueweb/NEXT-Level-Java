@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width"/>
+<meta name="viewport" content="width=device-width" />
 
 <title>NEXT Level - Java</title>
 
@@ -24,58 +23,60 @@
 		</nav>
 
 	</header>
-	
+
 	<main>
 		<section>
 			<h1>Cadastro de Rotas de Entrega</h1>
 		</section>
 
 		<section>
-			<form th:action="${rotaEntrega.novo} ? @{/rotaEntrega} : @{/rotaEntrega/{codigo}(codigo=${rotaEntrega.codigo})}" 
-				th:object="${rotaEntrega}" th:method="${rotaEntrega.novo} ? post : put">
+			<form
+				th:action="${rotaEntrega.novo} ? @{/rotaEntrega/form} : @{/rotaEntrega/salvar/{siglaEstado}/{codigoRota}(siglaEstado=${rotaEntregaPK.siglaEstado},codigoRota=${rotaEntregaPK.codigoRota})}"
+				th:object="${rotaEntrega}"
+				th:method="${rotaEntrega.novo} ? post : put">
 
 				<div th:if="${!rotaEntrega.novo}">
 					<label>Estado: </label> 
-					<input th:field="*{siglaEstado}" readonly="readonly" />
+					<input th:field="*{rotaEntregaPK.siglaEstado}" readonly="readonly" />
 				</div>
-				
-				<div>
+
+				<div th:if="${!rotaEntrega.novo}">
 					<label>Codigo: </label> 
-					<input th:field="*{codigo}"/>
+					<input th:field="*{rotaEntregaPK.codigoRota}" readonly="readonly" />
 				</div>
 
 				<div>
 					<label>Nome: </label> 
-					<input th:field="*{nome}"/>
+					<input th:field="*{nome}" />
 				</div>
-				
+
 				<div>
 					<label>Status: </label> 
-					<input th:field="*{status}"/>
+					<input th:field="*{status}" />
 				</div>
 
 				<div>
 					<label>Empresa: </label> 
-					<input th:field="*{codigoEmpresa}"/>
+					<input th:field="*{codigoEmpresa}" />
 				</div>
 
 				<div>
 					<label>Filial: </label> 
-					<input th:field="*{codigoFilial}"/>
+					<input th:field="*{codigoFilial}" />
 				</div>
-				
+
 				<div>
 					<label>Prazo Expedicao: </label> 
-					<input th:field="*{prazoExpedicao}"/>
+					<input th:field="*{prazoExpedicao}" />
 				</div>
-				
+
 				<div>
 					<button>Salvar</button>
 				</div>
-	
-			</form> 
+
+			</form>
 		</section>
-		
+
 	</main>
 </body>
 

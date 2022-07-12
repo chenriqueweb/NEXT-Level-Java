@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -12,6 +13,7 @@ import br.com.henrique.model.Empresa;
 import br.com.henrique.model.Estado;
 import br.com.henrique.model.FaixasCEPMicrozona;
 import br.com.henrique.model.Filial;
+import br.com.henrique.model.FilialPK;
 import br.com.henrique.model.Microzona;
 import br.com.henrique.model.Municipio;
 import br.com.henrique.model.RotaEntrega;
@@ -128,8 +130,7 @@ public class NextLevelController {
         public String atualizaEstadoWeb(Estado estado) {
             Estado estadoAntes = estadoService.findById(estado.getSigla());
             
-            estadoService.deletaEstado(estadoAntes.getSigla());
-            estadoService.addEstado(estado);
+            estadoService.updateEstado(estadoAntes.getSigla(), estado);
 
             return "redirect:/estadoListar";        
         }            
@@ -170,6 +171,8 @@ public class NextLevelController {
             
             municipioService.deletaMunicipio(municipioAntes.getCodigo_ID());
             municipioService.addMunicipio(municipio);
+            
+//            municipioService.updateMunicipio(municipioAntes.getCodigo_ID(), municipio);
 
             return "redirect:/municipioListar";        
         } 
@@ -200,8 +203,29 @@ public class NextLevelController {
             filialService.addFilial(filial);
             
             return "redirect:/filialListar";
-        }          
+        }       
+        
                 
+        // Atualiza dados da Filial     
+        // method Post (página)
+        @PostMapping("/filial/salvar/{codigoEmpresa}/{codigoFilial}")
+        public String atualizaFilialWeb(@PathVariable Integer codigoEmpresa,
+                                        @PathVariable Integer codigoFilial,
+                                        Filial filial) {
+
+            FilialPK filialPK = new FilialPK();
+            filialPK.setCodigoEmpresa(codigoEmpresa);
+            filialPK.setCodigoFilial(codigoFilial);              
+            Filial filialAntes = filialService.findById(filialPK);            
+            
+            filialService.deletaFilial(filialPK);
+            filialService.addFilial(filial);
+            
+//            filialService.updateFilial(filialAntes.getFilialPK(), filial);
+
+            return "redirect:/filialListar";        
+        } 
+        
         
         //--------------------------------------------------------------------------------------                
         // ### Rota de Entrega
@@ -230,18 +254,18 @@ public class NextLevelController {
             return "redirect:/rotaEntregaListar";
         }              
         
-//        // Atualiza dados da Rota de Entrega
-//        // method Post (página)
-//        @PostMapping("/rotaEntrega/salvar/{siglaEstado}/{codigo}")
-//        public String atualizaRotaEntregaoWeb(RotaEntrega rotaEntrega) {
-//            RotaEntrega rotaEntregaAntes = rotaEntregaService.findById(rotaEntrega.getRotaEntregaPK());
-//            
-//            rotaEntregaService.deletaRotaEntrega(rotaEntregaAntes.getRotaEntregaPK());
-//            rotaEntregaService.addRotaEntrega(rotaEntrega);
-//
-//            return "redirect:/rotaEntregaListar";        
-//        }             
-//        
+        // Atualiza dados da Rota de Entrega
+        // method Post (página)
+        @PostMapping("/rotaEntrega/salvar/{siglaEstado}/{codigo}")
+        public String atualizaRotaEntregaoWeb(RotaEntrega rotaEntrega) {
+            RotaEntrega rotaEntregaAntes = rotaEntregaService.findById(rotaEntrega.getRotaEntregaPK());
+            
+            rotaEntregaService.deletaRotaEntrega(rotaEntregaAntes.getRotaEntregaPK());
+            rotaEntregaService.addRotaEntrega(rotaEntrega);
+
+            return "redirect:/rotaEntregaListar";        
+        }             
+        
 
         //--------------------------------------------------------------------------------------            
         // ### Microzona
@@ -289,7 +313,7 @@ public class NextLevelController {
             List<FaixasCEPMicrozona> faixasCEPMicrozonas = faixasCEPMicrozonaService.findAll();
             
             ModelAndView modelAndView = new ModelAndView("FaixasCEPMicrozonaListar");
-            modelAndView.addObject("faixasCEPMicrozona", faixasCEPMicrozonas);
+            modelAndView.addObject("faixasCEPMicrozonas", faixasCEPMicrozonas);
             
             return modelAndView;
         }

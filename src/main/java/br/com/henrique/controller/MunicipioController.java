@@ -64,6 +64,20 @@ public class MunicipioController {
     }
     
     //----------------------------------------------------------------------------------------
+    // Altera Municipio
+    // method Post (página)
+    @GetMapping(path = "/editar/{codigo}")
+    public ModelAndView editarMunicipioWeb(@PathVariable Integer codigo) {
+        ModelAndView modelAndView = new ModelAndView("MunicipioFormulario");
+        
+        Municipio municipio = municipioService.findById(codigo);
+        
+        modelAndView.addObject("municipio", municipio);
+        
+        return modelAndView;
+    }        
+
+    
     // Deleta estado e chama Lista de Municipio
     // method Post (página)
 //    @PostMapping(path = "/remover/{codigo}")
@@ -78,16 +92,4 @@ public class MunicipioController {
 //        return modelAndView;
 //    } 
 //    
-//    // Altera Municipio
-//    // method Post (página)
-//    @GetMapping(path = "/editar/{codigo}")
-//    public ModelAndView editarMunicipioWeb(@PathVariable Integer codigo) {
-//        ModelAndView modelAndView = new ModelAndView("MunicipioFormulario");
-//        
-//        Municipio municipio = municipioService.findById(codigo);
-//        
-//        modelAndView.addObject("municipio", municipio);
-//        
-//        return modelAndView;
-//    }        
 }

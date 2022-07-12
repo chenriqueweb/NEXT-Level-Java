@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.henrique.model.Filial;
@@ -85,37 +86,43 @@ public class FilialController {
         return ResponseEntity.noContent().build();
     }
     
-//    //-----------------------------------------------------------------------------------------------------
-//    // Exclui Filial e chama Lista de Filiais
-//    // method Post (página)
-//    @PostMapping(path = "/remover/{empresa}/{codigo}")
-//    public ModelAndView deletaFilialWeb(@PathVariable Integer codigoEmpresa, 
-//                                        @PathVariable Integer codigoFilial,
-//                                        @RequestBody Filial filial) {
-//        filialService.deletaFilial(codigoEmpresa, codigoFilial, filial);
-//        
-//        List<Filial> filiais = filialService.findAll();
-//        
-//        ModelAndView modelAndView = new ModelAndView("FilialListar");
-//        modelAndView.addObject("filiais", filiais);
-//        
-//        return modelAndView;
-//    }         
-//    
-//    // Altera Filial
-//    // method Post (página)
-//    @GetMapping(path = "/editar/{empresa}/{codigo}")
-//    public ModelAndView editarFilialaWeb(@PathVariable Integer codigoEmpresa,
-//                                         @PathVariable Integer codigoFilial,
-//                                         @RequestBody Filial filial) {
-//        ModelAndView modelAndView = new ModelAndView("FilialFormulario");
-//        
-//        Filial filialAltera = filialService.findById(codigoEmpresa, codigoFilial, filial);
-//        
-//        modelAndView.addObject("filial", filialAltera);
-//        
-//        return modelAndView;
-//    }    
+    //-----------------------------------------------------------------------------------------------------
+    // Exclui Filial e chama Lista de Filiais
+    // method Post (página)
+    @PostMapping(path = "/remover/{codigoEmpresa}/{codigoFilial}")
+    public ModelAndView deletaFilialWeb(@PathVariable Integer codigoEmpresa, 
+                                        @PathVariable Integer codigoFilial) {
+        
+        FilialPK filialPK = new FilialPK();
+        filialPK.setCodigoEmpresa(codigoEmpresa);
+        filialPK.setCodigoFilial(codigoFilial);          
+        
+        filialService.deletaFilial(filialPK);
+        
+        List<Filial> filiais = filialService.findAll();
+        
+        ModelAndView modelAndView = new ModelAndView("FilialListar");
+        modelAndView.addObject("filiais", filiais);
+        
+        return modelAndView;
+    }         
+    
+    // Altera Filial
+    // method Post (página)
+    @GetMapping(path = "/editar/{codigoEmpresa}/{codigoFilial}")
+    public ModelAndView editarFilialaWeb(@PathVariable Integer codigoEmpresa,
+                                         @PathVariable Integer codigoFilial) {
+        
+        FilialPK filialPK = new FilialPK();
+        filialPK.setCodigoEmpresa(codigoEmpresa);
+        filialPK.setCodigoFilial(codigoFilial);              
+        Filial filialAltera = filialService.findById(filialPK);
+        
+        ModelAndView modelAndView = new ModelAndView("FilialFormulario");
+        modelAndView.addObject("filial", filialAltera);
+        
+        return modelAndView;
+    }    
 }
 
 

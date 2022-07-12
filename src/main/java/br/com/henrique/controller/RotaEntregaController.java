@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.henrique.model.RotaEntrega;
@@ -89,32 +90,32 @@ public class RotaEntregaController {
 //    //-----------------------------------------------------------------------------------------------------
 //    // Exclui rotaEntrega e chama Lista de RotaEntregas
 //    // method Post (página)
-//    @PostMapping(path = "/remover/{siglaEstado}/{codigoRota}")
-//    public ModelAndView deletaRotaEntregaWeb(@PathVariable String siglaEstado, 
-//                                             @PathVariable Integer codigoRota,
-//                                             @RequestBody RotaEntrega rotaEntrega) {
-//        rotaEntregaService.deletaRotaEntrega(rotaEntrega.getRotaEntregaPK());
-//        
-//        List<RotaEntrega> rotaEntregas = rotaEntregaService.findAll();
-//        
-//        ModelAndView modelAndView = new ModelAndView("RotaEntregaListar");
-//        modelAndView.addObject("rotaEntregas", rotaEntregas);
-//        
-//        return modelAndView;
-//    }         
-//    
-//    // Altera rotaEntrega
-//    // method Post (página)
-//    @GetMapping(path = "/editar/{siglaEstado}/{codigoRota}")
-//    public ModelAndView editarRotaEntregaWeb(@PathVariable String siglaEstado,
-//                                             @PathVariable Integer codigoRota,
-//                                             @RequestBody RotaEntrega rotaEntrega) {
-//        ModelAndView modelAndView = new ModelAndView("RotaEntregaFormulario");
-//        
-//        RotaEntrega rotaEntregaAltera = rotaEntregaService.findById(rotaEntrega.getRotaEntregaPK());
-//        
-//        modelAndView.addObject("rotaEntrega", rotaEntregaAltera);
-//        
-//        return modelAndView;
-//    }
+    @PostMapping(path = "/remover/{siglaEstado}/{codigoRota}")
+    public ModelAndView deletaRotaEntregaWeb(@PathVariable String siglaEstado, 
+                                             @PathVariable Integer codigoRota,
+                                             @RequestBody RotaEntrega rotaEntrega) {
+        rotaEntregaService.deletaRotaEntrega(rotaEntrega.getRotaEntregaPK());
+        
+        List<RotaEntrega> rotaEntregas = rotaEntregaService.findAll();
+        
+        ModelAndView modelAndView = new ModelAndView("RotaEntregaListar");
+        modelAndView.addObject("rotaEntregas", rotaEntregas);
+        
+        return modelAndView;
+    }         
+    
+    // Altera rotaEntrega
+    // method Post (página)
+    @GetMapping(path = "/editar/{siglaEstado}/{codigoRota}")
+    public ModelAndView editarRotaEntregaWeb(@PathVariable String siglaEstado,
+                                             @PathVariable Integer codigoRota,
+                                             @RequestBody RotaEntrega rotaEntrega) {
+        ModelAndView modelAndView = new ModelAndView("RotaEntregaFormulario");
+        
+        RotaEntrega rotaEntregaAltera = rotaEntregaService.findById(rotaEntrega.getRotaEntregaPK());
+        
+        modelAndView.addObject("rotaEntrega", rotaEntregaAltera);
+        
+        return modelAndView;
+    }
 }

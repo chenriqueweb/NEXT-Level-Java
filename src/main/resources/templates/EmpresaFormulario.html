@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width"/>
+<meta name="viewport" content="width=device-width" />
 
 <title>NEXT Level - Java</title>
 
@@ -25,47 +24,48 @@
 		</nav>
 
 	</header>
-	
+
 	<main>
 		<section>
 			<h1>Cadastro de Empresas</h1>
 		</section>
 
 		<section>
-		
-			<form th:action="${empresa.novo} ? @{/empresa/form} : @{/empresa/salvar/{codigo}(codigo=${empresa.codigo})}" 
+
+			<form
+				th:action="${empresa.novo} ? @{/empresa/form} : @{/empresa/salvar/{codigo}(codigo=${empresa.codigo})}"
 				th:object="${empresa}" th:method="${empresa.novo} ? post : put">
-			
+
 				<div th:if="${!empresa.novo}">
 					<label>Código: </label> 
 					<input th:field="*{codigo}" readonly="readonly" />
 				</div>
-				
+
 				<div>
 					<label>Razao Social: </label> 
-					<input th:field="*{razaoSocial}"/>
+					<input th:field="*{razaoSocial}" />
 				</div>
 
 				<div>
 					<label>CNPJ: </label> 
-					<input th:field="*{raizCNPJ}"/>
+					<input th:field="*{raizCNPJ}" />
 				</div>
-				
+
 				<div>
 					<label>Data Abertura: </label> 
-					<input th:field="*{dataAbertura}"/>
+					<input th:field="*{dataAbertura}" />
 				</div>
-				
-<!-- The actual snackbar -->
-<div id="snackbar">Empresa Cadastrada com sucesso !</div>	    
-	    
+
+				<!-- The actual snackbar -->
+				<div id="snackbar">Empresa Cadastrada com sucesso !</div>
+
 				<div>
 					<button onclick="myFunction()">Salvar</button>
 				</div>
 
-			</form> 
+			</form>
 		</section>
-		
+
 	</main>
 </body>
 

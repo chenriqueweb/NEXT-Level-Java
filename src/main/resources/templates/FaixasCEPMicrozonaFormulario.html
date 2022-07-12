@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width"/>
+<meta name="viewport" content="width=device-width" />
 
 <title>NEXT Level - Java</title>
 
@@ -19,49 +18,50 @@
 			<ul>
 				<li><a th:href="@{/}">MENU</a></li>
 				<li><a th:href="@{/faixasCEPMicrozonaListar}"> Listar </a></li>
-				<li><a th:href="@{/faixasCEPMicrozona/novo}"> Novo </a></li> 
+				<li><a th:href="@{/faixasCEPMicrozona/novo}"> Novo </a></li>
 			</ul>
 		</nav>
 
 	</header>
-	
+
 	<main>
 		<section>
 			<h1>Cadastro de Faixas de CEP das Microzonas</h1>
 		</section>
 
 		<section>
-			<form th:action="${faixasCEPMicrozona.novo} ? @{/faixasCEPMicrozona} : @{/faixasCEPMicrozona/{codigo}(codigo=${faixasCEPMicrozona.codigo})}" 
-				th:object="${faixasCEPMicrozona}" th:method="${faixasCEPMicrozona.novo} ? post : put">
+			<form
+				th:action="${faixasCEPMicrozona.novo} ? @{/faixasCEPMicrozona} : @{/faixasCEPMicrozona/{codigoMicrozona}(codigoMicrozona=${faixasCEPMicrozonaPK.codigoMicrozona})}"
+				th:object="${faixasCEPMicrozona}"
+				th:method="${faixasCEPMicrozona.novo} ? post : put">
+
+				<div>
+					<label>Código Microzona: </label> 
+					<input th:field="*{faixasCEPMicrozonaPK.codigoMicrozona}" />
+				</div>
 
 				<div th:if="${!faixasCEPMicrozona.novo}">
-					<label>Código: </label> 
-					
-					<input th:field="*{codigoMicrozona}" readonly="readonly" />
-				</div>
-				
-				<div>
 					<label>Sequencia: </label> 
-					<input th:field="*{codigoSequencial}"/>
+					<input th:field="*{faixasCEPMicrozonaPK.codigoSequencial}" readonly="readonly" />
 				</div>
 
 				<div>
 					<label>CEP Inicial: </label> 
-					<input th:field="*{CEPinicial}"/>
+					<input th:field="*{CEPinicial}" />
 				</div>
-				
+
 				<div>
 					<label>CEP Final: </label> 
-					<input th:field="*{CEPfinal}"/>
+					<input th:field="*{CEPfinal}" />
 				</div>
-				
+
 				<div>
 					<button>Salvar</button>
 				</div>
-	
-			</form> 
+
+			</form>
 		</section>
-		
+
 	</main>
 </body>
 

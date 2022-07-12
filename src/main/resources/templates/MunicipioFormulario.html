@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width"/>
+<meta name="viewport" content="width=device-width" />
 
 <title>NEXT Level - Java</title>
 
@@ -24,38 +23,36 @@
 		</nav>
 
 	</header>
-	
+
 	<main>
 		<section>
 			<h1>Cadastro de Municipio</h1>
 		</section>
 
 		<section>
-			<form th:action="${municipio.novo} ? @{/municipio/form} : @{/municipio/salvar/{codigo}(codigo=${municipio.codigo})}" 
+			<form
+				th:action="${municipio.novo} ? @{/municipio/form} : @{/municipio/salvar/{codigo_ID}(codigo_ID=${municipio.codigo_ID})}"
 				th:object="${municipio}" th:method="${municipio.novo} ? post : put">
 
 				<div th:if="${!municipio.novo}">
-					<label>Código: </label> 
-					
-					<input th:field="*{codigo}" readonly="readonly" />
-				</div>
-				
-				<div>
-					<label>Nome: </label> 
-					<input th:field="*{nome}"/>
+					<label>Código: </label> <input th:field="*{codigo_ID}"
+						readonly="readonly" />
 				</div>
 
 				<div>
-					<label>Estado: </label> 
-					<input th:field="*{siglaEstado}"/> 
+					<label>Nome: </label> <input th:field="*{nome}" />
 				</div>
-				
+
+				<div>
+					<label>Estado: </label> <input th:field="*{estado}" />
+				</div>
+
 				<div>
 					<button>Salvar</button>
 				</div>
-			</form> 
+			</form>
 		</section>
-		
+
 	</main>
 </body>
 
