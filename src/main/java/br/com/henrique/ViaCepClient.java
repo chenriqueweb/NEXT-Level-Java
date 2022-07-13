@@ -1,7 +1,6 @@
 package br.com.henrique;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
-//import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import java.io.IOException;
 import java.net.URI;
@@ -36,7 +35,7 @@ public class ViaCepClient {
 
             HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
-//            log.info("[VIA CEP API] - [RESULTADO DA BUSCA: {}]", httpResponse.body());
+            // log.info("[VIA CEP API] - [RESULTADO DA BUSCA: {}]", httpResponse.body());
 
             return gson.fromJson(httpResponse.body(), Cep.class);
 

@@ -21,6 +21,7 @@ public class Cep {
     private String gia;
     private String ddd;
     private String siafi;
+    
     public String getCep() {
         return cep;
     }

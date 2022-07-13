@@ -2,6 +2,7 @@ package br.com.henrique.controller;
 
 import java.util.List;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,10 @@ public class AtendeController {
         List<FaixasCEPMicrozona> faixasCEPMicrozona = faixasCEPMicrozonaService.findAll();
         JSONObject objetoJson = new JSONObject();
         
-        
+        JSONArray arrayMicrozonaJson = new JSONArray();
+        JSONArray arrayEnderecoJson = new JSONArray();
+
+        // Procura por uma faixa de CEPs
         for (int x = 0; x < faixasCEPMicrozona.size(); x++ ) {
           if (cepAtende >= faixasCEPMicrozona.get(x).getCEPinicial() & 
               cepAtende <= faixasCEPMicrozona.get(x).getCEPfinal()) {
@@ -42,17 +46,41 @@ public class AtendeController {
                 
 //                objetoJson.put(faixasCEPMicrozona.get(x).getClass().getdeclaretion, faixasCEPMicrozona.get(x).getFaixasCEPMicrozonaPK().getCodigoMicrozona());
 
-              Cep cep = ViaCepClient.findCep("03422001");
+                Cep cep = ViaCepClient.findCep("14620000");  // 14620000
               
-              System.out.println(cep.getLogradouro());
-              
-                objetoJson.put("microzona", faixasCEPMicrozona.get(x).getFaixasCEPMicrozonaPK().getCodigoMicrozona());
-                objetoJson.put("sequencial", faixasCEPMicrozona.get(x).getFaixasCEPMicrozonaPK().getCodigoSequencial());
-                objetoJson.put("cepInicial", faixasCEPMicrozona.get(x).getCEPinicial());
-                objetoJson.put("cepFinal", faixasCEPMicrozona.get(x).getCEPfinal());                
+//              System.out.println(cep.getCep());
+//              System.out.println(cep.getBairro());
+//              System.out.println(cep.getComplemento());
+//              System.out.println(cep.getDdd());
+//              System.out.println(cep.getGia());
+//              System.out.println(cep.getIbge());
+//              System.out.println(cep.getLocalidade());
+//              System.out.println(cep.getLogradouro());
+//              System.out.println(cep.getSiafi());
+//              System.out.println(cep.getUf());
+//
+              // Dados do CEP da Microzona
+              arrayMicrozonaJson.add("microzona: " + faixasCEPMicrozona.get(x).getFaixasCEPMicrozonaPK().getCodigoMicrozona());
+              arrayMicrozonaJson.add("sequencial: " + faixasCEPMicrozona.get(x).getFaixasCEPMicrozonaPK().getCodigoSequencial());
+              arrayMicrozonaJson.add("cepInicial: " + faixasCEPMicrozona.get(x).getCEPinicial());
+              arrayMicrozonaJson.add("cepFinal: " + faixasCEPMicrozona.get(x).getCEPfinal());                
+
+              objetoJson.put("microzona", arrayMicrozonaJson);                
                 
-//                System.out.println(objetoJson.toJSONString());
-                
+
+              // Dados do CEP informado
+              if (cep.getCep() != null) {
+                 arrayEnderecoJson.add("cep: " + cep.getCep());
+                 arrayEnderecoJson.add("logradouro: " + cep.getLogradouro());
+                 arrayEnderecoJson.add("complemento: " + cep.getComplemento());
+                 arrayEnderecoJson.add("localidade: " + cep.getLocalidade());
+                 arrayEnderecoJson.add("bairro: " + cep.getBairro());
+                 arrayEnderecoJson.add("uf: " + cep.getUf());
+                 arrayEnderecoJson.add("ibge: " + cep.getIbge());
+                 
+                 objetoJson.put("endereco", arrayEnderecoJson);
+              }
+
             }
         }
         
