@@ -71,32 +71,5 @@ public class MicrozonaController {
         microzonaService.deletaMicrozona(codigo);
         return ResponseEntity.noContent().build();
     }    
-    
-    //-----------------------------------------------------------------------------------------------------
-    // Exclui empresa e chama Lista de Empresas
-    // method Post (página)
-//    @PostMapping(path = "/remover/{codigo}")
-//    public ModelAndView deletaMicrozonaWeb(@PathVariable Integer codigo) {
-//        microzonaService.deletaMicrozona(codigo);
-//        
-//        List<Microzona> microzonas = microzonaService.findAll();
-//        
-//        ModelAndView modelAndView = new ModelAndView("MicrozonaListar");
-//        modelAndView.addObject("microzonas", microzonas);
-//        
-//        return modelAndView;
-//    }         
-//    
-//    // Altera empresa
-//    // method Post (página)
-//    @GetMapping(path = "/editar/{codigo}")
-//    public ModelAndView editarMicrozonaWeb(@PathVariable Integer codigo) {
-//        ModelAndView modelAndView = new ModelAndView("MicrozonaFormulario");
-//        
-//        Microzona microzona = microzonaService.findById(codigo);
-//        
-//        modelAndView.addObject("microzona", microzona);
-//        
-//        return modelAndView;
-//    }    
+
 }

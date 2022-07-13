@@ -62,34 +62,5 @@ public class MunicipioController {
         municipioService.deletaMunicipio(codigo);
         return ResponseEntity.noContent().build();
     }
-    
-    //----------------------------------------------------------------------------------------
-    // Altera Municipio
-    // method Post (página)
-    @GetMapping(path = "/editar/{codigo}")
-    public ModelAndView editarMunicipioWeb(@PathVariable Integer codigo) {
-        ModelAndView modelAndView = new ModelAndView("MunicipioFormulario");
-        
-        Municipio municipio = municipioService.findById(codigo);
-        
-        modelAndView.addObject("municipio", municipio);
-        
-        return modelAndView;
-    }        
-
-    
-    // Deleta estado e chama Lista de Municipio
-    // method Post (página)
-//    @PostMapping(path = "/remover/{codigo}")
-//    public ModelAndView deletaMunicipioWeb(@PathVariable Integer codigo) {
-//        municipioService.deletaMunicipio(codigo);
-//        
-//        List<Municipio> municipios = municipioService.findAll();
-//        
-//        ModelAndView modelAndView = new ModelAndView("MunicipioListar");
-//        modelAndView.addObject("municipios", municipios);
-//        
-//        return modelAndView;
-//    } 
-//    
+  
 }

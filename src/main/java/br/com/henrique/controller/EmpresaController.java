@@ -63,32 +63,4 @@ public class EmpresaController {
         return ResponseEntity.noContent().build();
     }
     
-    //-----------------------------------------------------------------------------------------------------
-    // Altera empresa
-    // method Post (página)
-    @GetMapping(path = "/editar/{codigo}")
-    public ModelAndView editarEmpresaWeb(@PathVariable Integer codigo) {
-        ModelAndView modelAndView = new ModelAndView("EmpresaFormulario");
-        
-        Empresa empresa = empresaService.findById(codigo);
-        
-        modelAndView.addObject("empresa", empresa);
-        
-        return modelAndView;
-    }
-
-    // Exclui empresa e chama Lista de Empresas
-    // method Post (página)
-    @PostMapping(path = "/remover/{codigo}")
-    public ModelAndView deletaEmpresaWeb(@PathVariable Integer codigo) {
-        empresaService.deletaEmpresa(codigo);
-        
-        List<Empresa> empresas = empresaService.findAll();
-        
-        ModelAndView modelAndView = new ModelAndView("EmpresaListar");
-        modelAndView.addObject("empresas", empresas);
-        
-        return modelAndView;
-    }         
-    
 }

@@ -90,38 +90,6 @@ public class FaixasCEPMicrozonaController {
         return ResponseEntity.noContent().build();
     }
     
-    
-//    //-----------------------------------------------------------------------------------------------------
-//    // Exclui Filial e chama Lista de Filiais
-//    // method Post (página)
-//    @PostMapping(path = "/remover/{empresa}/{codigo}")
-//    public ModelAndView deletaFilialWeb(@PathVariable Integer codigoEmpresa, 
-//                                        @PathVariable Integer codigoFilial,
-//                                        @RequestBody Filial filial) {
-//        filialService.deletaFilial(codigoEmpresa, codigoFilial, filial);
-//        
-//        List<Filial> filiais = filialService.findAll();
-//        
-//        ModelAndView modelAndView = new ModelAndView("FilialListar");
-//        modelAndView.addObject("filiais", filiais);
-//        
-//        return modelAndView;
-//    }         
-//    
-//    // Altera Filial
-//    // method Post (página)
-//    @GetMapping(path = "/editar/{empresa}/{codigo}")
-//    public ModelAndView editarFilialaWeb(@PathVariable Integer codigoEmpresa,
-//                                         @PathVariable Integer codigoFilial,
-//                                         @RequestBody Filial filial) {
-//        ModelAndView modelAndView = new ModelAndView("FilialFormulario");
-//        
-//        Filial filialAltera = filialService.findById(codigoEmpresa, codigoFilial, filial);
-//        
-//        modelAndView.addObject("filial", filialAltera);
-//        
-//        return modelAndView;
-//    }    
 }
 
 

@@ -46,7 +46,7 @@ public class AtendeController {
                 
 //                objetoJson.put(faixasCEPMicrozona.get(x).getClass().getdeclaretion, faixasCEPMicrozona.get(x).getFaixasCEPMicrozonaPK().getCodigoMicrozona());
 
-                Cep cep = ViaCepClient.findCep("14620000");  // 14620000
+                Cep cep = ViaCepClient.findCep("07807220");  // 14620000
               
 //              System.out.println(cep.getCep());
 //              System.out.println(cep.getBairro());
