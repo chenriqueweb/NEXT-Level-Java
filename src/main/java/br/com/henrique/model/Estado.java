@@ -1,20 +1,37 @@
 package br.com.henrique.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import br.com.henrique.dto.EstadoDto;
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 public class Estado {
-    
+	
     @Id
+    @ApiModelProperty(value = "Sigla da Unidade Federativa", required = true)
     private String sigla;
     
+    @ApiModelProperty(value = "Nome do Estado", required = true)
     private String nome;
+    
+    @OneToMany(mappedBy = "estado")
+    private List<Municipio> municipios = new ArrayList<>();
 
     // Construtores da Class
     public Estado() {
         super();
     }
+    
+    public Estado(EstadoDto estadoDto) {
+        this.sigla = estadoDto.getSigla();
+        this.nome = estadoDto.getNome();        
+    }    
     
     public Estado(String sigla, String nome) {
         super();
@@ -22,11 +39,6 @@ public class Estado {
         this.nome = nome;
     }
     
-    // Método para identificar registro novo
-    public boolean isNovo() {
-        return sigla == null;
-    }
-        
     public String getSigla() {
         return sigla;
     }
@@ -70,5 +82,9 @@ public class Estado {
             return false;
         return true;
     }
-
+    
+    // Conversor para atualização do DTO
+    public EstadoDto converteToDto() {
+    	return new EstadoDto(this);
+    }
 }

@@ -2,8 +2,13 @@ package br.com.henrique.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,81 +18,109 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.henrique.dto.EmpresaDto;
 import br.com.henrique.model.Empresa;
 import br.com.henrique.service.EmpresaService;
+import br.com.henrique.service.exception.NoNullAllowedException;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
+@Api(value = "Empresa")
 @RestController
 @RequestMapping(path = "/empresa")
 public class EmpresaController {
     
     @Autowired
-    private EmpresaService empresaService;
+    private EmpresaService empresaService; 
 
-    // Lista Empresa
+    // Lista Empresa - DTO
     @GetMapping
-    public ResponseEntity<List<Empresa>> findAll() {
+    @ApiOperation(value = "Lista todas as Empresas")
+    @ApiResponses(value = {
+    	    @ApiResponse(code = 200, message = "Retorna uma lista de todas as Empresas")
+    })    
+    public ResponseEntity<List<EmpresaDto>> findAll() {
         List<Empresa> empresas = empresaService.findAll();
-        return ResponseEntity.ok().body(empresas);
+        
+        return ResponseEntity.ok().body(empresas.stream().map(e -> e.converteToDto(e)).collect(Collectors.toList()));
     }
+    
+    // Lista de Empresas com paginação
+    @GetMapping(path = "page")
+    @ApiOperation(value = "Lista todas as Empresas - paginação")
+    @ApiResponses(value = {
+    	    @ApiResponse(code = 200, message = "Retorna uma lista de todas as Empresas")
+    })    
+    public ResponseEntity<Page<Empresa>> findAllPage(Pageable pageable) {
+        return ResponseEntity.ok().body(empresaService.findAllPage(pageable));
+    }    
     
     // Busca por Empresa
     @GetMapping(path = "{codigo}")
+    @ApiOperation(value = "Busca por uma Empresa")
+    @ApiResponses(value = {
+    	    @ApiResponse(code = 200, message = "Retorna dados da Empresa"),
+    	    @ApiResponse(code = 404, message = "Empresa não encontrada")    	    
+    })        
     public ResponseEntity<Empresa> findById(@PathVariable Integer codigo) {
         Empresa empresa = empresaService.findById(codigo);
         return ResponseEntity.ok().body(empresa);
     }
     
-    // Inclui Empresa
+    // Inclui Empresa - DTO
     @PostMapping
-    public ResponseEntity<Void> addEmpresa(@RequestBody Empresa empresa) {
-        Empresa empresaNova = empresaService.addEmpresa(empresa);
-        
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{codigo}").buildAndExpand(empresaNova.getCodigo()).toUri();
-        return ResponseEntity.created(uri).build();
+    @ApiOperation(value = "Inclui uma Empresa")
+    @ApiResponses(value = {
+    	    @ApiResponse(code = 201, message = "Empresa criada com sucesso")
+    })  
+    public ResponseEntity<Void> addEmpresa(@Valid 
+    		@RequestBody EmpresaDto empresaDto) {
+    	
+        URI uri = null;
+    	try {
+             Empresa empresaNova = empresaService.addEmpresa(empresaDto);
+             uri = ServletUriComponentsBuilder
+            		           .fromCurrentRequest()
+            		           .path("/{codigo}")
+            		           .buildAndExpand(empresaNova.getCodigo())
+            		           .toUri();
+    	}
+    	catch (Exception e) {
+    		throw new NoNullAllowedException(e.getMessage().toString());
+    	}
+    	
+		return ResponseEntity.created(uri).build();
     }    
     
-    // Altera Empresa
+    // Altera Empresa - DTO
     @PutMapping(path = "{codigo}")
-    public ResponseEntity<Void> updateEmpresa(@PathVariable Integer codigo, @RequestBody Empresa empresa) {
-        empresaService.updateEmpresa(codigo, empresa);
+    @ApiOperation(value = "Altera os dados de uma Empresa")
+    @ApiResponses(value = {
+    	    @ApiResponse(code = 204, message = "Empresa alterada com sucesso"),
+    	    @ApiResponse(code = 400, message = "Dados inválidos"),
+    	    @ApiResponse(code = 404, message = "Empresa não encontrada")    	    
+    })  
+    public ResponseEntity<Void> updateEmpresa(@PathVariable Integer codigo, 
+    		                                  @Valid @RequestBody EmpresaDto empresaDto) {
+        empresaService.updateEmpresa(codigo, empresaDto);
         return ResponseEntity.noContent().build();
     }
     
     // Exclusão Empresa
     @DeleteMapping(path = "{codigo}")
+    @ApiOperation(value = "Exclui uma Empresa")
+    @ApiResponses(value = {
+    	    @ApiResponse(code = 204, message = "Empresa excluída"),
+    	    @ApiResponse(code = 404, message = "Empresa não encontrada"), 
+    	    @ApiResponse(code = 500, message = "Houve um erro e não foi possível excluir a Empresa")    	    
+    }) 
     public ResponseEntity<Void> deletaEmpresa(@PathVariable Integer codigo) {
         empresaService.deletaEmpresa(codigo);
         return ResponseEntity.noContent().build();
     }
     
-    //-----------------------------------------------------------------------------------------------------
-    // Exclui empresa e chama Lista de Empresas
-    // method Post (página)
-    @PostMapping(path = "/remover/{codigo}")
-    public ModelAndView deletaEmpresaWeb(@PathVariable Integer codigo) {
-        empresaService.deletaEmpresa(codigo);
-        
-        List<Empresa> empresas = empresaService.findAll();
-        
-        ModelAndView modelAndView = new ModelAndView("EmpresaListar");
-        modelAndView.addObject("empresas", empresas);
-        
-        return modelAndView;
-    }         
-    
-    // Altera empresa
-    // method Post (página)
-    @GetMapping(path = "/editar/{codigo}")
-    public ModelAndView editarEmpresaWeb(@PathVariable Integer codigo) {
-        ModelAndView modelAndView = new ModelAndView("EmpresaFormulario");
-        
-        Empresa empresa = empresaService.findById(codigo);
-        
-        modelAndView.addObject("empresa", empresa);
-        
-        return modelAndView;
-    }
 }

@@ -1,21 +1,37 @@
 package br.com.henrique.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import br.com.henrique.dto.MunicipioDto;
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 public class Municipio {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(value = "Código do Município", required = true)
     private Integer codigo_ID;
+    
+    @ApiModelProperty(value = "Nome do Município", required = true)
+    private String nome;
+    
+    // FK com Estado
+    @ManyToOne
+    @JoinColumn(name="sigla")
+    @ApiModelProperty(value = "Sigla do Estado", required = true)
+    private Estado estado;
     
     public Municipio() {
         super();
+    }
+    
+    public Municipio(MunicipioDto municipioDto) {
+        this.codigo_ID = municipioDto.getCodigo_ID();
+        this.nome = municipioDto.getNome();
+        this.estado = municipioDto.getEstado().converteToEntity();    
     }
 
     public Municipio(Integer codigo_ID, String nome, Estado estado) {
@@ -25,19 +41,6 @@ public class Municipio {
         this.estado = estado;
     }
 
-    // Método para identificar registro novo
-    public boolean isNovo() {
-        return nome == null;
-    }    
-    
-    private String nome;
-    
-    // FK com Estado
-    @ManyToOne
-    @JoinColumn(name="sigla")
-    private Estado estado;
-    
-    
     public Integer getCodigo_ID() {
         return codigo_ID;
     }
@@ -95,4 +98,8 @@ public class Municipio {
         return true;
     }
 
+    // Conversor para atualização do DTO
+    public MunicipioDto converteToDto(Municipio municipio) {
+    	return new MunicipioDto(this);
+    }
 }

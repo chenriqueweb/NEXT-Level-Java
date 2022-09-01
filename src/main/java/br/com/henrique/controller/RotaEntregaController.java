@@ -2,8 +2,13 @@ package br.com.henrique.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,12 +18,19 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.henrique.dto.RotaEntregaDto;
 import br.com.henrique.model.RotaEntrega;
+import br.com.henrique.model.RotaEntregaPK;
 import br.com.henrique.service.RotaEntregaService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
+@Api(value = "Rota_Entrega")
+@ApiOperation(value = "CRUD - Rota de Entrega")
 @RestController
 @RequestMapping(path = "/rotaEntrega")
 public class RotaEntregaController {
@@ -26,68 +38,99 @@ public class RotaEntregaController {
     @Autowired
     private RotaEntregaService rotaEntregaService;
 
-    // Lista RotaEntrega
+    // Lista RotaEntrega - DTO
     @GetMapping
-    public ResponseEntity<List<RotaEntrega>> findAll() {
+    @ApiOperation(value = "Lista todas as RotaEntregas")
+    @ApiResponses(value = {
+    	    @ApiResponse(code = 200, message = "Retorna uma lista de todas as RotaEntregas")
+    })  
+    public ResponseEntity<List<RotaEntregaDto>> findAll() {
         List<RotaEntrega> rotaEntregas = rotaEntregaService.findAll();
-        return ResponseEntity.ok().body(rotaEntregas);
+        return ResponseEntity.ok().body(rotaEntregas.stream().map(e -> e.converteToDto(e)).collect(Collectors.toList()));
     }
+    
+    // Lista de Rotas de Entrega com paginação
+    @GetMapping(path = "page")
+    @ApiOperation(value = "Lista todas as RotaEntregas - paginação")
+    @ApiResponses(value = {
+    	    @ApiResponse(code = 200, message = "Retorna uma lista de todas as RotaEntregas")
+    })  
+    public ResponseEntity<Page<RotaEntrega>> findAllPage(Pageable pageable) {
+        return ResponseEntity.ok().body(rotaEntregaService.findAllPage(pageable));
+    }       
     
     // Busca por RotaEntrega
-    @GetMapping(path = "{codigo}")
-    public ResponseEntity<RotaEntrega> findById(@PathVariable Integer codigo) {
-        RotaEntrega rotaEntrega = rotaEntregaService.findById(codigo);
-        return ResponseEntity.ok().body(rotaEntrega);
+    @GetMapping(path = "{siglaEstado}/{codigoRota}")
+    @ApiOperation(value = "Busca por uma RotaEntrega")
+    @ApiResponses(value = {
+    	    @ApiResponse(code = 200, message = "Retorna dados da RotaEntrega"),
+    	    @ApiResponse(code = 404, message = "RotaEntrega não encontrada")    	    
+    })  
+    public ResponseEntity<RotaEntrega> findById(@PathVariable String siglaEstado,
+                                                @PathVariable Integer codigoRota) {
+        RotaEntregaPK rotaEntregaPK = new RotaEntregaPK();
+        rotaEntregaPK.setSiglaEstado(siglaEstado);
+        rotaEntregaPK.setCodigoRota(codigoRota);
+        
+        RotaEntrega rotaEntregaBusca = rotaEntregaService.findById(rotaEntregaPK);
+        
+        return ResponseEntity.ok().body(rotaEntregaBusca);
     }
     
-    // Inclui RotaEntrega
+    // Inclui RotaEntrega - DTO
     @PostMapping
-    public ResponseEntity<Void> addRotaEntrega(@RequestBody RotaEntrega rotaEntrega) {
-        RotaEntrega rotaEntregaNova = rotaEntregaService.addRotaEntrega(rotaEntrega);
+    @ApiOperation(value = "Inclui uma RotaEntrega")
+    @ApiResponses(value = {
+    	    @ApiResponse(code = 201, message = "RotaEntrega criada com sucesso")
+    }) 
+    public ResponseEntity<Void> addRotaEntrega(@Valid @RequestBody RotaEntregaDto rotaEntregaDto) {
+        RotaEntrega rotaEntregaNova = rotaEntregaService.addRotaEntrega(rotaEntregaDto);
         
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{codigo}").buildAndExpand(rotaEntregaNova.getCodigo()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{siglaEstado}/{codigoRota}")
+                  .buildAndExpand(rotaEntregaNova.getRotaEntregaPK().getSiglaEstado(),
+                                  rotaEntregaNova.getRotaEntregaPK().getCodigoRota())
+                  .toUri();
         return ResponseEntity.created(uri).build();
     }
-
+    
     // Altera RotaEntrega
-    @PutMapping(path = "{codigo}")
-    public ResponseEntity<Void> updateRotaEntrega(@PathVariable Integer codigo, @RequestBody RotaEntrega rotaEntrega) {
-        rotaEntregaService.updateRotaEntrega(codigo, rotaEntrega);
+    @PutMapping(path = "{siglaEstado}/{codigoRota}")
+    @ApiOperation(value = "Altera os dados de uma RotaEntrega")
+    @ApiResponses(value = {
+    	    @ApiResponse(code = 204, message = "RotaEntrega alterada com sucesso"),
+    	    @ApiResponse(code = 400, message = "Dados inválidos"),
+    	    @ApiResponse(code = 404, message = "RotaEntrega não encontrada")    	    
+    })  
+    public ResponseEntity<Void> updateRotaEntrega(@PathVariable String siglaEstado,
+                                                  @PathVariable Integer codigoRota, 
+                                                  @Valid  @RequestBody RotaEntregaDto rotaEntregaDto) {
+        
+        RotaEntregaPK rotaEntregaPK = new RotaEntregaPK();
+        rotaEntregaPK.setSiglaEstado(siglaEstado);
+        rotaEntregaPK.setCodigoRota(codigoRota);
+    
+        rotaEntregaService.updateRotaEntrega(rotaEntregaPK, rotaEntregaDto);
+        
         return ResponseEntity.noContent().build();
     }
     
     // Exclusão RotaEntrega
-    @DeleteMapping(path = "{codigo}")
-    public ResponseEntity<Void> deletaRotaEntrega(@PathVariable Integer codigo) {
-        rotaEntregaService.deletaRotaEntrega(codigo);
+    @DeleteMapping(path = "{siglaEstado}/{codigoRota}")
+    @ApiOperation(value = "Exclui uma RotaEntrega")
+    @ApiResponses(value = {
+    	    @ApiResponse(code = 204, message = "RotaEntrega excluída"),
+    	    @ApiResponse(code = 404, message = "RotaEntrega não encontrada"),
+    	    @ApiResponse(code = 500, message = "Houve um erro e não foi possível excluir a RotaEntrega")
+    })  
+    public ResponseEntity<Void> deletaRotaEntrega(@PathVariable String siglaEstado,
+                                                  @PathVariable Integer codigoRota) {
+        
+        RotaEntregaPK rotaEntregaPK = new RotaEntregaPK();
+        rotaEntregaPK.setSiglaEstado(siglaEstado);
+        rotaEntregaPK.setCodigoRota(codigoRota);
+        
+        rotaEntregaService.deletaRotaEntrega(rotaEntregaPK);
         return ResponseEntity.noContent().build();
     }
-    
-    //-----------------------------------------------------------------------------------------------------
-    // Exclui rotaEntrega e chama Lista de RotaEntregas
-    // method Post (página)
-    @PostMapping(path = "/remover/{codigo}")
-    public ModelAndView deletaRotaEntregaWeb(@PathVariable Integer codigo) {
-        rotaEntregaService.deletaRotaEntrega(codigo);
-        
-        List<RotaEntrega> rotaEntregas = rotaEntregaService.findAll();
-        
-        ModelAndView modelAndView = new ModelAndView("RotaEntregaListar");
-        modelAndView.addObject("rotaEntregas", rotaEntregas);
-        
-        return modelAndView;
-    }         
-    
-    // Altera rotaEntrega
-    // method Post (página)
-    @GetMapping(path = "/editar/{codigo}")
-    public ModelAndView editarRotaEntregaWeb(@PathVariable Integer codigo) {
-        ModelAndView modelAndView = new ModelAndView("RotaEntregaFormulario");
-        
-        RotaEntrega rotaEntrega = rotaEntregaService.findById(codigo);
-        
-        modelAndView.addObject("rotaEntrega", rotaEntrega);
-        
-        return modelAndView;
-    }
+
 }

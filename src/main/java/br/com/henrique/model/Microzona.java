@@ -5,24 +5,49 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
+
+import br.com.henrique.dto.MicrozonaDto;
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 public class Microzona {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(value = "Código da Microzona", required = true)
     private Integer codigo;
         
+    @ApiModelProperty(value = "Nome da Microzona", required = true)
     private String nome;
+    
+    @ApiModelProperty(value = "Status da Microzona", required = true)
     private String status;
+
+    @ApiModelProperty(value = "Atendimento Diário", required = true)
     private String atendimentoDiario;
+    
+    @ApiModelProperty(value = "Atendimento - Segunda-feira", required = true)
     private String atendeSegunda;
+    
+    @ApiModelProperty(value = "Atendimento - Terça-feira", required = true)
     private String atendeTerca;
+    
+    @ApiModelProperty(value = "Atendimento - Quarta-feira", required = true)
     private String atendeQuarta;
+    
+    @ApiModelProperty(value = "Atendimento - Quinta-feira", required = true)
     private String atendeQuinta;
+    
+    @ApiModelProperty(value = "Atendimento - Sexta-feira", required = true)
     private String atendeSexta;
+    
+    @ApiModelProperty(value = "Atendimento - Sábado", required = true)
     private String atendeSabado;
+    
+    @ApiModelProperty(value = "Código da Rota", required = true)
+    private Integer codigoRota;
     
     // FK com Estado
     @ManyToOne
@@ -33,12 +58,40 @@ public class Microzona {
     @ManyToOne
     @JoinColumn(name="codigo_ID")
     private Municipio codigoMunicipio;
-        
     
-    private Integer codigoRota;
+    // FK com Estado
+    @ManyToOne
+    @JoinColumn(name="rotaEntregaPK.siglaEstado", referencedColumnName="sigla") 
+    private Estado estado; 
+    
+    // FK com Rota de Entrega
+    @ManyToOne
+    @JoinColumns({@JoinColumn(updatable = false, insertable = false, 
+                                    name = "rotaEntregaPK.siglaEstado", referencedColumnName = "siglaEstado"), 
+                  @JoinColumn(updatable = false, insertable = false,
+                                    name = "rotaEntregaPK.codigoRota",  referencedColumnName = "codigoRota")
+                 })  
+    private RotaEntrega rotaEntrega;      
+
 
     public Microzona() {
         super();
+    }
+    
+    public Microzona(MicrozonaDto microzonaDto) {
+        this.codigo = null;
+        this.nome = microzonaDto.getNome();
+        this.status = microzonaDto.getStatus();
+        this.atendimentoDiario = microzonaDto.getAtendimentoDiario();
+        this.atendeSegunda = microzonaDto.getAtendeSegunda();
+        this.atendeTerca = microzonaDto.getAtendeTerca();
+        this.atendeQuarta = microzonaDto.getAtendeQuarta();
+        this.atendeQuinta = microzonaDto.getAtendeQuinta();
+        this.atendeSexta =  microzonaDto.getAtendeSexta();
+        this.atendeSabado = microzonaDto.getAtendeSabado();
+        this.estadoRota = microzonaDto.getEstadoRota();
+        this.codigoMunicipio = microzonaDto.getCodigoMunicipio();
+        this.codigoRota = microzonaDto.getCodigoRota();
     }
 
     public Microzona(Integer codigo, String nome, String status, String atendimentoDiario, String atendeSegunda, String atendeTerca,
@@ -58,11 +111,6 @@ public class Microzona {
         this.estadoRota = estadoRota;
         this.codigoMunicipio = codigoMunicipio;
         this.codigoRota = codigoRota;
-    }
-
-    // Método para identificar registro novo
-    public boolean isNovo() {
-        return nome == null;
     }
 
     public Integer getCodigo() {
@@ -266,4 +314,8 @@ public class Microzona {
         return true;
     }
 
+    // Conversor para atualização do DTO
+    public MicrozonaDto converteToDto(Microzona microzona) {
+    	return new MicrozonaDto(this);
+    }
 }

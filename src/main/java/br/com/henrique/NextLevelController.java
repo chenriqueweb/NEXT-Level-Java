@@ -3,18 +3,34 @@ package br.com.henrique;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.com.henrique.dto.EmpresaDto;
+import br.com.henrique.dto.EstadoDto;
+import br.com.henrique.dto.FilialDto;
+import br.com.henrique.dto.MicrozonaDto;
+import br.com.henrique.dto.MunicipioDto;
+import br.com.henrique.dto.RotaEntregaDto;
+import br.com.henrique.model.Atende;
 import br.com.henrique.model.Empresa;
 import br.com.henrique.model.Estado;
 import br.com.henrique.model.FaixasCEPMicrozona;
 import br.com.henrique.model.Filial;
+import br.com.henrique.model.FilialPK;
 import br.com.henrique.model.Microzona;
 import br.com.henrique.model.Municipio;
 import br.com.henrique.model.RotaEntrega;
+import br.com.henrique.service.AtendeFilialService;
 import br.com.henrique.service.EmpresaService;
 import br.com.henrique.service.EstadoService;
 import br.com.henrique.service.FaixasCEPMicrozonaService;
@@ -47,6 +63,9 @@ public class NextLevelController {
         @Autowired
         private FaixasCEPMicrozonaService faixasCEPMicrozonaService;
 
+        @Autowired
+        private AtendeFilialService atendeFilialService;
+
         
         // ### Página Principal
         @GetMapping("/")
@@ -66,6 +85,16 @@ public class NextLevelController {
             return modelAndView;
         }
         
+        @GetMapping("/empresaListar/page")
+        public ModelAndView findAllEmpresaPage(@PageableDefault(size = 7) Pageable pageable) {            
+            Page<Empresa> empresas = empresaService.findAllPage(pageable);
+            
+            ModelAndView modelAndView = new ModelAndView("EmpresaListar");
+            modelAndView.addObject("empresas", empresas);            
+            
+            return modelAndView;
+        }            
+        
         @GetMapping("/empresa/novo")
         public ModelAndView empresaNovo() {            
             ModelAndView modelAndView = new ModelAndView("EmpresaFormulario");
@@ -75,8 +104,8 @@ public class NextLevelController {
         }        
         
         @PostMapping("/empresa/form")
-        public String insereEmpresa(Empresa empresa) {
-            empresaService.addEmpresa(empresa);
+        public String insereEmpresa(EmpresaDto empresaDto) {
+            empresaService.addEmpresa(empresaDto);
             
             return "redirect:/empresaListar";
         }
@@ -84,11 +113,11 @@ public class NextLevelController {
         // Atualiza dados da Empresa     
         // method Post (página)
         @PostMapping("/empresa/salvar/{codigo}")
-        public String atualizaEmpresaWeb(Empresa empresa) {
-            Empresa empresaAntes = empresaService.findById(empresa.getCodigo());
+        public String atualizaEmpresaWeb(EmpresaDto empresaDto) {
+            Empresa empresaAntes = empresaService.findById(empresaDto.getCodigo());
             
             empresaService.deletaEmpresa(empresaAntes.getCodigo());
-            empresaService.addEmpresa(empresa);
+            empresaService.addEmpresa(empresaDto);
 
             return "redirect:/empresaListar";        
         }        
@@ -107,6 +136,16 @@ public class NextLevelController {
             return modelAndView;
         }
         
+        @GetMapping("/estadoListar/page")
+        public ModelAndView findAllEstadoPage(@PageableDefault(size = 7) Pageable pageable) {            
+            Page<Estado> estados = estadoService.findAllPage(pageable);
+            
+            ModelAndView modelAndView = new ModelAndView("EstadoListar");
+            modelAndView.addObject("estados", estados);            
+            
+            return modelAndView;
+        }        
+        
         @GetMapping("/estado/novo")
         public ModelAndView estadoNovo() {            
             ModelAndView modelAndView = new ModelAndView("EstadoFormulario");
@@ -116,8 +155,8 @@ public class NextLevelController {
         }
         
         @PostMapping("/estado/form")
-        public String insreEstado(Estado estado) {
-            estadoService.addEstado(estado);
+        public String insreEstado(EstadoDto estadoDto) {
+            estadoService.addEstado(estadoDto);
             
             return "redirect:/estadoListar";
         }  
@@ -125,11 +164,10 @@ public class NextLevelController {
         // Atualiza dados da Estado     
         // method Post (página)
         @PostMapping("/estado/salvar/{sigla}")
-        public String atualizaEstadoWeb(Estado estado) {
-            Estado estadoAntes = estadoService.findById(estado.getSigla());
+        public String atualizaEstadoWeb(EstadoDto estadoDto) {
+            Estado estadoAntes = estadoService.findById(estadoDto.getSigla());
             
-            estadoService.deletaEstado(estadoAntes.getSigla());
-            estadoService.addEstado(estado);
+            estadoService.updateEstado(estadoAntes.getSigla(), estadoDto);
 
             return "redirect:/estadoListar";        
         }            
@@ -147,6 +185,16 @@ public class NextLevelController {
             return modelAndView;
         }
         
+        @GetMapping("/municipioListar/page")
+        public ModelAndView findAllMunicipioPage(@PageableDefault(size = 7) Pageable pageable) {            
+            Page<Municipio> municipios = municipioService.findAllPage(pageable);
+            
+            ModelAndView modelAndView = new ModelAndView("MunicipioListar");
+            modelAndView.addObject("municipios", municipios);            
+            
+            return modelAndView;
+        }          
+        
         @GetMapping("/municipio/novo")
         public ModelAndView municipioNovo() {            
             ModelAndView modelAndView = new ModelAndView("MunicipioFormulario");
@@ -156,8 +204,8 @@ public class NextLevelController {
         }    
         
         @PostMapping("/municipio/form")
-        public String insreMunicipio1(Municipio municipio) {
-            municipioService.addMunicipio(municipio);
+        public String insreMunicipio1(MunicipioDto municipioDto) {
+            municipioService.addMunicipio(municipioDto);
             
             return "redirect:/municipioListar";
         }          
@@ -165,11 +213,13 @@ public class NextLevelController {
         // Atualiza dados do Municipio     
         // method Post (página)
         @PostMapping("/municipio/salvar/{codigo}")
-        public String atualizaMunicipioWeb(Municipio municipio) {
-            Municipio municipioAntes = municipioService.findById(municipio.getCodigo());
+        public String atualizaMunicipioWeb(MunicipioDto municipioDto) {
+            Municipio municipioAntes = municipioService.findById(municipioDto.getCodigo_ID());
             
-            municipioService.deletaMunicipio(municipioAntes.getCodigo());
-            municipioService.addMunicipio(municipio);
+            municipioService.deletaMunicipio(municipioAntes.getCodigo_ID());
+            municipioService.addMunicipio(municipioDto);
+            
+//            municipioService.updateMunicipio(municipioAntes.getCodigo_ID(), municipio);
 
             return "redirect:/municipioListar";        
         } 
@@ -187,6 +237,16 @@ public class NextLevelController {
             return modelAndView;
         }        
         
+        @GetMapping("/filialListar/page")
+        public ModelAndView findAllFilialPage(@PageableDefault(size = 7) Pageable pageable) {            
+            Page<Filial> filiais = filialService.findAllPage(pageable);
+            
+            ModelAndView modelAndView = new ModelAndView("FilialListar");
+            modelAndView.addObject("filiais", filiais);            
+            
+            return modelAndView;
+        }         
+        
         @GetMapping("/filial/novo")
         public ModelAndView filialNovo() {            
             ModelAndView modelAndView = new ModelAndView("FilialFormulario");
@@ -196,12 +256,32 @@ public class NextLevelController {
         }        
        
         @PostMapping("/filial/form")
-        public String insereFilial(Filial filial) {
-            filialService.addFilial(filial);
+        public String insereFilial(FilialDto filialDto) {
+            filialService.addFilial(filialDto);
             
             return "redirect:/filialListar";
-        }          
+        }       
                 
+        // Atualiza dados da Filial     
+        // method Post (página)
+        @PostMapping("/filial/salvar/{codigoEmpresa}/{codigoFilial}")
+        public String atualizaFilialWeb(@PathVariable Integer codigoEmpresa,
+                                        @PathVariable Integer codigoFilial,
+                                        FilialDto filialDto) {
+
+            FilialPK filialPK = new FilialPK();
+            filialPK.setCodigoEmpresa(codigoEmpresa);
+            filialPK.setCodigoFilial(codigoFilial);              
+//          Filial filialAntes = filialService.findById(filialPK);            
+            
+            filialService.deletaFilial(filialPK);
+            filialService.addFilial(filialDto);
+            
+//          filialService.updateFilial(filialAntes.getFilialPK(), filial);
+
+            return "redirect:/filialListar";        
+        } 
+        
         
         //--------------------------------------------------------------------------------------                
         // ### Rota de Entrega
@@ -215,6 +295,16 @@ public class NextLevelController {
             return modelAndView;
         }
         
+        @GetMapping("/rotaEntregaListar/page")
+        public ModelAndView findAllRotaEntregaPage(@PageableDefault(size = 7) Pageable pageable) {            
+            Page<RotaEntrega> rotasEntregas = rotaEntregaService.findAllPage(pageable);
+            
+            ModelAndView modelAndView = new ModelAndView("RotaEntregaListar");
+            modelAndView.addObject("rotasEntregas", rotasEntregas);            
+            
+            return modelAndView;
+        }                
+        
         @GetMapping("/rotaEntrega/novo")
         public ModelAndView rotaEntregaNovo() {            
             ModelAndView modelAndView = new ModelAndView("RotaEntregaFormulario");
@@ -224,8 +314,8 @@ public class NextLevelController {
         }            
         
         @PostMapping("/rotaEntrega/form")
-        public String insereRotaEntrega(RotaEntrega rotaEntrega) {
-            rotaEntregaService.addRotaEntrega(rotaEntrega);
+        public String insereRotaEntrega(RotaEntregaDto rotaEntregaDto) {
+            rotaEntregaService.addRotaEntrega(rotaEntregaDto);
             
             return "redirect:/rotaEntregaListar";
         }              
@@ -233,11 +323,11 @@ public class NextLevelController {
         // Atualiza dados da Rota de Entrega
         // method Post (página)
         @PostMapping("/rotaEntrega/salvar/{siglaEstado}/{codigo}")
-        public String atualizaRotaEntregaoWeb(RotaEntrega rotaEntrega) {
-            RotaEntrega rotaEntregaAntes = rotaEntregaService.findById(rotaEntrega.getCodigo());
+        public String atualizaRotaEntregaoWeb(RotaEntregaDto rotaEntregaDto) {
+            RotaEntrega rotaEntregaAntes = rotaEntregaService.findById(rotaEntregaDto.getRotaEntregaPK());
             
-            rotaEntregaService.deletaRotaEntrega(rotaEntregaAntes.getCodigo());
-            rotaEntregaService.addRotaEntrega(rotaEntrega);
+            rotaEntregaService.deletaRotaEntrega(rotaEntregaAntes.getRotaEntregaPK());
+            rotaEntregaService.addRotaEntrega(rotaEntregaDto);
 
             return "redirect:/rotaEntregaListar";        
         }             
@@ -254,6 +344,16 @@ public class NextLevelController {
             
             return modelAndView;
         }
+        
+        @GetMapping("/microzonaListar/page")
+        public ModelAndView findAllMicrozonaPage(@PageableDefault(size = 7) Pageable pageable) {            
+            Page<Microzona> microzonas = microzonaService.findAllPage(pageable);
+            
+            ModelAndView modelAndView = new ModelAndView("MicrozonaListar");
+            modelAndView.addObject("microzonas", microzonas);            
+            
+            return modelAndView;
+        }        
 
         @GetMapping("/microzona/novo")
         public ModelAndView microzonaNovo() {            
@@ -264,8 +364,8 @@ public class NextLevelController {
         }            
         
         @PostMapping("/microzona/form")
-        public String insereEmpresa(Microzona microzona) {
-            microzonaService.addMicrozona(microzona);
+        public String insereEmpresa(MicrozonaDto microzonaDto) {
+            microzonaService.addMicrozona(microzonaDto);
             
             return "redirect:/microzonaListar";
         }        
@@ -273,14 +373,15 @@ public class NextLevelController {
         // Atualiza dados da Microzona     
         // method Post (página)
         @PostMapping("/microzona/salvar/{codigo}")
-        public String atualizaMicrozonaWeb(Microzona microzona) {
-            Microzona microzonaAntes = microzonaService.findById(microzona.getCodigo());
+        public String atualizaMicrozonaWeb(MicrozonaDto microzonaDto) {
+            Microzona microzonaAntes = microzonaService.findById(microzonaDto.getCodigo());
             
             microzonaService.deletaMicrozona(microzonaAntes.getCodigo());
-            microzonaService.addMicrozona(microzona);
+            microzonaService.addMicrozona(microzonaDto);
 
             return "redirect:/microzonaListar";        
         }             
+        
         
         //--------------------------------------------------------------------------------------        
         // ### Faixa de CEPs Microzona
@@ -289,10 +390,20 @@ public class NextLevelController {
             List<FaixasCEPMicrozona> faixasCEPMicrozonas = faixasCEPMicrozonaService.findAll();
             
             ModelAndView modelAndView = new ModelAndView("FaixasCEPMicrozonaListar");
-            modelAndView.addObject("faixasCEPMicrozona", faixasCEPMicrozonas);
+            modelAndView.addObject("faixasCEPMicrozonas", faixasCEPMicrozonas);
             
             return modelAndView;
         }
+        
+        @GetMapping("/faixasCEPMicrozonaListar/page")
+        public ModelAndView findAllFaixasCEPMicrozonaPage(@PageableDefault(size = 7) Pageable pageable) {            
+            Page<FaixasCEPMicrozona> faixasCEPMicrozonas = faixasCEPMicrozonaService.findAllPage(pageable);
+            
+            ModelAndView modelAndView = new ModelAndView("FaixasCEPMicrozonaListar");
+            modelAndView.addObject("faixasCEPMicrozonas", faixasCEPMicrozonas);            
+            
+            return modelAndView;
+        }               
         
         @GetMapping("/faixasCEPMicrozona/novo")
         public ModelAndView faixasCEPMicrozonaNovo() {            
@@ -300,6 +411,26 @@ public class NextLevelController {
             modelAndView.addObject("faixasCEPMicrozona", new FaixasCEPMicrozona());
             
             return modelAndView;
-        }            
+        }
         
+        
+        //--------------------------------------------------------------------------------------        
+        // ### Atende CEP próximo Filial
+        @GetMapping("/atende/filial")
+        public ModelAndView filialAtendeBuscaWeb() throws ClassNotFoundException {
+            ModelAndView modelAndView = new ModelAndView("FilialAtende");
+            
+            return modelAndView;
+        }    
+        
+        @RequestMapping(value = "atende/filialCEP", method = RequestMethod.GET)
+        public ModelAndView filialAtendeBuscaWeb(@RequestParam(value = "cepAtende") Integer cepAtende) throws ClassNotFoundException {
+        	
+        	Atende atendeFilial = atendeFilialService.addAtendeFilial(cepAtende);
+        	
+            ModelAndView modelAndView = new ModelAndView("FilialAtendeBusca");
+            modelAndView.addObject("atendeFilial", atendeFilial);
+            
+            return modelAndView;
+        }
 }

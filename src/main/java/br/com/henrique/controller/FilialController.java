@@ -1,17 +1,36 @@
 package br.com.henrique.controller;
 
+import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.henrique.dto.FilialDto;
 import br.com.henrique.model.Filial;
+import br.com.henrique.model.FilialPK;
 import br.com.henrique.service.FilialService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
+@Api(value = "Filial")
+@ApiOperation(value = "CRUD - Filial")
 @RestController
 @RequestMapping(path = "/filial")
 public class FilialController {
@@ -19,36 +38,99 @@ public class FilialController {
     @Autowired
     private FilialService filialService;
 
-    // Lista Filiais
+    // Lista Filiais - DTO
     @GetMapping
-    public List<Filial> findAll() {
+    @ApiOperation(value = "Lista todas as Filiais")
+    @ApiResponses(value = {
+    	    @ApiResponse(code = 200, message = "Retorna uma lista de todas as Filiais")
+    }) 
+    public ResponseEntity<List<FilialDto>> findAll() {
         List<Filial> filiais = filialService.findAll();
-        return filiais;
+        // return ResponseEntity.ok().body(filiais);
+        return ResponseEntity.ok().body(filiais.stream().map(e -> e.converteToDto(e)).collect(Collectors.toList())); 
+    }    
+    
+    // Lista de Filiais com paginação
+    @GetMapping(path = "page")
+    @ApiOperation(value = "Lista todas as Filiais - paginação")
+    @ApiResponses(value = {
+    	    @ApiResponse(code = 200, message = "Retorna uma lista de todas as Filiais")
+    }) 
+    public ResponseEntity<Page<Filial>> findAllPage(Pageable pageable) {
+        return ResponseEntity.ok().body(filialService.findAllPage(pageable));
+    }     
+    
+    // Busca por Filial
+    @ApiOperation(value = "Busca por uma Filial")
+    @GetMapping(path = "/{codigoEmpresa}/{codigoFilial}")
+    @ApiResponses(value = {
+    	    @ApiResponse(code = 200, message = "Retorna dados da Filial"),
+    	    @ApiResponse(code = 404, message = "Filial não encontrada")    	    
+    })  
+    public ResponseEntity<Filial> findById(@PathVariable Integer codigoEmpresa, 
+                                           @PathVariable Integer codigoFilial) {
+        FilialPK filialPK = new FilialPK();
+        filialPK.setCodigoEmpresa(codigoEmpresa);
+        filialPK.setCodigoFilial(codigoFilial);
+        
+        Filial filialBusca = filialService.findById(filialPK);
+
+        return ResponseEntity.ok().body(filialBusca);
     }
-//    
-//    // Busca por Filial
-//    @GetMapping(path = "{empresa}/{codigo}")
-//    public Optional<Filial> findByAll(@PathVariable Long codigoEmpresa, @PathVariable Long codigoFilial) {
-//        Optional<Filial> filial = filialService.findById(codigoEmpresa, codigoFilial);
-//        return filial;
-//    }
-//   
-    // Inclui Filial
+    
+    // Inclui Filial - DTO
     @PostMapping
-    public void addFilial(@RequestBody Filial Filial) {
-        filialService.addFilial(Filial);
+    @ApiOperation(value = "Inclui uma Filial")
+    @ApiResponses(value = {
+    	    @ApiResponse(code = 201, message = "Filial criada com sucesso")
+    }) 
+    public ResponseEntity<Void> addFilial(@Valid @RequestBody FilialDto filialDto) {
+        Filial filialNova = filialService.addFilial(filialDto);
+        
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{codigoEmpresa}")
+                  .buildAndExpand(filialNova.getFilialPK().getCodigoEmpresa())
+                  .toUri();
+        return ResponseEntity.created(uri).build();
+    }    
+    
+    // Altera Filial - DTO
+    @PutMapping(path = "/{codigoEmpresa}/{codigoFilial}")
+    @ApiOperation(value = "Altera os dados de uma Filial")
+    @ApiResponses(value = {
+    	    @ApiResponse(code = 204, message = "Filial alterada com sucesso"),
+    	    @ApiResponse(code = 400, message = "Dados inválidos"),
+    	    @ApiResponse(code = 404, message = "Filial não encontrada")    	    
+    })  
+    public ResponseEntity<Void> updateFilial(@PathVariable Integer codigoEmpresa,
+    		                                 @PathVariable Integer codigoFilial,
+                                             @Valid  @RequestBody FilialDto filialDto) {
+        
+        FilialPK filialPK = new FilialPK();
+        filialPK.setCodigoEmpresa(codigoEmpresa);
+        filialPK.setCodigoFilial(codigoFilial);          
+        
+        filialService.updateFilial(filialPK, filialDto);
+        
+        return ResponseEntity.noContent().build();
     }
-//    
-//    // Altera Filial
-////    @PutMapping(path =  "{empresa}/{codigo}")
-////    public void updateFilial(@PathVariable Long codigoEmpresa, @PathVariable Long codigoFilial,
-////                              @RequestBody Filial filial) {
-////        filialService.updateFilial(codigoEmpresa, codigoFilial, filial);
-////    }
-//    
-//    // Deleta Filial = method Delete
-////    @DeleteMapping(path = "{empresa}/{codigo}")
-////    public void deletaFilial(@PathVariable Long codigoEmpresa, @PathVariable Long codigoFilial) {
-////       filialService.deletaFilial(codigoEmpresa, codigoFilial);
-////    }    
+    
+    // Exclusão Filial
+    @DeleteMapping(path = "/{codigoEmpresa}/{codigoFilial}")
+    @ApiOperation(value = "Exclui uma Filial")
+    @ApiResponses(value = {
+    	    @ApiResponse(code = 204, message = "Filial excluída"),
+    	    @ApiResponse(code = 404, message = "Filial não encontrada"), 
+    	    @ApiResponse(code = 500, message = "Houve um erro e não foi possível excluir a Filial")      	    
+    })  
+    public ResponseEntity<Void> deletaFilial(@PathVariable Integer codigoEmpresa, 
+                                             @PathVariable Integer codigoFilial) {
+        FilialPK filialPK = new FilialPK();
+        filialPK.setCodigoEmpresa(codigoEmpresa);
+        filialPK.setCodigoFilial(codigoFilial);        
+        
+        filialService.deletaFilial(filialPK);
+        
+        return ResponseEntity.noContent().build();
+    }
+   
 }

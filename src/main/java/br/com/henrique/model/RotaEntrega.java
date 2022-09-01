@@ -1,37 +1,68 @@
 package br.com.henrique.model;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
+
+import br.com.henrique.dto.RotaEntregaDto;
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
-@IdClass(RotaEntregaId.class)
 public class RotaEntrega {
     
-    @Id
-    private String siglaEstado;
+    @EmbeddedId
+    @ApiModelProperty(value = "Chave para Rota de Entrega", required = true)
+    private RotaEntregaPK rotaEntregaPK;    
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer codigo;
-    
+    @ApiModelProperty(value = "Nome da Rota de Entrega", required = true)
     private String nome;
+
+    @ApiModelProperty(value = "Status da Rota de Entrega", required = true)
     private String status;
+    
+    @ApiModelProperty(value = "Código da Empresa", required = true)
     private Integer codigoEmpresa;
+    
+    @ApiModelProperty(value = "Código da Filial", required = true)
     private Integer codigoFilial;
-    private String prazoExpedicao;
+    
+    @ApiModelProperty(value = "Prazo para Expedição", required = false)
+    private Integer prazoExpedicao;
+    
+    // FK com Estado
+    @ManyToOne
+    @JoinColumn(name="rotaEntregaPK.siglaEstado", referencedColumnName="sigla") 
+    private Estado estado; 
+    
+    // FK com Filial
+    @ManyToOne
+    @JoinColumns({@JoinColumn(updatable = false, insertable = false, 
+                                    name = "filialPK.codigoEmpresa", referencedColumnName = "codigoEmpresa"), 
+                  @JoinColumn(updatable = false, insertable = false,
+                                    name = "filialPK.codigoFilial",  referencedColumnName = "codigoFilial")
+                 })  
+    private Filial filial;    
+    
     
     public RotaEntrega() {
         super();
     }
     
-    public RotaEntrega(String siglaEstado, Integer codigo, String nome, String status, Integer codigoEmpresa, Integer codigoFilial,
-                    String prazoExpedicao) {
+    public RotaEntrega(RotaEntregaDto rotaEntregaDto) {
+        this.rotaEntregaPK = rotaEntregaDto.getRotaEntregaPK();
+        this.nome = rotaEntregaDto.getNome();
+        this.status = rotaEntregaDto.getStatus();
+        this.codigoEmpresa = rotaEntregaDto.getCodigoEmpresa();
+        this.codigoFilial = rotaEntregaDto.getCodigoFilial();
+        this.prazoExpedicao = rotaEntregaDto.getPrazoExpedicao();
+    }
+    
+    public RotaEntrega(RotaEntregaPK rotaEntregaPK, String nome, String status, Integer codigoEmpresa, Integer codigoFilial,
+                    Integer prazoExpedicao) {
         super();
-        this.siglaEstado = siglaEstado;
-        this.codigo = codigo;
+        this.rotaEntregaPK = rotaEntregaPK;
         this.nome = nome;
         this.status = status;
         this.codigoEmpresa = codigoEmpresa;
@@ -39,22 +70,11 @@ public class RotaEntrega {
         this.prazoExpedicao = prazoExpedicao;
     }
 
-    // Método para identificar registro novo
-    public boolean isNovo() {
-        return nome == null;
-    }         
-    
-    public String getSiglaEstado() {
-        return siglaEstado;
+    public RotaEntregaPK getRotaEntregaPK() {
+        return rotaEntregaPK;
     }
-    public void setSiglaEstado(String siglaEstado) {
-        this.siglaEstado = siglaEstado;
-    }
-    public Integer getCodigo() {
-        return codigo;
-    }
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
+    public void setRotaEntregaPK(RotaEntregaPK rotaEntregaPK) {
+        this.rotaEntregaPK = rotaEntregaPK;
     }
     public String getNome() {
         return nome;
@@ -80,10 +100,10 @@ public class RotaEntrega {
     public void setCodigoFilial(Integer codigoFilial) {
         this.codigoFilial = codigoFilial;
     }
-    public String getPrazoExpedicao() {
+    public Integer getPrazoExpedicao() {
         return prazoExpedicao;
     }
-    public void setPrazoExpedicao(String prazoExpedicao) {
+    public void setPrazoExpedicao(Integer prazoExpedicao) {
         this.prazoExpedicao = prazoExpedicao;
     }
 
@@ -91,12 +111,11 @@ public class RotaEntrega {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
         result = prime * result + ((codigoEmpresa == null) ? 0 : codigoEmpresa.hashCode());
         result = prime * result + ((codigoFilial == null) ? 0 : codigoFilial.hashCode());
         result = prime * result + ((nome == null) ? 0 : nome.hashCode());
         result = prime * result + ((prazoExpedicao == null) ? 0 : prazoExpedicao.hashCode());
-        result = prime * result + ((siglaEstado == null) ? 0 : siglaEstado.hashCode());
+        result = prime * result + ((rotaEntregaPK == null) ? 0 : rotaEntregaPK.hashCode());
         result = prime * result + ((status == null) ? 0 : status.hashCode());
         return result;
     }
@@ -110,11 +129,6 @@ public class RotaEntrega {
         if (getClass() != obj.getClass())
             return false;
         RotaEntrega other = (RotaEntrega) obj;
-        if (codigo == null) {
-            if (other.codigo != null)
-                return false;
-        } else if (!codigo.equals(other.codigo))
-            return false;
         if (codigoEmpresa == null) {
             if (other.codigoEmpresa != null)
                 return false;
@@ -135,10 +149,10 @@ public class RotaEntrega {
                 return false;
         } else if (!prazoExpedicao.equals(other.prazoExpedicao))
             return false;
-        if (siglaEstado == null) {
-            if (other.siglaEstado != null)
+        if (rotaEntregaPK == null) {
+            if (other.rotaEntregaPK != null)
                 return false;
-        } else if (!siglaEstado.equals(other.siglaEstado))
+        } else if (!rotaEntregaPK.equals(other.rotaEntregaPK))
             return false;
         if (status == null) {
             if (other.status != null)
@@ -148,5 +162,9 @@ public class RotaEntrega {
         return true;
     }
     
+    // Conversor para atualização do DTO
+    public RotaEntregaDto converteToDto(RotaEntrega rotaEntrega) {
+    	return new RotaEntregaDto(this);
+    }
 
 }

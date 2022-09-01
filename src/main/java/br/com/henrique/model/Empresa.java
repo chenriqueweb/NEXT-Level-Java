@@ -1,38 +1,57 @@
 package br.com.henrique.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+
+import br.com.henrique.dto.EmpresaDto;
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 public class Empresa {
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id 
+    @ApiModelProperty(value = "Código da Empresa", required = true)
     private Integer codigo;
-    
+
+    @ApiModelProperty(value = "Razão Social", required = true)
     private String razaoSocial;
+    
+    @NumberFormat(pattern = "00000000")
+    @ApiModelProperty(value = "Raiz do CNPJ", required = true)
     private String raizCNPJ;
-    private String dataAbertura;
+    
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
+    @ApiModelProperty(value = "Data da Abertura", required = false)
+    private Date dataAbertura;
     
     // Construtor da Classe
     public Empresa() {
         super();
     }
     
-    public Empresa(Integer codigo, String razaoSocial, String raizCNPJ, String dataAbertura) {
+    public Empresa(EmpresaDto empresaDto) {
+        this.codigo = empresaDto.getCodigo();
+        this.razaoSocial = empresaDto.getRazaoSocial();
+        this.raizCNPJ = empresaDto.getRaizCNPJ();
+        this.dataAbertura = empresaDto.getDataAbertura();        
+    }    
+    
+    public Empresa(Integer codigo, String razaoSocial, String raizCNPJ, Date dataAbertura) {
         super();
+        this.codigo = codigo;
         this.razaoSocial = razaoSocial;
         this.raizCNPJ = raizCNPJ;
         this.dataAbertura = dataAbertura;
     }
-    
-    // Método para identificar registro novo
-    public boolean isNovo() {
-        return razaoSocial == null;
-    } 
-    
+
     public Integer getCodigo() {
         return codigo;
     }
@@ -51,10 +70,10 @@ public class Empresa {
     public void setRaizCNPJ(String raizCNPJ) {
         this.raizCNPJ = raizCNPJ;
     }
-    public String getDataAbertura() {
+    public Date getDataAbertura() {
         return dataAbertura;
     }
-    public void setDataAbertura(String dataAbertura) {
+    public void setDataAbertura(Date dataAbertura) {
         this.dataAbertura = dataAbertura;
     }
     @Override
@@ -80,6 +99,10 @@ public class Empresa {
         } else if (!codigo.equals(other.codigo))
             return false;
         return true;
+    }
+    
+    public EmpresaDto converteToDto(Empresa empresa) {
+    	return new EmpresaDto(this);
     }
 }
 
