@@ -10,7 +10,6 @@ import io.swagger.annotations.ApiModelProperty;
 public class MunicipioDto {
 	
     // @GeneratedValue(strategy = GenerationType.IDENTITY)  // Usando sequencia do DB2
-    @NotEmpty(message = "O campo é obrigatório é não foi preenchido")
     @NotNull(message = "O campo não pode ser nulo")
     @ApiModelProperty(value = "Código do Município", required = true)
     private Integer codigo_ID;
@@ -23,6 +22,10 @@ public class MunicipioDto {
     
     // FK com Estado
     private EstadoDto estado;
+    
+	public MunicipioDto() {
+		super();
+	}
     
     public MunicipioDto(Integer codigo_ID, String nome, EstadoDto estadoDto) {
         super();
@@ -61,4 +64,5 @@ public class MunicipioDto {
     public Municipio converteToEntity() {
     	return new Municipio(this);
     }
+
 }

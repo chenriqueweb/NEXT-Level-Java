@@ -43,23 +43,14 @@ Um dos propósitos principais é possibilitar a capacitação de Desenvolvedores
 ### Testes das APIs
 Para a realização dos testes de chamadas às APIs foi disponibilizado um arquivo JSON para ser importado no Postman.
 
-**/src/main/resources/postman/NEXT-Level_Projeto-01.postman_collection.json**
+**/src/main/resources/postman/NEXT-Level_Projeto.postman_collection.json**
 
-### Telas
-![Projeto-Next-Java-pagina-principal](https://user-images.githubusercontent.com/66568299/179315100-e1d919fd-b3bd-4c51-abdc-5af6416d6896.png)
-
-![Lista-Estados](https://user-images.githubusercontent.com/66568299/179307517-ad5b6156-24eb-46d5-a3a4-75457574fb00.png) 
-![Cadastro-Estados](https://user-images.githubusercontent.com/66568299/179307706-1da8043d-5f2f-44cc-b548-b97e68642ce2.png)
-<br>
-<br>
 
 ## Funcionalidades
 
 :heavy_check_mark: `Funcionalidade 1:` Realizar cadastro de Empresas, Estados, Municipios, Filiais, Micrzonas, Faixas de CEP da Microzona e Rota de Entrega
 
 :heavy_check_mark: `Funcionalidade 2:` Realizar a busca de Filiais próximas ao CEP informado (cliente).
-
-:heavy_check_mark: `Funcionalidade 3:` Plotar um gráfico informando a distância entre o cliente e a Filial mais próxima ao CEP informado.
 <br>
 <br>
 
@@ -72,14 +63,12 @@ Para a realização dos testes de chamadas às APIs foi disponibilizado um arqui
 ## Ferramentas utilizadas
 
 <a href="https://www.java.com" target="_blank"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="70" height="60"/> </a> 
+
 <a href="https://www.eclipse.org/downloads/" target="_blank"> <img src="https://bilginc.com/blog/eclipse-nedir.jpg"
 alt="java" width="70" height="60"/> </a> 
+
 <a href="https://spring.io/tools" target="_blank"> <img src="https://bgasparotto.com/wp-content/uploads/2017/12/spring-logo.png" 
 alt="java" width="70" height="60"/> </a> 
-
-
-<a href="https://spring.io/guides/gs/serving-web-content/" target="_blank"> <img src="https://storage.googleapis.com/zenn-user-upload/c5735c427dcf-20220519.jpg" 
-alt="java" width="100" height="60"/> </a> 
 
 <a href="https://www.postman.com/" target="_blank"> <img src="https://user-images.githubusercontent.com/4249709/29496848-63ad446c-85b1-11e7-904e-a4ddad25e9db.png" 
 alt="java" width="100" height="60"/> </a> 
